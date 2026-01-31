@@ -40,5 +40,9 @@ Tools（工具集）：定义这个实例能调用哪些 API（如搜索、数�
 <img width="1291" height="373" alt="image" src="https://github.com/user-attachments/assets/4202dced-2014-40b6-afb7-d8b1108b1cf7" />
 
 
+## Agent
+<img width="665" height="281" alt="image" src="https://github.com/user-attachments/assets/10fbc1e7-673c-4a45-895f-5d636a51db7c" />
+
+
 
 

@@ -44,5 +44,66 @@ Tools（工具集）：定义这个实例能调用哪些 API（如搜索、数�
 <img width="665" height="281" alt="image" src="https://github.com/user-attachments/assets/10fbc1e7-673c-4a45-895f-5d636a51db7c" />
 
 
+# ChatModel 是“引擎”，ChatClient 是“方向盘”，而 ReactAgent
+在 Spring AI Alibaba 的架构中，这三个概念处于不同的抽象层级。简单来说，它们的关系是：ChatModel 是“引擎”，ChatClient 是“方向盘”，而 ReactAgent 是“自动驾驶系统”。
+
+## 2. 深入理解三者关系
+ChatModel：地基
+它是 Spring AI 对不同厂商模型（如通义千问、OpenAI、Llama）的底层抽象。你直接使用 ChatModel 时，需要手动处理历史记录同步、Prompt 拼接等繁琐工作。
+
+特点：低级 API，控制力最强，但开发效率低。
+
+ChatClient：脚手架
+它是目前 Spring AI 最推荐使用的核心类。它将 ChatModel 包装起来，提供了极其便利的链式调用和 Advisor（顾问）机制。
+
+特点：通过 MessageChatMemoryAdvisor 自动处理数万用户的独立记忆，通过 QuestionAnswerAdvisor 自动实现 RAG。
+
+使用场景：绝大多数的对话系统、固定流程的 RAG 助手。
+
+ReactAgent：上层应用
+ReactAgent 并不取代 ChatClient，它内部通常持有一个 ChatClient。它的核心在于 ReAct (Reason + Act) 逻辑：
+
+Thought：模型通过 ChatClient 思考当前进度。
+
+Action：模型决定调用哪个工具（Tool）。
+
+Observation：模型观察工具返回的结果，并回到步骤 1。
+
+特点：能够处理“模糊”任务。例如：“帮我分析我的代码并修复其中的 SQL 注入风险”，它会自主进行“读取文件 -> 分析代码 -> 测试修复”的循环。
 
 
+## 3. 如何选择？
+什么时候只用 ChatClient？
+
+你的业务逻辑相对固定。
+
+需要支持大规模并发（如成千上万用户，配合 Redis 记忆）。
+
+你只需要模型根据给定的知识库回答问题（标准 RAG）。
+
+什么时候需要 ReactAgent？
+
+你的任务需要多个步骤，且下一步的操作取决于上一步的输出。
+
+你需要智能体在多个互不相关的工具之间进行灵活调度。
+
+你希望智能体具有“解决复杂问题”的能力，而不仅仅是对话。
+
+## 4. 代码结构中的位置
+
+```java
+// 1. ChatModel (底层引擎)
+ChatModel qwenModel = new DashScopeChatModel(...);
+
+// 2. ChatClient (利用引擎构建的易用接口)
+ChatClient chatClient = ChatClient.builder(qwenModel)
+    .defaultAdvisors(new MessageChatMemoryAdvisor(memory))
+    .build();
+
+// 3. ReactAgent (利用 Client 运行自主逻辑)
+// 注意：RC2 以后通常通过构造特定任务或 Advisor 模式实现 Agent 行为
+AgentExecutor agent = AgentExecutor.builder()
+    .chatClient(chatClient)
+    .tools(myTools)
+    .build();
+``` 

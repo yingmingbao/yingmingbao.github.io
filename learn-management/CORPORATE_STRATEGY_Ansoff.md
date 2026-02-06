@@ -1,7 +1,7 @@
-All + All -
-"CORPORATE STRATEGY," Ansoff, 1965
+# "CORPORATE STRATEGY," Ansoff, 1965
 
 - Preface
+
 THIS, book is concerned with business strategy formulation in the social-economic environment .of the United States.
 
 This book is concerned with management, the active process of determining and guiding the course of a firm toward its objectives.
@@ -174,7 +174,8 @@ As a step toward a unified theory the final chapter of this book will discuss th
 
 - Note Loc. 231  | Added on Monday, January 19, 2015, 09:49 AM need to read both Chandler as well as Cyert and March
 
-- CHAPTER 2. A Model for Strategic Decisions
+## CHAPTER 2. A Model for Strategic Decisions
+
 - THE PROBLEM
 THE end product of strategic decisions is deceptively simple; a combination of products and markets is selected for the firm.
 
@@ -201,7 +202,7 @@ With individual evaluations in hand, the preferred projects can be chosen by sev
 
 At first glance, this procedure for plant and equipment decisions appears applicable to deciding what markets to enter or what products to develop.
 
-Our objective in this chapter is to see where product-market investments differ from capital investments and what modifications in the method are needed for a practical approach to strategic decisions.
+Our objective in this  is to see where product-market investments differ from capital investments and what modifications in the method are needed for a practical approach to strategic decisions.
 
 - STEPS IN PROBLEM SOLVING
 Simon has shown [7] that solution of any decision problem in business, science, or art can be viewed in four steps.
@@ -407,7 +408,7 @@ Its salient characteristics are a ‘cascade' procedure of successive narrowing 
 
 The concepts of strategy and of objectives are the keys to successful application of the method.
 
-the next few chapters will explore how product-market decisions relate to these concepts in practice.
+the next few s will explore how product-market decisions relate to these concepts in practice.
 
 a decision flow diagram will be constructed which applies the adaptive search method to the problem in hand.
 
@@ -415,7 +416,7 @@ This schematic is shown in Figure 2.1, where for simplicity all feedback relatio
 
 Figure 2.1. Decision schematic in strategy formulation. [SEE PAPER FOR FIGURE]
 
-- CHAPTER 3. Objectives
+## CHAPTER 3. Objectives
 - THE PROBLEM
 we described a business firm as a purposive organization whose behavior is directed toward identifiable end purposes or objectives.
 
@@ -574,7 +575,7 @@ The key idea is selecting profitability (a measure 'of return on resources) rath
 
 The second distinctive point in our formulation of objectives is selection of the rate of return on the investment as the yardstick of profitability.
 
-- CHAPTER 4. A Practical System of Objectives
+## CHAPTER 4. A Practical System of Objectives
 - THE PROBLEM
 WE shall approach practical objectives through a: series, of approximations.
 
@@ -925,7 +926,7 @@ we decided to face the real-world fact that data are not available to produce a 
 
 A specific method for evaluating incommensurate components of objectives will be developed in Chapter 9.
 
-- CHAPTER 5. Synergy and Capability Profiles
+## CHAPTER 5. Synergy and Capability Profiles
 - THE PROBLEM
 IN this chapter we begin to explore synergy, 'which is one of the major components of the firm's product-market strategy.
 
@@ -1213,7 +1214,7 @@ c. Finally superimposed profiles are compared with typical profiles developed un
 
 This procedure of using paired profiles to fill in Table 5.2 is laborious and should be used primarily at the 'short strokes' of an acquisition.
 
-- CHAPTER 6. Concept of Strategy
+## CHAPTER 6. Concept of Strategy
 - THE PROBLEM
 a firm needs a well-defined scope and growth direction, that objectives alone do not meet this need, and that additional decision rules are required if the firm is to have orderly and profitable growth.
 
@@ -1402,7 +1403,7 @@ all four basic types of decision described above -'strategy, policy, program, ar
 
 all of the basic types of decisions may apply on organizational levels below the firm as a whole.
 
-- CHAPTER 7. Why Firms Diversify
+## CHAPTER 7. Why Firms Diversify
 - THE PROBLEM
 It was pointed out in Chapter 1 that a firm's concern with the strategic problem is not automatic 'and that, in the absence of a trigger signal, most managements will focus their attention on administrative and operating decisions.
 
@@ -1592,7 +1593,7 @@ the acquiring firm should insist on a record of successful operation and evidenc
 
 7. Organizational strategy is of great importance in conglomerate acquisitions.
 
-- CHAPTER 8. The Appraisal
+## CHAPTER 8. The Appraisal
 - THE PROBLEM
 THUS far we have been concerned with development of basic concepts and tools for strategic analysis. The remainder of the book 1s devoted to using these in constructing a step-by-step solution of the strategic problem.
 
@@ -1791,7 +1792,7 @@ Whether synergy shall follow structure or vice versa is a major top management d
 
 This decision needs to be made at this point, rather than delayed until an actual acquisition is in hand, because it affects strategy and hence the search and evaluation of opportunities.
 
-- CHAPTER 9. Choice of Strategy
+## CHAPTER 9. Choice of Strategy
 - THE PROBLEM
 THE synergy-structure decision moves strategy formulation into its final stage.
 
@@ -2139,13 +2140,14 @@ If our strategic decision theory were to be compared with others, we suggest tha
 
 It also has strong economic overtones; since we assert that the firm's behavior is profit-oriented, and that institutional characteristics of the firm are dominant in this behavior, though perturbed and affected by the individual participants.
 
-- CHAPTER 10. Uses of Strategy
+## CHAPTER 10. Uses of Strategy
 - THE PROBLEM
 Two tasks remain. The first is to develop a procedure for individual project evaluation and selection.
 
 The second is to show how strategy can be used within the overall periodic planning process of the business firm.
 
 - AN OVERVIEW
+ 
 Figure 10.1, which shows only the main building blocks.
 
 The trigger signal which starts strategic analysis may come about in one of several ways depending on the circumstances of the firm' and the far-sightedness of its management.

@@ -7,12 +7,12 @@ THIS, book is concerned with business strategy formulation in the social-economi
 This book is concerned with management, the active process of determining and guiding the course of a firm toward its objectives.
 
 defn
-the interest is normative: we seek to develop a practically useful series of concepts and procedures which managers can use to manage.
+## the interest is normative: we seek to develop a practically useful series of concepts and procedures which managers can use to manage.
 
 Management of a business firm is a very large complex of activities which consists of analysis, decisions, communication, leadership, motivation, measurement, and control.
 
 defn
-we single out the process of decision making, since it is the comer, ' stone of successful management. Peter Drucker has said, 'The 'end-products of ... management are decisions and actions.'
+## we single out the process of decision making, since it is the comer, ' stone of successful management. Peter Drucker has said, 'The 'end-products of ... management are decisions and actions.'
 
 Our interest is in the characteristics' of these decisions, regardless of the organizational process by which they are made:
 
@@ -70,7 +70,8 @@ The purpose of this chapter is first to outline such a model and then' to single
 
 Following this we shall discuss some special characteristics of one of these classes -the strategic decisions -which is the core subject of this book.
 
-- CLASSES OF DECISIONS
+## - CLASSES OF DECISIONS
+  
 The adjective' business' has traditionally meant that the firm is an economically or 'money' motivated purposive social organization.
 
 defn
@@ -97,7 +98,7 @@ Our approach will be to construct three categories called respectively strategic
 Operating decisions usually absorb the bulk of the firm's energy and attention. The object is to maximize the efficiency of the firm's resource-conversion process, or, in more conventional language, to maximize profitability of current operations.
 
 defn
-The major decision areas are resource allocation (budgeting) among functional areas and product lines, scheduling of operations, supervision of performance, and applying control actions.
+## The major decision areas are resource allocation (budgeting) among functional areas and product lines, scheduling of operations, supervision of performance, and applying control actions.
 
 The key decisions involve pricing, establishing marketing strategy, setting production schedules and inventory levels, and deciding on relative expenditures in support of R&D (research and development), marketing, and operations.
 

@@ -38,8 +38,11 @@ In summary, this book provides a practical method for strategic decision making 
 
 - Acknowledgements
 a lot of influence from Lockheed Corp execurives.
-- CHAPTER 1. Structure of Business Decisions
-- THE PROBLEM
+
+## CHAPTER 1. Structure of Business Decisions
+
+### THE PROBLEM
+
 a major part of a manager's time is occupied in a daily process of making numerous and diverse decisions.
 
 decisions of great potential import come mixed with trivial but time-consuming demands; the nature of decisions is multifaceted and continually variable.

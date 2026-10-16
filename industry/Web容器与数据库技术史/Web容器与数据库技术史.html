@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中间件 Web 容器与数据库软件技术发展史</title><style>
+* { box-sizing: border-box; }
+body { font-family: "Microsoft YaHei","SimSun","Songti SC",sans-serif;
+       font-size: 15px; line-height: 1.75; color:#1f2430; max-width: 1080px;
+       margin: 0 auto; padding: 32px 28px 64px; }
+h1 { font-size: 28px; border-bottom: 3px solid #2b5797; padding-bottom: 10px; color:#1b3a6b; }
+h2 { font-size: 22px; margin-top: 38px; color:#2b5797; border-left: 6px solid #2b5797; padding-left: 10px; }
+h3 { font-size: 18px; margin-top: 26px; color:#3358a0; }
+h4 { font-size: 16px; color:#444; }
+a  { color:#2b5797; text-decoration: none; }
+code { background:#f2f4f8; padding:1px 5px; border-radius:4px; font-family: Consolas,Menlo,monospace; font-size: 13px; }
+pre code { display:block; padding:12px; }
+blockquote { background:#f6f8fc; border-left:4px solid #9bb4e0; margin: 14px 0; padding: 8px 14px; color:#334; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 13.5px; }
+th,td { border: 1px solid #c4ccd8; padding: 7px 9px; vertical-align: top; text-align: left; }
+th { background:#2b5797; color:#fff; }
+tbody tr:nth-child(even) { background:#eef2f8; }
+.toc { background:#f6f8fc; border:1px solid #d4dcea; border-radius:8px; padding:14px 20px; margin: 18px 0; }
+.toc ul { margin: 4px 0; padding-left: 22px; }
+hr { border:none; border-top:1px solid #dde; margin: 26px 0; }
+</style></head>
+<body><h1 id="中间件-Web-容器与数据库软件技术发展史">中间件 Web 容器与数据库软件技术发展史</h1>
+<blockquote>
+<p>一份关于 Web 中间件（Web 容器 / Web 服务器 / 反向代理 / 服务代理）与数据库软件演进脉络的结构化技术史。
+覆盖区间：1990 年代至今（CGI 时期 → 云原生与服务网格）。
+数据说明：市场份额类数据均以「区间 / 排名 / 定性」呈现，并标注来源与统计时点；确切成因与年份以公开史料为准。</p>
+</blockquote>
+<hr />
+<h2 id="目录">目录</h2>
+<div class="toc">
+<ul>
+<li><a href="#中间件-Web-容器与数据库软件技术发展史">中间件 Web 容器与数据库软件技术发展史</a><ul>
+<li><a href="#目录">目录</a></li>
+<li><a href="#1-引言">1. 引言</a></li>
+<li><a href="#2-阶段划分总表按时间顺序">2. 阶段划分总表（按时间顺序）</a></li>
+<li><a href="#3-各阶段深入分析">3. 各阶段深入分析</a><ul>
+<li><a href="#31-阶段一静态-Web-与-CGI-动态化19931997">3.1 阶段一：静态 Web 与 CGI 动态化（1993–1997）</a></li>
+<li><a href="#32-阶段二ServletJSP-规范确立与-Java-应用服务器19972003">3.2 阶段二：Servlet/JSP 规范确立与 Java 应用服务器（1997–2003）</a></li>
+<li><a href="#33-阶段三开源容器普及与高性能反向代理崛起20032009">3.3 阶段三：开源容器普及与高性能反向代理崛起（2003–2009）</a></li>
+<li><a href="#34-阶段四异步非阻塞与事件驱动范式20092015">3.4 阶段四：异步非阻塞与事件驱动范式（2009–2015）</a></li>
+<li><a href="#35-阶段五嵌入式容器与微服务20132018">3.5 阶段五：嵌入式容器与微服务（2013–2018）</a></li>
+<li><a href="#36-阶段六云原生服务网格与-Serverless2016至今">3.6 阶段六：云原生、服务网格与 Serverless（2016–至今）</a></li>
+</ul>
+</li>
+<li><a href="#4-对比与演进脉络">4. 对比与演进脉络</a><ul>
+<li><a href="#41-各类容器--模型的定位对比">4.1 各类容器 / 模型的定位对比</a></li>
+<li><a href="#42-数据模型的演进">4.2 数据模型的演进</a></li>
+<li><a href="#43-整体架构路径">4.3 整体架构路径</a></li>
+<li><a href="#44-云原生容器化AI-基础设施对未来的影响">4.4 云原生、容器化、AI 基础设施对未来的影响</a></li>
+</ul>
+</li>
+<li><a href="#5-关键节点时间线年份--事件">5. 关键节点时间线（年份 — 事件）</a></li>
+<li><a href="#6-现状对比调研">6. 现状对比调研</a><ul>
+<li><a href="#61-Web-容器--服务器现状对比">6.1 Web 容器 / 服务器现状对比</a></li>
+<li><a href="#62-数据库现状对比">6.2 数据库现状对比</a></li>
+</ul>
+</li>
+<li><a href="#7-AI-时代-Web-容器的发展方向研判">7. AI 时代 Web 容器的发展方向研判</a></li>
+<li><a href="#8-参考文献与引用来源">8. 参考文献与引用来源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr />
+<h2 id="1-引言">1. 引言</h2>
+<p>Web 容器（Container）与数据库（DBMS）是「中间件」层中最核心、也最具历史纵深的两类软件。Web 容器负责把 HTTP 请求映射到应用逻辑并管理连接、线程与生命周期；数据库负责数据的持久化、查询与一致性。二者共同构成了从「静态网页」到「动态交互」再到「分布式云原生系统」的技术底座。</p>
+<p>本报告的写作逻辑：</p>
+<ul>
+<li><strong>时间维度</strong>：以「请求处理模型」的跃迁为主线——进程模型（CGI）→ 线程/进程模型（Apache + mod_*) → Servlet 规范与容器 → 事件驱动/异步非阻塞（Nginx、Node.js、Netty）→ 嵌入式与微服务 → 云原生与服务网格（Envoy / Istio）→ Serverless。</li>
+<li><strong>数据维度</strong>：以「数据模型」的扩展为主线——关系型（RDBMS）→ 文档 / KV / 宽列 / 图 / 时序 → 多模型与向量（AI 时代）。</li>
+<li><strong>架构维度</strong>：单体内核 → 分层 / 模块化 → 微服务 / 云原生 → Serverless 与存算分离。</li>
+</ul>
+<hr />
+<h2 id="2-阶段划分总表按时间顺序">2. 阶段划分总表（按时间顺序）</h2>
+<p>下表给出 Web 容器演进的六大阶段，标注起止年份、标志性事件与关键版本 / 规范节点（数据库领域的关键节点并入第 5 节时间线）。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>起止年份</th>
+<th>标志性事件</th>
+<th>关键版本 / 规范节点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一、静态 Web 与 CGI 动态化</td>
+<td>1993–1997</td>
+<td>CGI 出现，Web 从静态文档走向交互；Apache 接棒 NCSA httpd；LAMP 雏形</td>
+<td>CGI（NCSA，1993）；Apache HTTP Server（1995）；Servlet 1.0 / Java Web Server（1996–1997）；PHP（1995）；MySQL（1995）；PostgreSQL（1996）</td>
+</tr>
+<tr>
+<td>二、Servlet/JSP 规范确立与 Java 应用服务器</td>
+<td>1997–2003</td>
+<td>Java 规范化为企业 Web 标准；商业应用服务器（WebSphere/WebLogic）与开源容器（Tomcat/Jetty/JBoss）并立</td>
+<td>Servlet 2.0–2.4（1997–2003）；JSP（1998）；Tomcat 3.0（1999，Servlet 2.2/JSP 1.1）；Tomcat 4.0 Catalina（2001）；WebSphere（1998）、WebLogic（1996/1998）、JBoss（1999）</td>
+</tr>
+<tr>
+<td>三、开源容器普及与高性能反向代理崛起</td>
+<td>2003–2009</td>
+<td>高并发（C10K）倒逼事件驱动架构；Nginx 以异步非阻塞模型颠覆 Apache 霸主地位；LAMP 与 Web 2.0 普及</td>
+<td>Apache 2.0/2.2（2002/2005）；Nginx 0.1.0（2004）；Lighttpd（2003）；Jetty 6 续体模型（2006）；Tomcat 5/6（2003/2006）；Resin（1999）；Ajax（2005）</td>
+</tr>
+<tr>
+<td>四、异步非阻塞与事件驱动范式</td>
+<td>2009–2015</td>
+<td>实时 / 长连接 / 移动场景成为常态；Reactor 模型主流化；HTTP/2 与 WebSocket 落地</td>
+<td>Node.js（2009）；Servlet 3.0 异步（2009）；Jetty 7/8 WebSocket（2009–2010）；Netty 4（2013）；Undertow（2013）；Nginx Plus（2013）；HTTP/2（2015）</td>
+</tr>
+<tr>
+<td>五、嵌入式容器与微服务</td>
+<td>2013–2018</td>
+<td>容器化（Docker/K8s）与 DevOps 推动「应用自带容器」；微服务拆分单体</td>
+<td>Spring Boot（2014，内嵌 Tomcat/Jetty/Undertow）；Docker（2013）；Kubernetes（2014）；WildFly 8 默认 Undertow（2014）；微服务架构流行</td>
+</tr>
+<tr>
+<td>六、云原生、服务网格与 Serverless</td>
+<td>2016–至今</td>
+<td>K8s 成为事实标准；Sidecar 代理接管东西向流量；函数即服务（FaaS）兴起；Java 进入 Jakarta EE 时代</td>
+<td>Envoy（2016，Lyft）；Istio（2017）；Knative / Serverless（2018+）；Jakarta EE 9（jakarta.* 命名空间，2020）、10（2022）、11（2024）；Tomcat 10/11（2020/2024）；Quarkus / Micronaut（云原生 Java）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-各阶段深入分析">3. 各阶段深入分析</h2>
+<h3 id="31-阶段一静态-Web-与-CGI-动态化19931997">3.1 阶段一：静态 Web 与 CGI 动态化（1993–1997）</h3>
+<p><strong>背景与驱动因素</strong>
+- 硬件：单核低主频 CPU、内存以兆计，网络以拨号 / 低速专线为主；并发量极低。
+- 需求：Web 由「只读静态文档」走向「表单提交、查询、会话」等交互需求。
+- 生态：NCSA 发布 Mosaic 浏览器（1993），Web 用户快速膨胀。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>C/S（客户端 / 服务器）</strong> 萌芽，<strong>B/S（浏览器 / 服务器）</strong> 模式确立。
+- <strong>CGI（通用网关接口）进程模型</strong>：每请求一进程（fork-exec），通过环境变量 + 标准 I/O 与 Web 服务器通信。</p>
+<p><strong>关键技术与系统</strong>
+- NCSA httpd 与 CGI（1993，NCSA）；Apache HTTP Server（1995，由 Apache 小组基于 NCSA httpd 重写）。
+- 脚本语言：Perl（CGI 主力）、PHP（1995，初为 CGI 形态）、Python（1991）。
+- 数据库：MySQL（1995）、PostgreSQL（1996）开源关系型数据库登场，与 PHP/Apache 构成 LAMP 雏形。</p>
+<p><strong>局限</strong>：CGI「每请求一进程」在并发上升时进程创建 / 销毁开销成为瓶颈，催生了进程内模块（mod_perl、mod_php）与 FastCGI（1996）。</p>
+<h3 id="32-阶段二ServletJSP-规范确立与-Java-应用服务器19972003">3.2 阶段二：Servlet/JSP 规范确立与 Java 应用服务器（1997–2003）</h3>
+<p><strong>背景与驱动因素</strong>
+- Java 凭借「一次编写，到处运行」与强类型企业特性，成为大型组织后端首选。
+- 需要一种跨厂商、标准化的服务端 Java 组件模型来替代各家的私有 CGI/ISAPI 方案。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>B/S + 分层架构（MVC）</strong>：Servlet 处理请求控制，JSP 负责视图，EJB/业务层负责模型。
+- <strong>J2EE 平台化</strong>：将 Web、事务、消息、目录等能力标准化。</p>
+<p><strong>关键技术与系统</strong>
+- <strong>Servlet 规范</strong>：1.0（1997）由 Sun 的 Pavni Diwanji 制定；2.0（1997）、2.1（1998）、2.2（1999，纳入 J2EE、引入 .war 独立 Web 应用）、2.3（2001，引入 Filter）、2.4（2003，web.xml 改用 XML Schema）。
+- <strong>JSP</strong>：1998 年随 J2EE 1.2 推出，与 Servlet 配合形成「Model 2」MVC。
+- <strong>开源容器</strong>：Tomcat 3.0（1999，James Duncan Davidson 基于 Sun 代码捐赠 ASF，实现 Servlet 2.2/JSP 1.1）；Jetty（1995 起，Mort Bay，后 2009 入 Eclipse）。
+- <strong>商业应用服务器</strong>：IBM WebSphere（1998 起）、BEA WebLogic（1996 起，2008 年被 Oracle 收购）、JBoss（1999 起，2006 被 Red Hat 收购）、Caucho Resin（1999）。</p>
+<p><strong>意义</strong>：Servlet 容器把「连接管理 + 线程池 + 生命周期」从应用代码中剥离，确立了现代 Web 容器的核心契约（init / service / destroy）。</p>
+<h3 id="33-阶段三开源容器普及与高性能反向代理崛起20032009">3.3 阶段三：开源容器普及与高性能反向代理崛起（2003–2009）</h3>
+<p><strong>背景与驱动因素</strong>
+- <strong>C10K 问题</strong>：单服务器需同时维持上万并发连接，Apache 的「每连接一进程/线程」模型内存与上下文切换成本过高。
+- <strong>Web 2.0 与 Ajax（2005）</strong>：页面局部刷新、富交互带来请求量激增。
+- 硬件：多核 CPU 普及，但操作系统仍多以阻塞 I/O 为主，需要新的 I/O 编排方式。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>事件驱动 / 异步非阻塞（Reactor）</strong>：单线程事件循环 + epoll/kqueue，用极少线程支撑海量连接。
+- <strong>反向代理 / 负载均衡</strong>：把静态资源、SSL 终结、缓存前置到应用服务器之前。</p>
+<p><strong>关键技术与系统</strong>
+- <strong>Nginx</strong>（0.1.0，2004-10-04，Igor Sysoev，为 Rambler 解决高并发）：BSD 许可，事件驱动，迅速成为反向代理 / 负载均衡 / 静态服务事实标准；Nginx, Inc.（2011）成立，2019 被 F5 收购。
+- <strong>Apache 2.x</strong>：引入 Worker / Event MPM，向异步化靠拢（Event MPM 在 2.4 成为默认）。
+- <strong>Lighttpd（2003）</strong>、<strong>Cherokee</strong> 等同代事件驱动服务器。
+- Tomcat 5（Servlet 2.4/JSP 2.0，2003）、Tomcat 6（Servlet 2.5，2006）；Jetty 6（2006，续体 continuations 支持异步）。</p>
+<h3 id="34-阶段四异步非阻塞与事件驱动范式20092015">3.4 阶段四：异步非阻塞与事件驱动范式（2009–2015）</h3>
+<p><strong>背景与驱动因素</strong>
+- 实时应用（聊天、推送、行情）、移动端、长连接（WebSocket）成为主流。
+- 微服务萌芽，对「高吞吐、低尾延迟」的网络层提出更高要求。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>Reactor / Proactor 全异步 I/O</strong>；<strong>Servlet 3.0 异步处理</strong>；<strong>WebSocket 全双工</strong>；<strong>HTTP/2 多路复用</strong>。
+- 语言级事件循环：Node.js 将「前端 JS」带入服务端，验证单线程事件循环的高吞吐可能。</p>
+<p><strong>关键技术与系统</strong>
+- <strong>Node.js（2009，Ryan Dahl）</strong>：基于 V8 + 事件循环，非阻塞 I/O，催生 Express / Koa 等框架与全栈 JS。
+- <strong>Servlet 3.0（2009）</strong>：规范级异步 Servlet，容器可异步处理请求。
+- <strong>Jetty 7/8（2009–2010）</strong>：WebSocket、SPDY 支持；<strong>Netty 4（2013）</strong>：Trustin Lee 创建的 Reactor 网络框架，成为 Kafka、Cassandra、Dubbo、gRPC 等基础设施的通信底座。
+- <strong>Undertow（2013，Red Hat）</strong>：为 WildFly 8（2014）打造的轻量非阻塞 Web 服务器，可处理十万级并发。
+- <strong>HTTP/2（2015，RFC 7540）</strong>：多路复用、头部压缩，Nginx 1.9.5 起原生支持。
+- <strong>Nginx Plus（2013）</strong>：商业版引入高级负载均衡与可观测指标。</p>
+<h3 id="35-阶段五嵌入式容器与微服务20132018">3.5 阶段五：嵌入式容器与微服务（2013–2018）</h3>
+<p><strong>背景与驱动因素</strong>
+- <strong>Docker（2013）/ Kubernetes（2014）</strong> 让「应用 + 运行时」打包为不可变镜像，传统「先装应用服务器再部署 war」的运维模式被颠覆。
+- <strong>DevOps / CI-CD</strong> 要求应用自包含、启动快、可水平扩展。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>微服务</strong>：单体拆分为小而独立的服务，每服务自带嵌入式运行时。
+- <strong>嵌入式容器</strong>：容器作为库（library）嵌入应用，而非应用部署进容器。</p>
+<p><strong>关键技术与系统</strong>
+- <strong>Spring Boot（2014）</strong>：默认内嵌 Tomcat，可选 Jetty / Undertow，使「java -jar 即服务」成为常态。
+- <strong>WildFly 8（2014）</strong>：以 Undertow 取代 JBossWeb 作为默认 Web 服务器，并能直接作为非阻塞反向代理，减少 Apache/Nginx 前置依赖。
+- <strong>云厂商 PaaS</strong>：AWS Elastic Beanstalk、Heroku、Cloud Foundry 等将容器运行时托管化。</p>
+<h3 id="36-阶段六云原生服务网格与-Serverless2016至今">3.6 阶段六：云原生、服务网格与 Serverless（2016–至今）</h3>
+<p><strong>背景与驱动因素</strong>
+- K8s 成为调度标准；服务数量爆炸，东西向（服务间）流量治理需求压过南北向（入口）。
+- <strong>Service Mesh</strong> 用 Sidecar 代理把熔断、重试、mTLS、可观测性从应用下沉到基础设施层。
+- <strong>Serverless / FaaS</strong>：用户只关心函数，运行时与扩缩容完全托管。</p>
+<p><strong>代表性理论与模型</strong>
+- <strong>数据面 / 控制面分离</strong>：xDS 动态配置（LDS/RDS/CDS/EDS），配置热更新无需 reload。
+- <strong>Sidecar 代理 + 服务网格（Istio + Envoy）</strong>；<strong>存算分离</strong>；<strong>函数即服务</strong>。</p>
+<p><strong>关键技术与系统</strong>
+- <strong>Envoy（2016-09-14 开源，Lyft，Matt Klein）</strong>：C++ 编写、为高并发低尾延迟设计，原生可观测（logs/metrics/tracing），2017 年捐献 CNCF；成为 Istio 默认数据面。
+- <strong>Istio（2017）</strong>：以 Envoy 为数据面，提供流量管理、安全与可观测。
+- <strong>Knative / OpenFaaS / AWS Lambda / 阿里云函数计算</strong>：Serverless 运行时。
+- <strong>Jakarta EE 转型</strong>：Java EE 移交 Eclipse 基金会后，包名由 <code>javax.*</code> 改为 <code>jakarta.*</code>（Jakarta EE 9，2020；10，2022；11，2024）；Tomcat 10（2020）/11（2024）跟进。
+- <strong>云原生 Java</strong>：Quarkus、Micronaut 面向 GraalVM 原生镜像与极低启动时间，契合 Serverless。</p>
+<hr />
+<h2 id="4-对比与演进脉络">4. 对比与演进脉络</h2>
+<h3 id="41-各类容器--模型的定位对比">4.1 各类容器 / 模型的定位对比</h3>
+<table>
+<thead>
+<tr>
+<th>模型 / 容器</th>
+<th>定位</th>
+<th>并发模型</th>
+<th>部署方式</th>
+<th>性能特征</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGI</td>
+<td>最早的动态网关</td>
+<td>每请求一进程（fork-exec）</td>
+<td>独立可执行 + Web 服务器</td>
+<td>吞吐低、开销大</td>
+<td>历史交互页面（已淘汰）</td>
+</tr>
+<tr>
+<td>模块内嵌（mod_php / ISAPI / mod_perl）</td>
+<td>进程内脚本执行</td>
+<td>线程 / 进程内</td>
+<td>编译进 Apache/IIS</td>
+<td>中，依赖宿主 MPM</td>
+<td>LAMP、Windows/.NET 传统站点</td>
+</tr>
+<tr>
+<td>Servlet 容器（Tomcat/Jetty/Undertow）</td>
+<td>Java Web 运行时</td>
+<td>线程池 + 异步 Servlet</td>
+<td>独立服务 或 嵌入式</td>
+<td>中高，稳定成熟</td>
+<td>Java EE / Spring 企业应用</td>
+</tr>
+<tr>
+<td>Nginx / OpenResty</td>
+<td>反向代理 / 静态 / API 网关</td>
+<td>事件驱动、异步非阻塞</td>
+<td>独立进程（常前置）</td>
+<td>极高并发、低内存</td>
+<td>高并发入口、负载均衡、网关</td>
+</tr>
+<tr>
+<td>Netty</td>
+<td>Reactor 网络框架（非完整容器）</td>
+<td>事件驱动、全异步</td>
+<td>作为库嵌入应用</td>
+<td>极高吞吐、低尾延迟</td>
+<td>RPC/消息/代理底层通信</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>JS 运行时 + 内置容器</td>
+<td>单线程事件循环</td>
+<td>独立进程</td>
+<td>高 I/O 并发</td>
+<td>实时 API、BFF、全栈 JS</td>
+</tr>
+<tr>
+<td>Envoy</td>
+<td>云原生 L7 服务代理</td>
+<td>多线程事件循环 + 线程本地存储</td>
+<td>Sidecar / 边缘</td>
+<td>高吞吐、低尾延迟、强可观测</td>
+<td>服务网格数据面、入口网关</td>
+</tr>
+<tr>
+<td>Serverless / FaaS</td>
+<td>函数运行时（托管）</td>
+<td>平台托管、按请求扩缩</td>
+<td>完全托管、无服务器</td>
+<td>冷启动敏感、按需计费</td>
+<td>事件驱动、突发、轻量后端</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-数据模型的演进">4.2 数据模型的演进</h3>
+<table>
+<thead>
+<tr>
+<th>数据模型</th>
+<th>代表产品（首现年份）</th>
+<th>核心数据模型</th>
+<th>典型场景</th>
+<th>优势</th>
+<th>短板</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关系型（RDBMS）</td>
+<td>Oracle（1979）、MySQL（1995）、PostgreSQL（1996）、SQL Server（1989）</td>
+<td>二维表 + SQL + ACID</td>
+<td>交易、账务、ERP</td>
+<td>强一致、成熟生态</td>
+<td>水平扩展难、schema 变更重</td>
+</tr>
+<tr>
+<td>文档型</td>
+<td>MongoDB（2009）、CouchDB（2005）</td>
+<td>JSON/BSON 文档</td>
+<td>内容、目录、灵活 schema</td>
+<td>schema 灵活、易水平扩展</td>
+<td>多文档事务弱、联表弱</td>
+</tr>
+<tr>
+<td>键值型（KV）</td>
+<td>Redis（2009）、Memcached（2003）、DynamoDB（2012）</td>
+<td>key→value</td>
+<td>缓存、会话、排行榜</td>
+<td>极速、简单</td>
+<td>仅按 key 查、无复杂查询</td>
+</tr>
+<tr>
+<td>宽列（Wide-Column）</td>
+<td>Cassandra（2008）、HBase（2008）</td>
+<td>列族 / 有序列</td>
+<td>海量写入、时序、IoT</td>
+<td>线性扩展、高可用</td>
+<td>查询受限、运维复杂</td>
+</tr>
+<tr>
+<td>图（Graph）</td>
+<td>Neo4j（2007）</td>
+<td>节点-边-属性</td>
+<td>社交、知识图谱、风控</td>
+<td>多跳关系高效</td>
+<td>超大图扩展性受限</td>
+</tr>
+<tr>
+<td>时序（Time-Series）</td>
+<td>InfluxDB（2013）、TimescaleDB（2015）、Prometheus（2015）</td>
+<td>时间戳为主键</td>
+<td>监控、指标、传感器</td>
+<td>高压缩、时序聚合</td>
+<td>通用事务弱</td>
+</tr>
+<tr>
+<td>分析型 / 列存 OLAP</td>
+<td>ClickHouse（2016）、Vertica、Greenplum</td>
+<td>列存 + 向量化</td>
+<td>实时分析、BI、日志</td>
+<td>极速扫描聚合</td>
+<td>写入/更新模型特殊</td>
+</tr>
+<tr>
+<td>向量 / 多模型（AI 时代）</td>
+<td>Milvus（2019）、pgvector（PostgreSQL 扩展）、Redis Vector</td>
+<td>高维向量 + ANN</td>
+<td>检索增强（RAG）、相似度</td>
+<td>支撑 AI 语义检索</td>
+<td>依赖近似算法、精度权衡</td>
+</tr>
+</tbody>
+</table>
+<p><strong>演进主线</strong>：关系型（一致性优先）→ NoSQL 多样化（规模 / 灵活优先）→ NewSQL / 多模型（兼顾事务与扩展）→ 向量与 AI（语义优先）。</p>
+<h3 id="43-整体架构路径">4.3 整体架构路径</h3>
+<table>
+<thead>
+<tr>
+<th>架构阶段</th>
+<th>典型形态</th>
+<th>容器 / 数据特征</th>
+<th>代表技术</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单体内核</td>
+<td>单进程 / 单机数据库</td>
+<td>CGI、单实例 RDBMS</td>
+<td>Apache+mod_php、MySQL 单机</td>
+</tr>
+<tr>
+<td>分层 / 模块化</td>
+<td>应用服务器 + 连接池 + 主从库</td>
+<td>Servlet 容器、读写分离</td>
+<td>Tomcat + 连接池、MySQL 主从</td>
+</tr>
+<tr>
+<td>微服务 / 云原生</td>
+<td>多服务 + 容器编排 + 分片/副本</td>
+<td>嵌入式容器、服务网格、分片</td>
+<td>Spring Boot + K8s + Envoy、MongoDB 分片、Cassandra 多 DC</td>
+</tr>
+<tr>
+<td>Serverless / 存算分离</td>
+<td>函数 + 托管存储 + 弹性计算</td>
+<td>托管运行时、对象存储、计算存储解耦</td>
+<td>AWS Lambda、Aurora Serverless、Snowflake、存算分离数仓</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-云原生容器化AI-基础设施对未来的影响">4.4 云原生、容器化、AI 基础设施对未来的影响</h3>
+<ul>
+<li><strong>容器化</strong>：运行时被「库化 / 镜像化」，传统重型应用服务器退居后台，轻量容器（Tomcat 嵌入式、Netty、Envoy）成为默认。</li>
+<li><strong>云原生</strong>：控制面与数据面分离、声明式配置（xDS）、可观测内建，成为中间件标配。</li>
+<li><strong>AI 基础设施</strong>：向量检索、GPU 调度、推理网关、RAG 流水线催生「AI 网关」「推理代理」新一层；Web 容器从「转发 HTTP」延伸到「编排模型调用、限流、缓存 Embedding」。</li>
+</ul>
+<hr />
+<h2 id="5-关键节点时间线年份--事件">5. 关键节点时间线（年份 — 事件）</h2>
+<blockquote>
+<p>合并 Web 容器与数据库两条主线；来源见第 8 节。</p>
+</blockquote>
+<p><strong>1990 年代</strong></p>
+<ul>
+<li>1991 — HTTP/0.9 出现；Tim Berners-Lee 发明 WWW。</li>
+<li>1993 — NCSA 制定 <strong>CGI</strong>；Mosaic 浏览器发布；NCSA httpd。</li>
+<li>1994 — W3C 成立；SSL 出现（网景）。</li>
+<li>1995 — <strong>Apache HTTP Server</strong> 诞生（基于 NCSA httpd）；<strong>MySQL</strong> 发布；<strong>PostgreSQL</strong>（POSTGRES 开源化）；<strong>PHP</strong> 诞生；<strong>JavaScript</strong> 诞生；<strong>Java</strong> 发布；IIS 1.0（随 NT 3.51）。</li>
+<li>1996 — <strong>Servlet 1.0</strong>（Sun）；<strong>HTTP/1.0</strong>（RFC 1945）；<strong>FastCGI</strong>（Open Market）；<strong>WebLogic</strong> 初版；IIS 2.0（NT 4.0）；Redis 前身尚早。</li>
+<li>1997 — <strong>Servlet 2.0</strong>；<strong>Java Web Server</strong> 正式产品化；<strong>HTTP/1.1</strong>（RFC 2068）。</li>
+<li>1998 — <strong>JSP</strong> 随 J2EE 1.2 推出；<strong>IBM WebSphere</strong> 应用服务器发布；<strong>Resin</strong>（Caucho）诞生。</li>
+<li>1999 — <strong>Tomcat 3.0</strong>（Servlet 2.2/JSP 1.1，ASF）；<strong>JBoss</strong> 开源；<strong>Servlet 2.2</strong> 纳入 J2EE。</li>
+</ul>
+<p><strong>2000 年代</strong></p>
+<ul>
+<li>2001 — <strong>Tomcat 4.0 Catalina</strong>（Servlet 2.3，引入 Filter）；<strong>Servlet 2.3</strong>。</li>
+<li>2003 — <strong>Apache 2.0</strong>；<strong>Servlet 2.4</strong>（XML Schema）；<strong>Lighttpd</strong> 发布；<strong>HBase</strong> 思路源于 Google BigTable 论文（2006 正式立项，2008 发布）。</li>
+<li>2004 — <strong>Nginx 0.1.0</strong>（10 月 4 日）；<strong>Apache 2.2</strong>；<strong>Jetty</strong> 进入 Codehaus 时代；<strong>Facebook</strong> 大规模使用 MySQL。</li>
+<li>2005 — <strong>Servlet 2.5</strong>；<strong>Ajax</strong> 普及；<strong>Apache Cassandra</strong> 由 Facebook 开发（2008 开源）。</li>
+<li>2006 — <strong>HTTP/1.1</strong> 巩固；<strong>Apache Hadoop</strong> 发布（HBase 随之）；Jetty 6 续体模型；<strong>Google Bigtable</strong> 论文影响。</li>
+<li>2007 — <strong>Neo4j</strong> 发布；<strong>Servlet 3.0</strong> 草案；<strong>Android</strong> 发布（间接推动移动 Web）。</li>
+<li>2008 — <strong>Apache Cassandra</strong> 开源并进入 Apache；<strong>HBase</strong> 成为 Apache 顶级项目；<strong>Node.js</strong> 尚未出（2009）。</li>
+<li>2009 — <strong>Servlet 3.0</strong>（异步 Servlet）；<strong>Node.js</strong>（Ryan Dahl）；<strong>MongoDB</strong> 发布；<strong>Redis</strong> 发布（Salvatore Sanfilippo）；Jetty 7/8（WebSocket/SPDY）。</li>
+</ul>
+<p><strong>2010 年代</strong></p>
+<ul>
+<li>2010 — <strong>Elasticsearch</strong> 发布；<strong>Servlet 3.0</strong> 落地；<strong>Nginx, Inc.</strong> 成立（2011）。</li>
+<li>2011 — <strong>Nginx 1.0.0</strong> 稳定版；<strong>OpenResty</strong>（基于 Nginx + LuaJIT，agentzh）发布；<strong>Apache 2.4</strong>（Event MPM 默认化）；<strong>Nginx 商业公司</strong>成立。</li>
+<li>2012 — <strong>Kubernetes</strong> 前身（Borg 论文）；<strong>Apache 2.4</strong> 广泛部署；<strong>TimescaleDB</strong> 思路；<strong>Docker</strong> 尚未出（2013）。</li>
+<li>2013 — <strong>Docker</strong> 发布；<strong>Servlet 3.1</strong>（非阻塞 I/O、HTTP Upgrade）；<strong>Netty 4</strong>；<strong>Undertow</strong> 项目启动（Red Hat）；<strong>Nginx Plus</strong>；<strong>InfluxDB</strong> 发布；<strong>Cassandra</strong> 生产成熟。</li>
+<li>2014 — <strong>Kubernetes</strong> 开源（Google）；<strong>Spring Boot</strong> 发布（内嵌容器）；<strong>WildFly 8</strong> 默认 Undertow；<strong>HTTP/2</strong> 标准化（RFC 7540）。</li>
+<li>2015 — <strong>Envoy</strong> 于 Lyft 启动开发（5 月）；<strong>HTTP/2</strong> 正式；<strong>CockroachDB</strong> 发布（NewSQL）；<strong>Prometheus</strong> 发布。</li>
+<li>2016 — <strong>Envoy 开源</strong>（9 月 14 日）；<strong>ClickHouse</strong> 开源（Yandex）；<strong>HTTP/3/QUIC</strong> 起步；<strong>Istio</strong> 酝酿。</li>
+<li>2017 — <strong>Istio</strong> 发布；<strong>Envoy 捐献 CNCF</strong>；<strong>Servlet 4.0</strong>（HTTP/2）。</li>
+<li>2018 — <strong>Knative / Serverless</strong> 生态成形；<strong>云原生数据面</strong> 普及。</li>
+<li>2019 — <strong>F5 收购 Nginx</strong>（6.7 亿美元）；<strong>Milvus</strong> 向量数据库发布；<strong>Redis 许可变更</strong> 引发社区关注；<strong>Jakarta EE</strong> 过渡。</li>
+</ul>
+<p><strong>2020 年代</strong></p>
+<ul>
+<li>2020 — <strong>Jakarta EE 9</strong>（<code>jakarta.*</code> 命名空间）；<strong>Tomcat 10.0</strong>；<strong>Valkey</strong> 尚未分叉（2024）。</li>
+<li>2021 — <strong>Nginx 在 W3Techs 份额反超 Apache</strong> 并持续领先（约 2021 起）。</li>
+<li>2022 — <strong>Jakarta EE 10</strong>；<strong>Tomcat 10.1</strong>；<strong>Igor Sysoev 离开 Nginx/F5</strong>；<strong>Valkey</strong> 分支酝酿。</li>
+<li>2023 — <strong>Jetty 12</strong> 发布；<strong>Tomcat 11</strong> 路线；向量检索进入主流 RDBMS（pgvector 流行）。</li>
+<li>2024 — <strong>Jakarta EE 11 / Servlet 6.1</strong>；<strong>Tomcat 11.0</strong>；<strong>Redis 7.4 许可变更</strong>，Linux 基金会 <strong>Valkey</strong> 分叉；<strong>Serverless + AI 网关</strong> 成为热点。</li>
+<li>2026 — 现状：Nginx 约占已知 Web 服务器的 ~32%（W3Techs，2026-06）；Oracle/MySQL/PostgreSQL 仍居 DB-Engines 前三（详见第 6 节）。</li>
+</ul>
+<hr />
+<h2 id="6-现状对比调研">6. 现状对比调研</h2>
+<blockquote>
+<p>市场份额均标注来源与统计时点；产品体系与版本以公开信息为准。Web 服务器份额数据来自 W3Techs（2026-06 概览）[参考 W3]；数据库排名来自 DB-Engines（2026-06/08）[参考 DB]。</p>
+</blockquote>
+<h3 id="61-Web-容器--服务器现状对比">6.1 Web 容器 / 服务器现状对比</h3>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>所属公司 / 社区</th>
+<th>定位与目标场景</th>
+<th>市场份额 / 使用概况</th>
+<th>产品体系（版本与生态）</th>
+<th>技术架构要点</th>
+<th>当前主流架构与未来演进</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Apache Tomcat</strong></td>
+<td>Apache 软件基金会</td>
+<td>轻量 Servlet/JSP 容器，Java Web 标准实现</td>
+<td>广泛用于 Java 应用；W3Techs 将其计入「&lt;0.1%」独立 Web 服务器（常作应用服务器而非前置）</td>
+<td>Tomcat 9（Java EE 8，2027-03 止维护）、10.1（Jakarta 10）、11（Jakarta 11，2024）</td>
+<td>Catalina 容器 + Coyote 连接器（NIO/APR），线程池</td>
+<td>嵌入式（Spring Boot）为主；向 Jakarta EE 11、HTTP/3 演进</td>
+</tr>
+<tr>
+<td><strong>Eclipse Jetty</strong></td>
+<td>Eclipse 基金会</td>
+<td>可嵌入、轻量、高性能 Servlet 容器</td>
+<td>大量嵌入框架（Spark、ActiveMQ、Google App Engine 早期）；同属小份额独立服务器</td>
+<td>Jetty 9.4（LTS）、10/11、12（2023，模块化 Handler API）</td>
+<td>异步 Handler、低内存、WebSocket/HTTP2 原生</td>
+<td>模块化 Handler 架构；云原生嵌入与 GraalVM 原生镜像</td>
+</tr>
+<tr>
+<td><strong>Undertow</strong></td>
+<td>Red Hat / JBoss</td>
+<td>高性能非阻塞 Web 服务器，WildFly 默认</td>
+<td>主要随 WildFly/SpringBoot 使用；独立份额小</td>
+<td>随 WildFly 8+ 内置；支持 Servlet 4、HTTP/2、SPDY</td>
+<td>XNIO 非阻塞 I/O，Jar &lt; 4MB，阻塞/非阻塞双模式</td>
+<td>继续作为 WildFly 与嵌入式首选；与云原生 Java 协同</td>
+</tr>
+<tr>
+<td><strong>Netty</strong></td>
+<td>Netty 项目（原 JBoss/Red Hat）</td>
+<td>Reactor 网络框架（非完整 Web 容器）</td>
+<td>基础设施级：Kafka、Cassandra、Dubbo、gRPC、Elasticsearch 底层</td>
+<td>Netty 4.x（2013 起）、5.x 实验；大量子模块</td>
+<td>事件循环 + 零拷贝 + 池化 Buffer</td>
+<td>持续支撑云原生中间件通信；关注 Native 传输（io_uring/epoll）与 HTTP/3</td>
+</tr>
+<tr>
+<td><strong>Nginx</strong></td>
+<td>F5（原 Nginx, Inc.）</td>
+<td>反向代理 / 负载均衡 / 静态 / API 网关</td>
+<td><strong>W3Techs 2026-06：约 31.9%</strong>（已知站点第一）；高流量站更强</td>
+<td>开源 Nginx + Nginx Plus（商业）；1.29/1.31 主线、稳定 1.28+</td>
+<td>事件驱动、epoll/kqueue、单 worker 高并发</td>
+<td>强化 HTTP/3、API 网关、边缘；受 Valkey 同类分叉（开源治理）影响有限</td>
+</tr>
+<tr>
+<td><strong>OpenResty</strong></td>
+<td>OpenResty（agentzh / 春哥）社区</td>
+<td>基于 Nginx + LuaJIT 的可编程网关</td>
+<td>国内外网关 / 边缘逻辑热门（API 网关、WAF）</td>
+<td>OpenResty 主线（基于 Nginx 1.2x）+ Lua 生态（lua-resty-*）</td>
+<td>Nginx 事件模型 + 嵌入式 LuaJIT</td>
+<td>继续主导可编程网关；与 APISIX（基于 Nginx/OpenResty）生态竞争</td>
+</tr>
+<tr>
+<td><strong>Envoy</strong></td>
+<td>CNCF（原 Lyft）</td>
+<td>云原生 L7 服务代理 / 数据面</td>
+<td>W3Techs 2026-06：约 1.2%；服务网格事实标准</td>
+<td>Envoy 主线 + Istio/APISIX/Ambassador 等构建于其上</td>
+<td>C++ 多线程 + xDS 动态配置 + 原生可观测</td>
+<td>服务网格与入口网关核心；与 WASM 扩展、eBPF 融合</td>
+</tr>
+<tr>
+<td><strong>Microsoft IIS</strong></td>
+<td>微软</td>
+<td>Windows 集成 Web 服务器 / ASP.NET 平台</td>
+<td>W3Techs 2026-06：约 3.2%；Windows 企业内网主流</td>
+<td>IIS 10（Win Server 2016/2019/2022），随 Windows 生命周期</td>
+<td>模块化（40+ 模块）、集成管道、应用池隔离</td>
+<td>随 Windows 生态；.NET 云（Azure App Service）承接新负载</td>
+</tr>
+<tr>
+<td><strong>云厂商服务</strong>（如 AWS ALB/API GW、Lambda、Azure App Service、函数计算）</td>
+<td>AWS / Azure / 阿里云等</td>
+<td>全托管入口、网关、Serverless 运行时</td>
+<td>企业上云首选；与自建 Nginx/Envoy 互补</td>
+<td>ALB、API Gateway、CloudFront、Lambda、Elastic Beanstalk、函数计算、APISIX 托管版</td>
+<td>托管控制面 + 多租户数据面 + 存算分离</td>
+<td>进一步托管化、按量计费、内置 AI 网关与安全防护</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-数据库现状对比">6.2 数据库现状对比</h3>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>所属 / 社区</th>
+<th>定位与目标场景</th>
+<th>市场份额 / 使用概况（DB-Engines 2026-06/08）</th>
+<th>产品体系（版本与生态）</th>
+<th>技术架构（存储 / 计算 / 复制高可用）</th>
+<th>当前主流架构与未来演进</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MySQL</strong></td>
+<td>Oracle（开源）</td>
+<td>通用关系型、Web/交易首选</td>
+<td>DB-Engines 第 2（得分 ~842–856，同比下降）；开源关系型标杆</td>
+<td>8.4 LTS + 9.0 Innovation 双轨；MariaDB 分支；Percona 发行版</td>
+<td>InnoDB 行存 + 缓冲池；主从 / 组复制（MGR）；读写分离</td>
+<td>云托管（RDS/Aurora）、存算分离（Aurora）、HTAP 试探；受 PostgreSQL 替代压力</td>
+</tr>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>开源社区</td>
+<td>标准兼容、可扩展关系型 + 多模型</td>
+<td>DB-Engines 第 4（得分 ~684–688，<strong>同比唯一双增长</strong>）；开发者口碑领先</td>
+<td>16/17/18 主线；扩展生态（PostGIS、TimescaleDB、Citus、pgvector）</td>
+<td>堆表 + MVCC + WAL；流复制 / 逻辑复制；共享存储扩展</td>
+<td>多模型（JSONB/图/时序/向量）、分布式（Citus）、云原生（Aurora PostgreSQL、Cloud SQL）</td>
+</tr>
+<tr>
+<td><strong>Oracle Database</strong></td>
+<td>Oracle</td>
+<td>企业级关系型 + 多模型</td>
+<td>DB-Engines 第 1（得分 ~1123，但同比下降明显）</td>
+<td>23ai/23c（集成 AI Vector、Property Graph）</td>
+<td>RAC、ASM、多模型；成熟备份/容灾</td>
+<td>自治数据库（Autonomous DB）、AI 向量与图、云化（OCI）</td>
+</tr>
+<tr>
+<td><strong>MongoDB</strong></td>
+<td>MongoDB, Inc.</td>
+<td>文档型（JSON/BSON）</td>
+<td>DB-Engines 第 5（得分 ~385）；文档库绝对领先</td>
+<td>社区版 + Atlas 云服务；7.x</td>
+<td>WiredTiger 存储；副本集 + 分片；多文档事务</td>
+<td>Atlas 多云、向量搜索、Serverless、与 AI/RAG 深度整合</td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Redis Ltd.（开源社区 + Valkey 分叉）</td>
+<td>内存 KV / 数据结构缓存</td>
+<td>DB-Engines 第 8（得分 ~150–157，KV 第一）</td>
+<td>Redis 7.x + 模块（RediSearch/JSON/TimeSeries）；Valkey 分叉（2024）</td>
+<td>内存 + 可选持久化（AOF/RDB）；主从 + 哨兵 + 集群</td>
+<td>实时缓存/队列/排行榜；向量检索；<strong>2024 许可变更引发 Valkey 分叉</strong>；云托管（ElastiCache/内存版）</td>
+</tr>
+<tr>
+<td><strong>Apache Cassandra</strong></td>
+<td>Apache（DataStax 等商业）</td>
+<td>宽列、海量写入、多 DC 高可用</td>
+<td>DB-Engines 第 10（得分 ~100）；宽列第一</td>
+<td>4.x/5.x；DataStax Astra DB；ScyllaDB 兼容替代</td>
+<td>LSM-Tree + 无主多副本（可调一致性）；线性扩展</td>
+<td>多活、全球分布；受 ScyllaDB（C++/无 GC）竞争；云托管（Astra）</td>
+</tr>
+<tr>
+<td><strong>ClickHouse</strong></td>
+<td>ClickHouse Inc.（开源，原 Yandex）</td>
+<td>列存 OLAP / 实时分析</td>
+<td>DB-Engines 第 26（得分 ~25，但同比涨幅显著）</td>
+<td>开源 + ClickHouse Cloud；24/25 主线</td>
+<td>列存 + 向量化执行 + 物化视图；分片副本</td>
+<td>实时数仓、日志/指标分析；云原生存算分离；与 OLAP 竞争（Doris/StarRocks）</td>
+</tr>
+<tr>
+<td><strong>Neo4j</strong></td>
+<td>Neo4j, Inc.</td>
+<td>原生图数据库</td>
+<td>DB-Engines 图库第 1（总榜 ~第 20，得分 ~49）</td>
+<td>社区/企业版；5.x；Cypher 查询语言</td>
+<td>原生图存储 + 索引；因果集群（因果一致性）</td>
+<td>知识图谱、风控、欺诈检测；与 GNN/AI 结合；云托管（Aura）</td>
+</tr>
+<tr>
+<td><strong>Apache HBase</strong></td>
+<td>Apache（基于 Hadoop/HDFS）</td>
+<td>宽列、海量稀疏数据、近实时读写</td>
+<td>总榜 ~第 40+（得分 ~9–10）；Hadoop 生态内厚</td>
+<td>2.x/3.x；依赖 HDFS + ZooKeeper</td>
+<td>LSM + HDFS 持久化；Region 分裂 + 副本；强一致行级</td>
+<td>与 Hadoop/Spark 协同的大数据湖仓；云托管（EMR/DataHub）；受 Cassandra/云服务替代压力</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>说明：DB-Engines 分数衡量「流行度」（搜索、讨论、岗位等），并非装机量；具体数值每月浮动，参见 [参考 DB]。Web 服务器份额为「已知 Web 服务器站点占比」，且一站点可能使用多个服务器（W3Techs，2026-06）[参考 W3]。</p>
+</blockquote>
+<hr />
+<h2 id="7-AI-时代-Web-容器的发展方向研判">7. AI 时代 Web 容器的发展方向研判</h2>
+<ol>
+<li><strong>从「转发流量」到「编排智能」</strong>：Web 容器不再只转发 HTTP，而将内建「模型调用编排」——请求路由到不同模型、Token 限流、Prompt 缓存、RAG 检索前置、推理结果流式回传（SSE/HTTP 流）。「AI 网关 / 推理代理」成为新的一层（基于 Envoy、APISIX、Nginx 的可编程能力）。</li>
+<li><strong>长连接与流式成为常态</strong>：大模型对话天然是 SSE / 流式响应，对容器的「异步非阻塞、背压、超时与熔断」要求更高；Netty/Envoy 类 Reactor 模型比传统线程池模型更契合。</li>
+<li><strong>Serverless + GPU 弹性</strong>：函数计算与「按需 GPU」结合，Web 容器需要极低冷启动（GraalVM 原生镜像、Quarkus/Micronaut），并能在请求到达时秒级拉起含推理能力的运行时。</li>
+<li><strong>向量与语义路由下沉到数据/网关层</strong>：pgvector、Redis Vector、Milvus 让「语义检索」成为标准能力；Web 容器可能承担 Embedding 缓存与语义缓存（Semantic Cache），降低推理成本。</li>
+<li><strong>可观测与安全的「AI 化」</strong>：Sidecar（Envoy）天然可采集全链路追踪，AI 时代将扩展到「Prompt/Token 成本、幻觉率、模型版本灰度」；mTLS 与内容安全过滤前置到网格层。</li>
+<li><strong>多模型与多云路由</strong>：企业常同时接多家大模型，Web 容器承担「模型抽象层」——统一协议、故障转移、成本最优路由，类似服务网格对多版本服务的流量治理。</li>
+<li><strong>边缘 AI 推理</strong>：Nginx/OpenResty/Envoy 在边缘节点承担轻量推理与缓存，配合端侧小模型，形成「云-边-端」推理分层。</li>
+</ol>
+<p><strong>结论</strong>：Web 容器的核心契约（连接管理、并发模型、生命周期）不变，但「职责面」从「协议转发」扩展到「智能编排」；事件驱动/异步非阻塞架构（Nginx、Netty、Envoy）与云原生托管（Serverless、服务网格）将持续主导，传统重型 Servlet 容器更多退居为「应用内嵌运行时」。</p>
+<hr />
+<h2 id="8-参考文献与引用来源">8. 参考文献与引用来源</h2>
+<blockquote>
+<p>以下为本报告撰写过程中核验与引用的公开资料（访问时点：2026-10）。年份、版本与规范节点以各原始来源为准。</p>
+</blockquote>
+<p><strong>Web 容器 / 服务器</strong>
+- [W3] W3Techs — Web Server Market Share（2026-06 概览）：<a href="https://w3techs.com/technologies/overview/web_server">https://w3techs.com/technologies/overview/web_server</a>
+- [NGX] Nginx — Wikipedia / 历史与份额：<a href="https://wiki2.org/en/Nginx">https://wiki2.org/en/Nginx</a> ；Nginx 历史：<a href="https://wiki.linux-server-admin.com/software/webserver/nginx/history">https://wiki.linux-server-admin.com/software/webserver/nginx/history</a>
+- [CGI] Server application programming interface（CGI/ISAPI/FastCGI 历史）：<a href="https://grokipedia.com/page/Server_application_programming_interface">https://grokipedia.com/page/Server_application_programming_interface</a>
+- [SERV] Jakarta Servlet 版本史（Servlet 1.0–6.1）：<a href="https://wikiwand.com/en/Java_Servlet">https://wikiwand.com/en/Java_Servlet</a>
+- [TOM] Apache Tomcat 历史：<a href="https://wiki.linux-server-admin.com/software/application-server/apache-tomcat/history">https://wiki.linux-server-admin.com/software/application-server/apache-tomcat/history</a> ；官网：<a href="https://tomcat.apache.org/">https://tomcat.apache.org/</a>
+- [JET] Eclipse Jetty（历史与版本）：<a href="https://www.wikiwand.com/en/articles/Eclipse_Jetty">https://www.wikiwand.com/en/articles/Eclipse_Jetty</a>
+- [UND] Undertow 使用详解（Red Hat/JBoss，WildFly 8 默认）：<a href="https://blog.csdn.net/zhangzehai2234/article/details/136033744">https://blog.csdn.net/zhangzehai2234/article/details/136033744</a> ；WildFly 8 访谈：<a href="https://www.infoq.com/news/2014/02/wildfly8-interview/">https://www.infoq.com/news/2014/02/wildfly8-interview/</a>
+- [ENV] Envoy joins the CNCF（Lyft，Matt Klein）：<a href="https://eng.lyft.com/envoy-joins-the-cncf-dc18baefbc22">https://eng.lyft.com/envoy-joins-the-cncf-dc18baefbc22</a> ；Envoy 云原生解读：<a href="https://myf5.net/post/2947.htm">https://myf5.net/post/2947.htm</a>
+- [IIS] 微软 IIS 生命周期与技术沿革：<a href="https://learn.microsoft.com/zh-cn/lifecycle/products/internet-information-services-iis">https://learn.microsoft.com/zh-cn/lifecycle/products/internet-information-services-iis</a> ；百科：<a href="https://baike.baidu.com/item/%E5%9B%A0%E7%89%B9%E7%BD%91%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%99%A1/18151753">https://baike.baidu.com/item/%E5%9B%A0%E7%89%B9%E7%BD%91%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%99%A1/18151753</a>
+- [NODE] Node.js（事件循环、2009）：<a href="https://nnkksolution.in/blog/frontend-vs-backend-vs-full-stack-development-explained">https://nnkksolution.in/blog/frontend-vs-backend-vs-full-stack-development-explained</a></p>
+<p><strong>数据库</strong>
+- [DB] DB-Engines Ranking（流行度排名，2026-06/08）：<a href="https://db-engines.com/en/ranking">https://db-engines.com/en/ranking</a> ；趋势：<a href="https://db-engines.com/en/ranking_trend">https://db-engines.com/en/ranking_trend</a>
+- [DBT] 数据库时间线（Oracle/MySQL/PostgreSQL/MongoDB/Redis/Cassandra/HBase 等）：<a href="https://webref.lukasmurdock.com/databases">https://webref.lukasmurdock.com/databases</a>
+- [OP100] BenchCouncil Open100（开源数据库与中间件作者/年份）：<a href="https://www.benchcouncil.org/evaluation/opencs">https://www.benchcouncil.org/evaluation/opencs</a>
+- [ENM] 墨天轮 — 十大主流 DBMS（发行时间/模型）：<a href="https://cs.enmotech.com/db/208808">https://cs.enmotech.com/db/208808</a>
+- [CSDN-DB] 数据库发展史综述（层次/关系/NoSQL/NewSQL）：<a href="https://blog.csdn.net/weixin_52174724/article/details/151367081">https://blog.csdn.net/weixin_52174724/article/details/151367081</a>
+- [QQ-DB] 数据库模型演进（文档/KV/图/时序/向量）：<a href="https://news.qq.com/rain/a/20241012A01CKH00">https://news.qq.com/rain/a/20241012A01CKH00</a></p>
+<p><strong>协议 / 通用</strong>
+- [HTTP] HTTP/0.9–HTTP/3 历史脉络（Web 发展史）：<a href="https://blog.csdn.net/zp2605811855/article/details/89048146">https://blog.csdn.net/zp2605811855/article/details/89048146</a>
+- [W3C] World Wide Web Consortium：<a href="https://www.w3.org/">https://www.w3.org/</a></p>
+<blockquote>
+<p>注：部分市场份额（如 Redis 许可变更、Valkey 分叉、各产品具体得分）随时间变动较快，引用时请以 DB-Engines、W3Techs 当期官方数据为准。</p>
+</blockquote></body></html>

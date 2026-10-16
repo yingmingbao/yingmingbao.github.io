@@ -14,6 +14,9 @@ It overwrites index.html in the same directory.
 import os, re, json, html as html_lib
 from urllib.parse import quote
 
+# Markdown -> HTML 转换（零依赖，见 md2html.py）
+from md2html import convert as md_convert
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # ---- Module / category definitions ---------------------------------------
@@ -138,7 +141,7 @@ def extract(path, rel):
         title = MANUAL_TITLES[rel]
     content = content[:CONTENT_CAP]
     desc = content[:160].strip() if content else "（图文 / 图表内容，点击打开查看原文档）"
-    return title, content, desc, ftype
+    return title, content, desc, ftype, raw
 
 # ---- Build entries --------------------------------------------------------
 ENTRIES = []
@@ -152,16 +155,30 @@ for key in MODULE_ORDER:
             continue
         if not fname.lower().endswith((".md", ".html", ".htm")):
             continue
+        # 跳过由本程序生成的 HTML（其同名 .md 已存在），避免重复条目
+        stem, ext = os.path.splitext(fname)
+        if ext.lower() in (".html", ".htm") and os.path.isfile(os.path.join(fdir, stem + ".md")):
+            continue
         fpath = os.path.join(fdir, fname)
         if not os.path.isfile(fpath):
             continue
         rel = folder + "/" + fname
-        title, content, desc, ftype = extract(fpath, rel)
+        title, content, desc, ftype, raw = extract(fpath, rel)
+        href = quote(rel)
+        # 对 Markdown 文件：生成同名 HTML 页面用于展示，链接指向该 HTML
+        if ftype == "md":
+            html_rel = folder + "/" + stem + ".html"
+            html_path = os.path.join(fdir, stem + ".html")
+            page = md_convert(raw, title=title, back_href="../index.html",
+                             source_label=MODULES[key]["name"])
+            with open(html_path, "w", encoding="utf-8") as fh:
+                fh.write(page)
+            href = quote(html_rel)
         ENTRIES.append({
             "id": len(ENTRIES),
             "title": title,
             "path": rel,
-            "href": quote(rel),
+            "href": href,
             "module": key,
             "type": ftype,
             "desc": desc,
@@ -345,13 +362,47 @@ function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&l
 function tokenize(q){ return q.toLowerCase().split(/\s+/).filter(Boolean); }
 function reEsc(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
+// 模糊搜索：先精确子串匹配；未命中时用「字级二元组重叠」容错（容忍漏字 / 错字 / 部分输入）
+function tokenBigrams(t){
+  const bg = [];
+  for(let k = 0; k < t.length - 1; k++) bg.push(t.substr(k, 2));
+  return bg;
+}
+function fuzzyHit(hay, token){
+  const idx = hay.indexOf(token);
+  if(idx >= 0) return { exact:true, score:100, pos:idx };
+  // 模糊仅对含中文的检索词启用，避免拉丁短词（of/an 等）二元组过松造成误匹配
+  if(token.length >= 2 && /[㐀-鿿]/.test(token)){
+    const set = new Set(token.split(""));
+    let present = 0;
+    for(const ch of set){ if(hay.indexOf(ch) >= 0) present++; }
+    const cov = present / set.size;
+    const bgs = tokenBigrams(token);
+    let matched = 0, firstPos = -1;
+    for(const bg of bgs){
+      const p = hay.indexOf(bg);
+      if(p >= 0){ matched++; if(firstPos < 0 || p < firstPos) firstPos = p; }
+    }
+    // 需同时满足：字符覆盖率≥60% 且 至少命中一个二元组（保证局部连续性）
+    if(cov >= 0.6 && matched >= 1){
+      return { exact:false, score:30 + cov * 30 + matched * 10, pos:firstPos };
+    }
+  }
+  return { exact:false, score:0, pos:-1 };
+}
 function matchInfo(e, tokens){
-  if(!tokens.length) return { hit:true, count:0 };
+  if(!tokens.length) return { hit:true, score:0, fuzzy:false, pos:-1, hits:0 };
   const hay = (e.title + " " + e.content).toLowerCase();
-  for(const t of tokens){ if(!hay.includes(t)) return { hit:false, count:0 }; }
-  let count = 0;
-  for(const t of tokens){ let i = 0; while((i = hay.indexOf(t, i)) >= 0){ count++; i += t.length; } }
-  return { hit:true, count };
+  let score = 0, anyFuzzy = false, firstPos = -1, hits = 0;
+  for(const t of tokens){
+    const r = fuzzyHit(hay, t);
+    if(r.score <= 0) return { hit:false, score:0, fuzzy:false, pos:-1, hits:0 };
+    if(!r.exact){ anyFuzzy = true; }
+    else { let i = 0; while((i = hay.indexOf(t, i)) >= 0){ hits++; i += t.length; } }
+    score += r.score;
+    if(r.pos >= 0 && (firstPos < 0 || r.pos < firstPos)) firstPos = r.pos;
+  }
+  return { hit:true, score:score, fuzzy:anyFuzzy, pos:firstPos, hits:hits };
 }
 function highlight(s, tokens){
   s = esc(s);
@@ -364,6 +415,7 @@ function snippet(e, tokens){
   const hay = (e.title + " " + e.content).toLowerCase();
   let pos = -1;
   for(const t of tokens){ const p = hay.indexOf(t); if(p >= 0 && (pos < 0 || p < pos)) pos = p; }
+  if(pos < 0) pos = matchInfo(e, tokens).pos;
   if(pos < 0) return '';
   const cpos = Math.max(0, pos - e.title.length - 1);
   const start = Math.max(0, cpos - 50);
@@ -399,7 +451,7 @@ function renderSearch(){
         e.type.toUpperCase() + '</span><span class="ri-module">' + esc(MODULES[e.module].name) + '</span></div>' +
         '<div class="ri-title">' + highlight(e.title, tokens) + '</div>' +
         (sn ? '<div class="ri-snippet">' + highlight(sn, tokens) + '</div>' : '') +
-        '<div class="ri-meta">匹配 ' + m.count + ' 处 · 打开查看 ↗</div></a>';
+        '<div class="ri-meta">' + (m.fuzzy ? '模糊匹配 · ' : ('匹配 ' + m.hits + ' 处 · ')) + '打开查看 ↗</div></a>';
     }
     html += '</div>';
   }

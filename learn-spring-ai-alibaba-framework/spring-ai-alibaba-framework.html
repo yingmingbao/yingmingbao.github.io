@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spring AI Alibaba：ChatClient 与 ReactAgent</title>
+<style>
+:root{--li-blue:#0a66c2;--text:#1d2226;--sec:#5e5e5e;--border:#e8e8e8;--bg:#f3f2ef;--code-bg:#0d1117;--code-fg:#e6edf3;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;}
+.topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:860px;margin:0 auto;height:52px;display:flex;align-items:center;gap:12px;padding:0 18px;}
+.back{color:var(--li-blue);font-weight:600;text-decoration:none;font-size:14px;}
+.back:hover{text-decoration:underline;}
+.src-label{margin-left:auto;font-size:12px;color:var(--sec);background:#eef3f8;padding:4px 10px;border-radius:999px;}
+.wrap{max-width:860px;margin:24px auto;padding:0 18px 60px;}
+.doc-title{font-size:30px;line-height:1.3;margin:8px 0 18px;font-weight:800;}
+.toc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:0 0 26px;}
+.toc-title{font-size:13px;font-weight:700;color:var(--sec);margin-bottom:8px;letter-spacing:.05em;}
+.toc ul{list-style:none;margin:0;padding:0;}
+.toc li{margin:4px 0;}
+.toc li a{color:var(--li-blue);text-decoration:none;font-size:14px;}
+.toc li a:hover{text-decoration:underline;}
+.toc .toc-l2{padding-left:14px;}
+.toc .toc-l3{padding-left:28px;font-size:13px;}
+.content{background:#fff;border:1px solid var(--border);border-radius:12px;padding:26px 30px;}
+.content h1,.content h2,.content h3,.content h4,.content h5,.content h6{line-height:1.4;margin:1.4em 0 .6em;font-weight:700;}
+.content h1{font-size:24px;border-bottom:2px solid var(--border);padding-bottom:.3em;}
+.content h2{font-size:20px;border-bottom:1px solid var(--border);padding-bottom:.25em;}
+.content h3{font-size:17px;}
+.content p{margin:.8em 0;}
+.content a{color:var(--li-blue);text-decoration:none;}
+.content a:hover{text-decoration:underline;}
+.content ul,.content ol{margin:.7em 0;padding-left:1.6em;}
+.content li{margin:.3em 0;}
+.content blockquote{margin:1em 0;padding:.6em 1em;border-left:4px solid var(--li-blue);background:#f0f6fc;color:#33475b;border-radius:0 8px 8px 0;}
+.content hr{border:none;border-top:1px solid var(--border);margin:1.8em 0;}
+.content img{max-width:100%;border-radius:8px;margin:.6em 0;}
+.content code{background:#eef1f4;color:#b5245a;padding:.15em .4em;border-radius:4px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;font-size:.9em;}
+.content pre.code{background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:10px;overflow:auto;margin:1em 0;line-height:1.6;}
+.content pre.code code{background:none;color:inherit;padding:0;}
+.content table.md-table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14px;}
+.content table.md-table th,.content table.md-table td{border:1px solid var(--border);padding:8px 12px;text-align:left;}
+.content table.md-table th{background:#f3f6f9;font-weight:700;}
+.content table.md-table tr:nth-child(even) td{background:#fafbfc;}
+.foot{text-align:center;color:var(--sec);font-size:12px;margin-top:30px;}
+@media(max-width:600px){.content{padding:18px 16px;}.doc-title{font-size:24px;}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner">
+  <a class="back" href="../index.html">← 返回知识库</a>
+  <span class='src-label'>技术框架</span>
+</div></div>
+<div class="wrap">
+  <h1 class="doc-title">Spring AI Alibaba：ChatClient 与 ReactAgent</h1>
+  <nav class='toc'><div class='toc-title'>目录</div><ul><li class='toc-l2'><a href='#1-核心定义'>1. 核心定义</a></li>
+<li class='toc-l2'><a href='#2-详细对比ChatClient'>2. 详细对比ChatClient：</a></li>
+<li class='toc-l2'><a href='#3-它们之间的联系'>3. 它们之间的联系</a></li>
+<li class='toc-l2'><a href='#4-什么时候用哪个'>4. 什么时候用哪个？</a></li>
+<li class='toc-l2'><a href='#总结建议'>总结建议</a></li></ul></nav>
+  <div class="content">
+<p>在 Spring AI Alibaba 的生态中，ChatClient 和 ReactAgent（通常指基于 ReAct 模式实现的 Agent）分别代表了底层工具与高级形态的关系。简单来说：ChatClient 是你手中的“笔”，而 ReactAgent 是一个会自己思考并决定画什么的“画家”。</p>
+<h2 id='1-核心定义'>1. 核心定义</h2>
+<p>区别维度ChatClientReactAgent (智能体)本质统一的 LLM 操作接口，类似于数据库中的 JdbcTemplate。</p>
+<p>一种特定的推理模式实例，利用 LLM 的逻辑进行自主决策。</p>
+<p>执行逻辑线性/预设：你输入 Prompt，它返回结果。虽然支持工具调用，但逻辑由你控制。</p>
+<p>循环/自主：它会不断重复“思考(Thought) -&gt; 行动(Action) -&gt; 观察(Observation)”直到任务完成。状态管理主要是管理当前对话的上下文。</p>
+<p>管理任务进度、中间结果以及工具执行的反馈。</p>
+<h2 id='2-详细对比ChatClient'>2. 详细对比ChatClient：</h2>
+<p>基础连接器ChatClient 的主要目标是屏蔽不同底层模型的 API 差异（比如通义千问和 OpenAI 的差异）。</p>
+<p>它通过 Advisor 提供增强能力（如自动记忆、RAG 检索）。</p>
+<p>开发者视角：我需要模型回答一个问题，或者帮我提取一段 JSON。控制权：完全在开发者手中。ReactAgent：自主执行者ReactAgent 是一种基于 ReAct（Reasoning and Acting）框架设计的智能体。</p>
+<p>它不仅是调用 LLM，还赋予了 LLM “思考”的能力。开发者视角：我给它一个模糊的目标（例如：“帮我分析最近三天阿里股价并写个摘要”），它自己决定先去搜索、再统计、最后写总结。</p>
+<p>控制权：部分移交给智能体，它会根据工具返回的结果自动调整下一步计划。</p>
+<h2 id='3-它们之间的联系'>3. 它们之间的联系</h2>
+<p>在 Spring AI Alibaba 中，这两者并不是互斥的：ChatClient 是 ReactAgent 的驱动引擎：一个 ReactAgent 实例内部通常持有一个 ChatClient 实例，用来发送 Prompt 并获取模型的“思考”结果。工具支持：它们都依赖于 Tool（函数调用）。</p>
+<p>ChatClient 可以手动开启工具调用模式，而 ReactAgent 默认就是为工具调用而生的。</p>
+<h2 id='4-什么时候用哪个'>4. 什么时候用哪个？</h2>
+<p>选 ChatClient 的场景：标准的对话系统（客服机器人）。</p>
+<p>确定性的 RAG 流程（检索 -&gt; 生成）。简单的任务（如：分类、摘要、翻译）。</p>
+<p>需要高性能、低延迟的场景，因为不需要复杂的推理循环。</p>
+<p>选 ReactAgent 的场景：复杂、多步骤的任务，且步骤无法提前完全预知。需要调用多个外部 API 并根据返回结果决定下一步。高度自主的助手（如：自动分析报告、自动化运维）。</p>
+<h2 id='总结建议'>总结建议</h2>
+<p>如果你现在的需求是“成千上万用户、每个人有独立记忆”，首选 ChatClient 配合 MessageChatMemoryAdvisor。这能保证系统的稳定性和响应速度。只有当你的业务需要模型去“理解任务目标并自主拆解步骤”时，才考虑引入 ReAct 模式。</p>
+  </div>
+  <div class="foot">本页由 Markdown 自动转换生成 · 点击左上角返回知识库索引</div>
+</div>
+</body>
+</html>

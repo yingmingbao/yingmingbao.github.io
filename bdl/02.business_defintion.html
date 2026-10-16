@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>business system</title>
+<style>
+:root{--li-blue:#0a66c2;--text:#1d2226;--sec:#5e5e5e;--border:#e8e8e8;--bg:#f3f2ef;--code-bg:#0d1117;--code-fg:#e6edf3;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;}
+.topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:860px;margin:0 auto;height:52px;display:flex;align-items:center;gap:12px;padding:0 18px;}
+.back{color:var(--li-blue);font-weight:600;text-decoration:none;font-size:14px;}
+.back:hover{text-decoration:underline;}
+.src-label{margin-left:auto;font-size:12px;color:var(--sec);background:#eef3f8;padding:4px 10px;border-radius:999px;}
+.wrap{max-width:860px;margin:24px auto;padding:0 18px 60px;}
+.doc-title{font-size:30px;line-height:1.3;margin:8px 0 18px;font-weight:800;}
+.toc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:0 0 26px;}
+.toc-title{font-size:13px;font-weight:700;color:var(--sec);margin-bottom:8px;letter-spacing:.05em;}
+.toc ul{list-style:none;margin:0;padding:0;}
+.toc li{margin:4px 0;}
+.toc li a{color:var(--li-blue);text-decoration:none;font-size:14px;}
+.toc li a:hover{text-decoration:underline;}
+.toc .toc-l2{padding-left:14px;}
+.toc .toc-l3{padding-left:28px;font-size:13px;}
+.content{background:#fff;border:1px solid var(--border);border-radius:12px;padding:26px 30px;}
+.content h1,.content h2,.content h3,.content h4,.content h5,.content h6{line-height:1.4;margin:1.4em 0 .6em;font-weight:700;}
+.content h1{font-size:24px;border-bottom:2px solid var(--border);padding-bottom:.3em;}
+.content h2{font-size:20px;border-bottom:1px solid var(--border);padding-bottom:.25em;}
+.content h3{font-size:17px;}
+.content p{margin:.8em 0;}
+.content a{color:var(--li-blue);text-decoration:none;}
+.content a:hover{text-decoration:underline;}
+.content ul,.content ol{margin:.7em 0;padding-left:1.6em;}
+.content li{margin:.3em 0;}
+.content blockquote{margin:1em 0;padding:.6em 1em;border-left:4px solid var(--li-blue);background:#f0f6fc;color:#33475b;border-radius:0 8px 8px 0;}
+.content hr{border:none;border-top:1px solid var(--border);margin:1.8em 0;}
+.content img{max-width:100%;border-radius:8px;margin:.6em 0;}
+.content code{background:#eef1f4;color:#b5245a;padding:.15em .4em;border-radius:4px;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;font-size:.9em;}
+.content pre.code{background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:10px;overflow:auto;margin:1em 0;line-height:1.6;}
+.content pre.code code{background:none;color:inherit;padding:0;}
+.content table.md-table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14px;}
+.content table.md-table th,.content table.md-table td{border:1px solid var(--border);padding:8px 12px;text-align:left;}
+.content table.md-table th{background:#f3f6f9;font-weight:700;}
+.content table.md-table tr:nth-child(even) td{background:#fafbfc;}
+.foot{text-align:center;color:var(--sec);font-size:12px;margin-top:30px;}
+@media(max-width:600px){.content{padding:18px 16px;}.doc-title{font-size:24px;}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner">
+  <a class="back" href="../index.html">← 返回知识库</a>
+  <span class='src-label'>业务描述语言</span>
+</div></div>
+<div class="wrap">
+  <h1 class="doc-title">business system</h1>
+  <nav class='toc'><div class='toc-title'>目录</div><ul><li class='toc-l1'><a href='#business-system'>business system</a></li>
+<li class='toc-l2'><a href='#business-elements'>business elements</a></li>
+<li class='toc-l2'><a href='#business-patterns-categories'>business patterns &amp; categories</a></li>
+<li class='toc-l2'><a href='#business-architecture'>business architecture</a></li>
+<li class='toc-l2'><a href='#business-structures'>business structures</a></li>
+<li class='toc-l2'><a href='#business-mechanisms'>business mechanisms</a></li>
+<li class='toc-l2'><a href='#business-instances'>business instances</a></li>
+<li class='toc-l1'><a href='#business-functions'>business functions</a></li>
+<li class='toc-l2'><a href='#business-management'>business management</a></li>
+<li class='toc-l2'><a href='#business-organization'>business organization</a></li>
+<li class='toc-l2'><a href='#business-strategy'>business strategy</a></li>
+<li class='toc-l2'><a href='#business-operating'>business operating</a></li>
+<li class='toc-l2'><a href='#business-marketging'>business marketging</a></li>
+<li class='toc-l2'><a href='#business-resource'>business resource</a></li>
+<li class='toc-l2'><a href='#business-finance'>business finance</a></li>
+<li class='toc-l2'><a href='#busienss-administration'>busienss administration</a></li>
+<li class='toc-l2'><a href='#business-policy'>business policy</a></li>
+<li class='toc-l2'><a href='#business-communication'>business communication</a></li>
+<li class='toc-l2'><a href='#business-product-service'>business product &amp; service</a></li>
+<li class='toc-l1'><a href='#business-environemnt'>business environemnt</a></li>
+<li class='toc-l2'><a href='#business-social-environemnt'>business social environemnt</a></li>
+<li class='toc-l2'><a href='#busienss-economics'>busienss economics</a></li>
+<li class='toc-l2'><a href='#business-technology'>business technology</a></li>
+<li class='toc-l2'><a href='#business-market'>business market</a></li>
+<li class='toc-l2'><a href='#business-industry'>business industry</a></li>
+<li class='toc-l2'><a href='#business-supplychain'>business supplychain</a></li>
+<li class='toc-l2'><a href='#business-legal'>business legal</a></li>
+<li class='toc-l1'><a href='#business-behavior'>business behavior</a></li>
+<li class='toc-l2'><a href='#busienss-culture'>busienss culture</a></li>
+<li class='toc-l2'><a href='#business-changes'>business changes</a></li>
+<li class='toc-l2'><a href='#business-reflection'>business reflection</a></li>
+<li class='toc-l2'><a href='#business-process'>business process</a></li>
+<li class='toc-l1'><a href='#business-understanding'>business understanding</a></li>
+<li class='toc-l2'><a href='#business-history'>business history</a></li>
+<li class='toc-l2'><a href='#business-philosophy'>business philosophy</a></li>
+<li class='toc-l2'><a href='#business-cycle'>business cycle</a></li>
+<li class='toc-l2'><a href='#business-and-people'>business and people</a></li></ul></nav>
+  <div class="content">
+<h1 id='business-system'>business system</h1>
+<h2 id='business-elements'>business elements</h2>
+<h2 id='business-patterns-categories'>business patterns &amp; categories</h2>
+<h2 id='business-architecture'>business architecture</h2>
+<h2 id='business-structures'>business structures</h2>
+<h2 id='business-mechanisms'>business mechanisms</h2>
+<h2 id='business-instances'>business instances</h2>
+<h1 id='business-functions'>business functions</h1>
+<h2 id='business-management'>business management</h2>
+<h2 id='business-organization'>business organization</h2>
+<h2 id='business-strategy'>business strategy</h2>
+<h2 id='business-operating'>business operating</h2>
+<h2 id='business-marketging'>business marketging</h2>
+<h2 id='business-resource'>business resource</h2>
+<h2 id='business-finance'>business finance</h2>
+<h2 id='busienss-administration'>busienss administration</h2>
+<h2 id='business-policy'>business policy</h2>
+<h2 id='business-communication'>business communication</h2>
+<h2 id='business-product-service'>business product &amp; service</h2>
+<h1 id='business-environemnt'>business environemnt</h1>
+<h2 id='business-social-environemnt'>business social environemnt</h2>
+<h2 id='busienss-economics'>busienss economics</h2>
+<h2 id='business-technology'>business technology</h2>
+<h2 id='business-market'>business market</h2>
+<h2 id='business-industry'>business industry</h2>
+<h2 id='business-supplychain'>business supplychain</h2>
+<h2 id='business-legal'>business legal</h2>
+<h1 id='business-behavior'>business behavior</h1>
+<h2 id='busienss-culture'>busienss culture</h2>
+<h2 id='business-changes'>business changes</h2>
+<h2 id='business-reflection'>business reflection</h2>
+<h2 id='business-process'>business process</h2>
+<h1 id='business-understanding'>business understanding</h1>
+<h2 id='business-history'>business history</h2>
+<h2 id='business-philosophy'>business philosophy</h2>
+<h2 id='business-cycle'>business cycle</h2>
+<h2 id='business-and-people'>business and people</h2>
+  </div>
+  <div class="foot">本页由 Markdown 自动转换生成 · 点击左上角返回知识库索引</div>
+</div>
+</body>
+</html>

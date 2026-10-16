@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每日英语核心词 · Day 01（第 1–50 词）</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --bg:#f6f7f9; --panel:#ffffff; --ink:#1a1d21; --ink2:#3d444d;
+ --muted:#6b7280; --line:#e3e6ea; --accent:#2f6df6; --accent-soft:#eaf1ff;
+ --quote:#f7f4ec; --quote-line:#d9c89b; --chip:#eef1f5; --ph:#c2410c;
+}
+body{background:var(--bg);color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",Roboto,Helvetica,Arial,sans-serif;
+ font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:34px 22px 80px}
+
+/* header */
+header{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+ padding:28px 30px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:29px;line-height:1.25;margin:8px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{background:var(--chip);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+.tag b{color:var(--accent)}
+
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:20;margin-top:18px;background:rgba(246,247,249,.92);
+ backdrop-filter:blur(8px);padding:12px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+ border-bottom:1px solid var(--line)}
+.toolbar input{flex:1;min-width:190px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;
+ background:var(--panel);font-size:14px;color:var(--ink);outline:none;font-family:inherit}
+.toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.btn{padding:9px 14px;border:1px solid var(--line);background:var(--panel);border-radius:10px;
+ cursor:pointer;font-size:13.5px;color:var(--ink2);font-family:inherit;transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.count{font-size:13px;color:var(--muted);margin-left:auto;white-space:nowrap}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;
+ box-shadow:0 1px 2px rgba(16,24,40,.04);transition:.18s;display:flex;flex-direction:column}
+.card:hover{box-shadow:0 6px 20px rgba(16,24,40,.09);transform:translateY(-2px)}
+.card.hidden{display:none}
+
+.chead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.no{font-size:12px;font-weight:700;color:#9aa2ad;font-variant-numeric:tabular-nums}
+.wd{font-size:24px;font-weight:750;letter-spacing:-.015em;line-height:1.1}
+.pos{font-size:11.5px;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:6px;font-weight:600}
+.speak{margin-left:auto;border:1px solid var(--line);background:#fff;width:34px;height:34px;border-radius:50%;
+ cursor:pointer;font-size:15px;line-height:1;display:grid;place-items:center;transition:.15s;flex:0 0 auto}
+.speak:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.speak.playing{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.ipa{margin-top:7px;font-size:14.5px;color:var(--ph);font-family:"Cambria","Times New Roman",Georgia,serif;
+ letter-spacing:.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ipa .cn-hint{font-size:12px;color:var(--muted);font-family:inherit}
+
+.badges{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
+.badge.rank{background:#fff4e5;color:#b45309;font-weight:600}
+
+.sec{margin-top:13px}
+.lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#98a1ad;font-weight:700;margin-bottom:6px}
+.mean{font-size:13.8px;color:var(--ink);margin-bottom:5px}
+.mean .p{font-weight:700;color:var(--accent);margin-right:5px}
+.mean .de{color:var(--muted);font-size:12.6px;display:block;font-style:italic;margin-top:1px}
+
+.ex{padding:9px 12px;background:#fafbfc;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;margin-bottom:7px}
+.ex .en{font-size:13.8px;color:var(--ink)}
+.ex .cn{font-size:13px;color:var(--muted);margin-top:3px}
+.ex .sp{margin-top:5px;font-size:11.5px;color:var(--accent);cursor:pointer;background:none;border:none;
+ padding:0;font-family:inherit;font-weight:600}
+.ex .sp:hover{text-decoration:underline}
+
+.ph-list{display:flex;flex-direction:column;gap:4px}
+.ph-item{font-size:13.2px}
+.ph-item code{background:var(--chip);padding:2px 7px;border-radius:5px;font-size:12.6px;color:var(--ink2);
+ font-family:"Cascadia Code",Consolas,Menlo,monospace}
+.ph-item span{color:var(--muted);margin-left:7px;font-size:12.8px}
+
+.quote{margin-top:13px;background:var(--quote);border-left:3px solid var(--quote-line);
+ border-radius:0 8px 8px 0;padding:11px 13px}
+.quote .qen{font-size:13.4px;color:#4a3f28;font-style:italic;line-height:1.6}
+.quote .qcn{font-size:12.8px;color:#7a6a4a;margin-top:5px}
+.quote .src{font-size:11.2px;color:#a08f6c;margin-top:6px;text-align:right}
+.quote .sp{margin-top:6px;font-size:11.5px;color:#8a7647;cursor:pointer;background:none;border:none;padding:0;
+ font-family:inherit;font-weight:600}
+
+.empty{text-align:center;color:var(--muted);padding:40px;font-size:14px;display:none}
+
+footer{margin-top:34px;text-align:center;color:#9aa2ad;font-size:12.5px;line-height:1.9}
+@media(max-width:640px){
+ .wrap{padding:20px 14px 60px}
+ header{padding:22px 18px}
+ h1{font-size:23px}
+ .wd{font-size:21px}
+ .grid{grid-template-columns:1fr}
+ .toolbar{position:static}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Daily Core Vocabulary · Day 01</div>
+    <h1>语言发动机：超高频核心动词与基础功能词</h1>
+    <div class="sub">The Core Engine: Highest-Frequency Verbs &amp; Function Words</div>
+    <div class="meta">
+      <span class="tag">词表范围 <b>第 0001–0050 号</b></span>
+      <span class="tag">共 <b>50</b> 词</span>
+      <span class="tag">来源 <b>最常用 5000 词</b></span>
+      <span class="tag">含 含义 · 音标 · 发音 · 例句 · 短语 · 经典引用</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="搜索单词 / 中文释义 / 短语…（如：make、决心、时间）">
+    <button class="btn" id="tgEn">遮住英文</button>
+    <button class="btn" id="tgCn">遮住中文</button>
+    <button class="btn" id="all">连续朗读</button>
+    <span class="count" id="cnt"></span>
+  </div>
+
+  <div class="grid">
+    <article class="card" data-search="the /ðə; ðiː/ （定冠词）指已知或已提及的特定的人或事物；这、那 used before a noun to refer to a specific person or thing already known or mentioned. （用于比较级前）表示随之变化：越……越…… (with comparatives) used to indicate that something changes as something else changes. the same 同样的 the other day 前几天 all the time 一直，始终 the more ..., the more ... 越……越…… the book on the table is the one i told you about. 桌上那本书就是我跟你说过的那本。 the more you practise, the better your english becomes. 你练习得越多，英语就变得越好。">
+  <div class="chead">
+    <span class="no">#0001</span>
+    <span class="wd">the</span>
+    <span class="pos">art.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðə; ðiː/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">art.</span>（定冠词）指已知或已提及的特定的人或事物；这、那<span class="de">Used before a noun to refer to a specific person or thing already known or mentioned.</span></div><div class="mean"><span class="p">adv.</span>（用于比较级前）表示随之变化：越……越……<span class="de">(with comparatives) used to indicate that something changes as something else changes.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">The book on the table is the one I told you about.</div><div class="cn">桌上那本书就是我跟你说过的那本。</div><button class="sp" onclick="speakExample(this, "The book on the table is the one I told you about.")">▶ 朗读例句</button></div><div class="ex"><div class="en">The more you practise, the better your English becomes.</div><div class="cn">你练习得越多，英语就变得越好。</div><button class="sp" onclick="speakExample(this, "The more you practise, the better your English becomes.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>the same</code><span>同样的</span></div><div class="ph-item"><code>the other day</code><span>前几天</span></div><div class="ph-item"><code>all the time</code><span>一直，始终</span></div><div class="ph-item"><code>the more ..., the more ...</code><span>越……越……</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The unexamined life is not worth living.”</div>
+    <div class="qcn">未经省察的人生不值得过。</div>
+    <div class="src">— Socrates, recorded in Plato&#x27;s Apology</div>
+    <button class="sp" onclick='speakExample(this, "The unexamined life is not worth living.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="be /biː; bi/ 是；存在；处于某种状态 to exist, or to have a particular state, quality, or identity. （助动词）构成被动语态或进行时 used with a past participle to form the passive, or with a present participle to form continuous tenses. be about to 正要，即将 be used to 习惯于 be worth doing 值得做 be to blame 应受责备 to be, or not to be: that is the question. 生存还是毁灭，这是个问题。 she is being very patient with us today. 她今天对我们非常耐心。">
+  <div class="chead">
+    <span class="no">#0002</span>
+    <span class="wd">be</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/biː; bi/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>是；存在；处于某种状态<span class="de">To exist, or to have a particular state, quality, or identity.</span></div><div class="mean"><span class="p">aux.</span>（助动词）构成被动语态或进行时<span class="de">Used with a past participle to form the passive, or with a present participle to form continuous tenses.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">To be, or not to be: that is the question.</div><div class="cn">生存还是毁灭，这是个问题。</div><button class="sp" onclick="speakExample(this, "To be, or not to be: that is the question.")">▶ 朗读例句</button></div><div class="ex"><div class="en">She is being very patient with us today.</div><div class="cn">她今天对我们非常耐心。</div><button class="sp" onclick="speakExample(this, "She is being very patient with us today.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>be about to</code><span>正要，即将</span></div><div class="ph-item"><code>be used to</code><span>习惯于</span></div><div class="ph-item"><code>be worth doing</code><span>值得做</span></div><div class="ph-item"><code>be to blame</code><span>应受责备</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“To be, or not to be: that is the question.”</div>
+    <div class="qcn">生存还是毁灭，这是个问题。</div>
+    <div class="src">— William Shakespeare, Hamlet, Act III, Scene I</div>
+    <button class="sp" onclick='speakExample(this, "To be, or not to be: that is the question.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="and /ənd; ænd/ 和；与；并且 used to join words, phrases, or clauses that are to be taken together. （表结果或连续）那么，于是 used to show result or sequence: and then, and so. and so on 等等 and yet 然而 now and then 偶尔 by and large 总的来说 bread and butter, tea and milk — that is breakfast. 面包和黄油，茶和牛奶——这就是早餐。 work hard and you will succeed. 努力工作，你就会成功。">
+  <div class="chead">
+    <span class="no">#0003</span>
+    <span class="wd">and</span>
+    <span class="pos">conj.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ənd; ænd/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">conj.</span>和；与；并且<span class="de">Used to join words, phrases, or clauses that are to be taken together.</span></div><div class="mean"><span class="p">conj.</span>（表结果或连续）那么，于是<span class="de">Used to show result or sequence: and then, and so.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Bread and butter, tea and milk — that is breakfast.</div><div class="cn">面包和黄油，茶和牛奶——这就是早餐。</div><button class="sp" onclick="speakExample(this, "Bread and butter, tea and milk \u2014 that is breakfast.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Work hard and you will succeed.</div><div class="cn">努力工作，你就会成功。</div><button class="sp" onclick="speakExample(this, "Work hard and you will succeed.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>and so on</code><span>等等</span></div><div class="ph-item"><code>and yet</code><span>然而</span></div><div class="ph-item"><code>now and then</code><span>偶尔</span></div><div class="ph-item"><code>by and large</code><span>总的来说</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“There is nothing good or bad, but thinking makes it so.”</div>
+    <div class="qcn">世间本无好坏，思想使然。</div>
+    <div class="src">— William Shakespeare, Hamlet</div>
+    <button class="sp" onclick='speakExample(this, "There is nothing good or bad, but thinking makes it so.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="of /əv; ɒv/ ……的；属于 belonging to, relating to, or connected with. 由……构成；包含 containing, consisting of, or made from. of course 当然 a matter of 关系到……的问题 of one&#x27;s own accord 自愿地 regardless of 不管，无论 the name of the rose is a famous novel of ideas. 《玫瑰的名字》是一部著名的思想小说。 a cup of tea would be nice. 来一杯茶会很好。">
+  <div class="chead">
+    <span class="no">#0004</span>
+    <span class="wd">of</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/əv; ɒv/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>……的；属于<span class="de">Belonging to, relating to, or connected with.</span></div><div class="mean"><span class="p">prep.</span>由……构成；包含<span class="de">Containing, consisting of, or made from.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">The name of the rose is a famous novel of ideas.</div><div class="cn">《玫瑰的名字》是一部著名的思想小说。</div><button class="sp" onclick="speakExample(this, "The name of the rose is a famous novel of ideas.")">▶ 朗读例句</button></div><div class="ex"><div class="en">A cup of tea would be nice.</div><div class="cn">来一杯茶会很好。</div><button class="sp" onclick="speakExample(this, "A cup of tea would be nice.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>of course</code><span>当然</span></div><div class="ph-item"><code>a matter of</code><span>关系到……的问题</span></div><div class="ph-item"><code>of one&#x27;s own accord</code><span>自愿地</span></div><div class="ph-item"><code>regardless of</code><span>不管，无论</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The history of all hitherto existing society is the history of class struggles.”</div>
+    <div class="qcn">至今一切社会的历史都是阶级斗争的历史。</div>
+    <div class="src">— Karl Marx &amp; Friedrich Engels, The Communist Manifesto</div>
+    <button class="sp" onclick='speakExample(this, "The history of all hitherto existing society is the history of class struggles.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="a /ə; eɪ/ （不定冠词）一个；某一种 used before a singular noun to refer to one person or thing that is not specific. 每一；每 used to mean &#x27;per&#x27; or &#x27;every&#x27;. a lot of 许多 a few 几个，一些 a bit 一点，稍微 once upon a time 从前 a journey of a thousand miles begins with a single step. 千里之行，始于足下。 he earns fifty pounds a day. 他每天挣五十英镑。">
+  <div class="chead">
+    <span class="no">#0005</span>
+    <span class="wd">a</span>
+    <span class="pos">art.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ə; eɪ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">art.</span>（不定冠词）一个；某一种<span class="de">Used before a singular noun to refer to one person or thing that is not specific.</span></div><div class="mean"><span class="p">art.</span>每一；每<span class="de">Used to mean &#x27;per&#x27; or &#x27;every&#x27;.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">A journey of a thousand miles begins with a single step.</div><div class="cn">千里之行，始于足下。</div><button class="sp" onclick="speakExample(this, "A journey of a thousand miles begins with a single step.")">▶ 朗读例句</button></div><div class="ex"><div class="en">He earns fifty pounds a day.</div><div class="cn">他每天挣五十英镑。</div><button class="sp" onclick="speakExample(this, "He earns fifty pounds a day.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>a lot of</code><span>许多</span></div><div class="ph-item"><code>a few</code><span>几个，一些</span></div><div class="ph-item"><code>a bit</code><span>一点，稍微</span></div><div class="ph-item"><code>once upon a time</code><span>从前</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“A journey of a thousand miles begins with a single step.”</div>
+    <div class="qcn">千里之行，始于足下。</div>
+    <div class="src">— Laozi, Tao Te Ching, Chapter 64</div>
+    <button class="sp" onclick='speakExample(this, "A journey of a thousand miles begins with a single step.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="in /ɪn/ 在……里面；在……之内 inside, within, or enclosed by something. （表时间）在……之后；在……期间 used with a period of time: after a certain length of time. 进入；向内 towards the inside; indoors. in fact 事实上 in order to 为了 in terms of 就……而言 in charge of 负责 all happy families are alike; each unhappy family is unhappy in its own way. 幸福的家庭都是相似的，不幸的家庭各有各的不幸。 the train will arrive in ten minutes. 火车十分钟后到达。">
+  <div class="chead">
+    <span class="no">#0006</span>
+    <span class="wd">in</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɪn/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>在……里面；在……之内<span class="de">Inside, within, or enclosed by something.</span></div><div class="mean"><span class="p">prep.</span>（表时间）在……之后；在……期间<span class="de">Used with a period of time: after a certain length of time.</span></div><div class="mean"><span class="p">adv.</span>进入；向内<span class="de">Towards the inside; indoors.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">All happy families are alike; each unhappy family is unhappy in its own way.</div><div class="cn">幸福的家庭都是相似的，不幸的家庭各有各的不幸。</div><button class="sp" onclick="speakExample(this, "All happy families are alike; each unhappy family is unhappy in its own way.")">▶ 朗读例句</button></div><div class="ex"><div class="en">The train will arrive in ten minutes.</div><div class="cn">火车十分钟后到达。</div><button class="sp" onclick="speakExample(this, "The train will arrive in ten minutes.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>in fact</code><span>事实上</span></div><div class="ph-item"><code>in order to</code><span>为了</span></div><div class="ph-item"><code>in terms of</code><span>就……而言</span></div><div class="ph-item"><code>in charge of</code><span>负责</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“All happy families are alike; each unhappy family is unhappy in its own way.”</div>
+    <div class="qcn">幸福的家庭都是相似的，不幸的家庭各有各的不幸。</div>
+    <div class="src">— Leo Tolstoy, Anna Karenina</div>
+    <button class="sp" onclick='speakExample(this, "All happy families are alike; each unhappy family is unhappy in its own way.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="that /ðæt; ðət/ 那个；那件事 used to identify a particular thing or person at a distance, or already mentioned. （引导从句）……这件事 used to introduce a clause stating a fact or belief. 那么，如此 to such a degree; so. that is to say 也就是说 now that 既然 in that 因为，由于 that is why 那就是为什么 that is the question i have been asking myself. 那就是我一直问自己的问题。 i think that you are right. 我认为你是对的。">
+  <div class="chead">
+    <span class="no">#0007</span>
+    <span class="wd">that</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðæt; ðət/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>那个；那件事<span class="de">Used to identify a particular thing or person at a distance, or already mentioned.</span></div><div class="mean"><span class="p">conj.</span>（引导从句）……这件事<span class="de">Used to introduce a clause stating a fact or belief.</span></div><div class="mean"><span class="p">adv.</span>那么，如此<span class="de">To such a degree; so.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">That is the question I have been asking myself.</div><div class="cn">那就是我一直问自己的问题。</div><button class="sp" onclick="speakExample(this, "That is the question I have been asking myself.")">▶ 朗读例句</button></div><div class="ex"><div class="en">I think that you are right.</div><div class="cn">我认为你是对的。</div><button class="sp" onclick="speakExample(this, "I think that you are right.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>that is to say</code><span>也就是说</span></div><div class="ph-item"><code>now that</code><span>既然</span></div><div class="ph-item"><code>in that</code><span>因为，由于</span></div><div class="ph-item"><code>that is why</code><span>那就是为什么</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The only thing we have to fear is fear itself — nameless, unreasoning, unjustified terror.”</div>
+    <div class="qcn">我们唯一需要恐惧的，就是恐惧本身——那种无名的、不理智的、毫无根据的恐惧。</div>
+    <div class="src">— Franklin D. Roosevelt, First Inaugural Address, 1933</div>
+    <button class="sp" onclick='speakExample(this, "The only thing we have to fear is fear itself \u2014 nameless, unreasoning, unjustified terror.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="have /hæv; həv/ 有；拥有；具有 to possess, own, or hold as a quality or relationship. 进行；经历；吃（饭） to experience, perform, or receive (an action). （助动词）构成完成时 with past participle, to form the perfect tenses. have to 不得不，必须 have a look 看一眼 have fun 玩得开心 have no idea 不知道 we have nothing to fear but fear itself. 我们除了恐惧本身，没有什么可怕的。 let me have a look at your homework. 让我看看你的作业。">
+  <div class="chead">
+    <span class="no">#0008</span>
+    <span class="wd">have</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/hæv; həv/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>有；拥有；具有<span class="de">To possess, own, or hold as a quality or relationship.</span></div><div class="mean"><span class="p">v.</span>进行；经历；吃（饭）<span class="de">To experience, perform, or receive (an action).</span></div><div class="mean"><span class="p">aux.</span>（助动词）构成完成时<span class="de">With past participle, to form the perfect tenses.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">We have nothing to fear but fear itself.</div><div class="cn">我们除了恐惧本身，没有什么可怕的。</div><button class="sp" onclick="speakExample(this, "We have nothing to fear but fear itself.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Let me have a look at your homework.</div><div class="cn">让我看看你的作业。</div><button class="sp" onclick="speakExample(this, "Let me have a look at your homework.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>have to</code><span>不得不，必须</span></div><div class="ph-item"><code>have a look</code><span>看一眼</span></div><div class="ph-item"><code>have fun</code><span>玩得开心</span></div><div class="ph-item"><code>have no idea</code><span>不知道</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.”</div>
+    <div class="qcn">我梦想有一天，我的四个孩子将生活在一个不以肤色、而以品格来评判他们的国度里。</div>
+    <div class="src">— Martin Luther King Jr., I Have a Dream, 1963</div>
+    <button class="sp" onclick='speakExample(this, "I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="i /aɪ/ 我（说话者或写作者自称） the speaker or writer referring to himself or herself. i mean 我的意思是 i wonder if 我想知道是否 i see 我明白了 i am afraid 恐怕 i think, therefore i am. 我思故我在。 i am not the same person i was ten years ago. 我已不再是十年前的我了。">
+  <div class="chead">
+    <span class="no">#0009</span>
+    <span class="wd">I</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/aɪ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>我（说话者或写作者自称）<span class="de">The speaker or writer referring to himself or herself.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">I think, therefore I am.</div><div class="cn">我思故我在。</div><button class="sp" onclick="speakExample(this, "I think, therefore I am.")">▶ 朗读例句</button></div><div class="ex"><div class="en">I am not the same person I was ten years ago.</div><div class="cn">我已不再是十年前的我了。</div><button class="sp" onclick="speakExample(this, "I am not the same person I was ten years ago.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>I mean</code><span>我的意思是</span></div><div class="ph-item"><code>I wonder if</code><span>我想知道是否</span></div><div class="ph-item"><code>I see</code><span>我明白了</span></div><div class="ph-item"><code>I am afraid</code><span>恐怕</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“I think, therefore I am.”</div>
+    <div class="qcn">我思故我在。</div>
+    <div class="src">— René Descartes, Discourse on the Method, 1637</div>
+    <button class="sp" onclick='speakExample(this, "I think, therefore I am.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="it /ɪt/ 它；那件事；那东西 used to refer to a thing, an animal, or an idea already mentioned. （作无人称主语）表示时间、天气、距离 used as an impersonal subject for time, weather, or distance. it depends 视情况而定 take it easy 放松点 make it 成功；赶到 as it were 可以说，可谓 it was the best of times, it was the worst of times. 那是最好的时代，也是最坏的时代。 it is raining, so take an umbrella. 正在下雨，带把伞吧。">
+  <div class="chead">
+    <span class="no">#0010</span>
+    <span class="wd">it</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɪt/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>它；那件事；那东西<span class="de">Used to refer to a thing, an animal, or an idea already mentioned.</span></div><div class="mean"><span class="p">pron.</span>（作无人称主语）表示时间、天气、距离<span class="de">Used as an impersonal subject for time, weather, or distance.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">It was the best of times, it was the worst of times.</div><div class="cn">那是最好的时代，也是最坏的时代。</div><button class="sp" onclick="speakExample(this, "It was the best of times, it was the worst of times.")">▶ 朗读例句</button></div><div class="ex"><div class="en">It is raining, so take an umbrella.</div><div class="cn">正在下雨，带把伞吧。</div><button class="sp" onclick="speakExample(this, "It is raining, so take an umbrella.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>it depends</code><span>视情况而定</span></div><div class="ph-item"><code>take it easy</code><span>放松点</span></div><div class="ph-item"><code>make it</code><span>成功；赶到</span></div><div class="ph-item"><code>as it were</code><span>可以说，可谓</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.”</div>
+    <div class="qcn">那是最美好的时代，那是最糟糕的时代；那是智慧的年头，那是愚昧的年头。</div>
+    <div class="src">— Charles Dickens, A Tale of Two Cities</div>
+    <button class="sp" onclick='speakExample(this, "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="to /tuː; tə/ 向；到；朝……方向 in the direction of; towards. （不定式符号）用于动词原形前 used to introduce the infinitive of a verb. look forward to 期待 to some extent 在某种程度上 to one&#x27;s surprise 令某人惊讶的是 according to 根据 we go to school to learn, not merely to pass exams. 我们上学是为了学习，而不仅仅是为了通过考试。 she gave the letter to me. 她把信交给了我。">
+  <div class="chead">
+    <span class="no">#0011</span>
+    <span class="wd">to</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/tuː; tə/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>向；到；朝……方向<span class="de">In the direction of; towards.</span></div><div class="mean"><span class="p">prep.</span>（不定式符号）用于动词原形前<span class="de">Used to introduce the infinitive of a verb.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">We go to school to learn, not merely to pass exams.</div><div class="cn">我们上学是为了学习，而不仅仅是为了通过考试。</div><button class="sp" onclick="speakExample(this, "We go to school to learn, not merely to pass exams.")">▶ 朗读例句</button></div><div class="ex"><div class="en">She gave the letter to me.</div><div class="cn">她把信交给了我。</div><button class="sp" onclick="speakExample(this, "She gave the letter to me.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>look forward to</code><span>期待</span></div><div class="ph-item"><code>to some extent</code><span>在某种程度上</span></div><div class="ph-item"><code>to one&#x27;s surprise</code><span>令某人惊讶的是</span></div><div class="ph-item"><code>according to</code><span>根据</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“We hold these truths to be self-evident, that all men are created equal.”</div>
+    <div class="qcn">我们认为下述真理是不言而喻的：人人生而平等。</div>
+    <div class="src">— Thomas Jefferson, United States Declaration of Independence, 1776</div>
+    <button class="sp" onclick='speakExample(this, "We hold these truths to be self-evident, that all men are created equal.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="for /fɔː(r); fə(r)/ 为了；给；支持 intended to be given to or used by; in favour of. 因为；由于 because of; on account of. （书面语）因为 (formal/literary) because. for example 例如 for the sake of 为了……的缘故 for good 永远地 as for 至于 i came here for one reason only: to learn. 我来这里只有一个原因：学习。 he was praised for his honesty. 他因诚实而受到赞扬。">
+  <div class="chead">
+    <span class="no">#0012</span>
+    <span class="wd">for</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/fɔː(r); fə(r)/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>为了；给；支持<span class="de">Intended to be given to or used by; in favour of.</span></div><div class="mean"><span class="p">prep.</span>因为；由于<span class="de">Because of; on account of.</span></div><div class="mean"><span class="p">conj.</span>（书面语）因为<span class="de">(formal/literary) Because.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">I came here for one reason only: to learn.</div><div class="cn">我来这里只有一个原因：学习。</div><button class="sp" onclick="speakExample(this, "I came here for one reason only: to learn.")">▶ 朗读例句</button></div><div class="ex"><div class="en">He was praised for his honesty.</div><div class="cn">他因诚实而受到赞扬。</div><button class="sp" onclick="speakExample(this, "He was praised for his honesty.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>for example</code><span>例如</span></div><div class="ph-item"><code>for the sake of</code><span>为了……的缘故</span></div><div class="ph-item"><code>for good</code><span>永远地</span></div><div class="ph-item"><code>as for</code><span>至于</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Ask not what your country can do for you — ask what you can do for your country.”</div>
+    <div class="qcn">不要问你的国家能为你做什么，而要问你能为你的国家做什么。</div>
+    <div class="src">— John F. Kennedy, Inaugural Address, 1961</div>
+    <button class="sp" onclick='speakExample(this, "Ask not what your country can do for you \u2014 ask what you can do for your country.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="you /juː; jə/ 你；你们 the person or people being spoken to. （泛指）任何人，人们 used to refer to people in general. you know 你知道的（口头语） thank you 谢谢你 see you 回头见 if you like 如果你愿意的话 you never really understand a person until you consider things from his point of view. 除非你从他人的角度去看问题，否则你永远无法真正理解一个人。 you can lead a horse to water, but you cannot make it drink. 你可以把马牵到水边，却不能让它喝水。">
+  <div class="chead">
+    <span class="no">#0013</span>
+    <span class="wd">you</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/juː; jə/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>你；你们<span class="de">The person or people being spoken to.</span></div><div class="mean"><span class="p">pron.</span>（泛指）任何人，人们<span class="de">Used to refer to people in general.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">You never really understand a person until you consider things from his point of view.</div><div class="cn">除非你从他人的角度去看问题，否则你永远无法真正理解一个人。</div><button class="sp" onclick="speakExample(this, "You never really understand a person until you consider things from his point of view.")">▶ 朗读例句</button></div><div class="ex"><div class="en">You can lead a horse to water, but you cannot make it drink.</div><div class="cn">你可以把马牵到水边，却不能让它喝水。</div><button class="sp" onclick="speakExample(this, "You can lead a horse to water, but you cannot make it drink.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>you know</code><span>你知道的（口头语）</span></div><div class="ph-item"><code>thank you</code><span>谢谢你</span></div><div class="ph-item"><code>see you</code><span>回头见</span></div><div class="ph-item"><code>if you like</code><span>如果你愿意的话</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“You never really understand a person until you consider things from his point of view... until you climb into his skin and walk around in it.”</div>
+    <div class="qcn">除非你从他人的角度去看问题……直到你钻进他的皮肤里走一圈，否则你永远无法真正理解一个人。</div>
+    <div class="src">— Harper Lee, To Kill a Mockingbird</div>
+    <button class="sp" onclick='speakExample(this, "You never really understand a person until you consider things from his point of view... until you climb into his skin and walk around in it.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="he /hiː; hi/ 他；它（雄性） a male person or animal already mentioned. he who laughs last laughs longest 笑到最后的人笑得最好 he and i 他和我 he who has a why to live can bear almost any how. 知道自己为什么而活的人，几乎能忍受任何一种生活方式。 he said nothing and left the room. 他什么也没说就离开了房间。">
+  <div class="chead">
+    <span class="no">#0014</span>
+    <span class="wd">he</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/hiː; hi/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>他；它（雄性）<span class="de">A male person or animal already mentioned.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">He who has a why to live can bear almost any how.</div><div class="cn">知道自己为什么而活的人，几乎能忍受任何一种生活方式。</div><button class="sp" onclick="speakExample(this, "He who has a why to live can bear almost any how.")">▶ 朗读例句</button></div><div class="ex"><div class="en">He said nothing and left the room.</div><div class="cn">他什么也没说就离开了房间。</div><button class="sp" onclick="speakExample(this, "He said nothing and left the room.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>he who laughs last laughs longest</code><span>笑到最后的人笑得最好</span></div><div class="ph-item"><code>he and I</code><span>他和我</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“He who has a why to live can bear almost any how.”</div>
+    <div class="qcn">知道为什么而活的人，几乎能忍受任何一种生活方式。</div>
+    <div class="src">— Friedrich Nietzsche, Twilight of the Idols</div>
+    <button class="sp" onclick='speakExample(this, "He who has a why to live can bear almost any how.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="with /wɪð; wɪθ/ 和……一起；与 accompanied by; in the company of. 用；以……方式 using; by means of (a tool, method, or material). with regard to 关于 with respect to 就……而言 go along with 赞同，附和 with ease 轻松地 with great power comes great responsibility. 能力越大，责任越大。 she wrote the letter with a fountain pen. 她用钢笔写了这封信。">
+  <div class="chead">
+    <span class="no">#0015</span>
+    <span class="wd">with</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wɪð; wɪθ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>和……一起；与<span class="de">Accompanied by; in the company of.</span></div><div class="mean"><span class="p">prep.</span>用；以……方式<span class="de">Using; by means of (a tool, method, or material).</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">With great power comes great responsibility.</div><div class="cn">能力越大，责任越大。</div><button class="sp" onclick="speakExample(this, "With great power comes great responsibility.")">▶ 朗读例句</button></div><div class="ex"><div class="en">She wrote the letter with a fountain pen.</div><div class="cn">她用钢笔写了这封信。</div><button class="sp" onclick="speakExample(this, "She wrote the letter with a fountain pen.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>with regard to</code><span>关于</span></div><div class="ph-item"><code>with respect to</code><span>就……而言</span></div><div class="ph-item"><code>go along with</code><span>赞同，附和</span></div><div class="ph-item"><code>with ease</code><span>轻松地</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“With great power comes great responsibility.”</div>
+    <div class="qcn">能力越大，责任越大。</div>
+    <div class="src">— Attributed to Voltaire; popularised by Marvel&#x27;s Spider-Man</div>
+    <button class="sp" onclick='speakExample(this, "With great power comes great responsibility.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="on /ɒn; ɔːn/ 在……上面 touching and supported by a surface. 关于；论及 about; concerning. （设备）开着；（活动）进行中 (of a device or process) working, operating, or continuing. on the other hand 另一方面 on purpose 故意地 on time 准时 and so on 等等 the book on the table is about the theory of everything. 桌上那本书讲的是万物理论。 we had a long talk on the meaning of life. 我们就生命的意义进行了一次长谈。">
+  <div class="chead">
+    <span class="no">#0016</span>
+    <span class="wd">on</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɒn; ɔːn/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>在……上面<span class="de">Touching and supported by a surface.</span></div><div class="mean"><span class="p">prep.</span>关于；论及<span class="de">About; concerning.</span></div><div class="mean"><span class="p">adv.</span>（设备）开着；（活动）进行中<span class="de">(of a device or process) working, operating, or continuing.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">The book on the table is about the theory of everything.</div><div class="cn">桌上那本书讲的是万物理论。</div><button class="sp" onclick="speakExample(this, "The book on the table is about the theory of everything.")">▶ 朗读例句</button></div><div class="ex"><div class="en">We had a long talk on the meaning of life.</div><div class="cn">我们就生命的意义进行了一次长谈。</div><button class="sp" onclick="speakExample(this, "We had a long talk on the meaning of life.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>on the other hand</code><span>另一方面</span></div><div class="ph-item"><code>on purpose</code><span>故意地</span></div><div class="ph-item"><code>on time</code><span>准时</span></div><div class="ph-item"><code>and so on</code><span>等等</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Do not go where the path may lead; go instead where there is no path and leave a trail.”</div>
+    <div class="qcn">不要走现成的路，而要走向没有路的地方，并留下一道足迹。</div>
+    <div class="src">— Ralph Waldo Emerson</div>
+    <button class="sp" onclick='speakExample(this, "Do not go where the path may lead; go instead where there is no path and leave a trail.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="do /duː; də/ 做；干；进行 to perform, carry out, or complete an action or task. （助动词）构成疑问句和否定句 used to form questions and negative sentences. 行；够用 to be sufficient or acceptable. do one&#x27;s best 尽力 do away with 废除 do without 没有……也行 have to do with 与……有关 do to others as you would have them do to you. 你们愿意人怎样待你们，你们也要怎样待人。 that will do for now. 眼下这样就可以了。">
+  <div class="chead">
+    <span class="no">#0017</span>
+    <span class="wd">do</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/duː; də/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>做；干；进行<span class="de">To perform, carry out, or complete an action or task.</span></div><div class="mean"><span class="p">aux.</span>（助动词）构成疑问句和否定句<span class="de">Used to form questions and negative sentences.</span></div><div class="mean"><span class="p">v.</span>行；够用<span class="de">To be sufficient or acceptable.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Do to others as you would have them do to you.</div><div class="cn">你们愿意人怎样待你们，你们也要怎样待人。</div><button class="sp" onclick="speakExample(this, "Do to others as you would have them do to you.")">▶ 朗读例句</button></div><div class="ex"><div class="en">That will do for now.</div><div class="cn">眼下这样就可以了。</div><button class="sp" onclick="speakExample(this, "That will do for now.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>do one&#x27;s best</code><span>尽力</span></div><div class="ph-item"><code>do away with</code><span>废除</span></div><div class="ph-item"><code>do without</code><span>没有……也行</span></div><div class="ph-item"><code>have to do with</code><span>与……有关</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Do to others as you would have them do to you.”</div>
+    <div class="qcn">你们愿意人怎样待你们，你们也要怎样待人。</div>
+    <div class="src">— The Bible, Luke 6:31</div>
+    <button class="sp" onclick='speakExample(this, "Do to others as you would have them do to you.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="say /seɪ/ 说，讲；表达 to speak words; to express in words. 认为；说明 to give an opinion or state as a fact. 发言权 a chance to speak; a share in a decision. needless to say 不用说 that is to say 也就是说 have a say 有发言权 say the least 说得轻一点 what you do speaks so loudly that i cannot hear what you say. 你的行动如此响亮，以致我听不见你所说的话。 needless to say, the plan failed. 不用说，这个计划失败了。">
+  <div class="chead">
+    <span class="no">#0018</span>
+    <span class="wd">say</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/seɪ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>说，讲；表达<span class="de">To speak words; to express in words.</span></div><div class="mean"><span class="p">v.</span>认为；说明<span class="de">To give an opinion or state as a fact.</span></div><div class="mean"><span class="p">n.</span>发言权<span class="de">A chance to speak; a share in a decision.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">What you do speaks so loudly that I cannot hear what you say.</div><div class="cn">你的行动如此响亮，以致我听不见你所说的话。</div><button class="sp" onclick="speakExample(this, "What you do speaks so loudly that I cannot hear what you say.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Needless to say, the plan failed.</div><div class="cn">不用说，这个计划失败了。</div><button class="sp" onclick="speakExample(this, "Needless to say, the plan failed.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>needless to say</code><span>不用说</span></div><div class="ph-item"><code>that is to say</code><span>也就是说</span></div><div class="ph-item"><code>have a say</code><span>有发言权</span></div><div class="ph-item"><code>say the least</code><span>说得轻一点</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“What you do speaks so loudly that I cannot hear what you say.”</div>
+    <div class="qcn">你的行动如此响亮，以致我听不见你所说的话。</div>
+    <div class="src">— Ralph Waldo Emerson</div>
+    <button class="sp" onclick='speakExample(this, "What you do speaks so loudly that I cannot hear what you say.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="this /ðɪs/ 这；这个 used to refer to a thing or person close by or just mentioned. 这么，这样 to this degree; so. this way 这边；这样 for this reason 为此，因此 in this sense 在这个意义上 this above all: to thine own self be true. 最重要的：忠于你自己。 i will never forget this moment. 我永远不会忘记这一刻。">
+  <div class="chead">
+    <span class="no">#0019</span>
+    <span class="wd">this</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðɪs/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>这；这个<span class="de">Used to refer to a thing or person close by or just mentioned.</span></div><div class="mean"><span class="p">adv.</span>这么，这样<span class="de">To this degree; so.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">This above all: to thine own self be true.</div><div class="cn">最重要的：忠于你自己。</div><button class="sp" onclick="speakExample(this, "This above all: to thine own self be true.")">▶ 朗读例句</button></div><div class="ex"><div class="en">I will never forget this moment.</div><div class="cn">我永远不会忘记这一刻。</div><button class="sp" onclick="speakExample(this, "I will never forget this moment.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>this way</code><span>这边；这样</span></div><div class="ph-item"><code>for this reason</code><span>为此，因此</span></div><div class="ph-item"><code>in this sense</code><span>在这个意义上</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“This above all: to thine own self be true.”</div>
+    <div class="qcn">最重要的是：忠于你自己。</div>
+    <div class="src">— William Shakespeare, Hamlet, Act I, Scene III</div>
+    <button class="sp" onclick='speakExample(this, "This above all: to thine own self be true.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="they /ðeɪ/ 他们；她们；它们 those people or things already mentioned. （泛指）人们 used to refer to people in general. they say 据说 as they are 照原样 they also serve who only stand and wait. 那些只是站立等待的人，同样是在服务。 they say that time heals all wounds. 人们说时间能治愈一切创伤。">
+  <div class="chead">
+    <span class="no">#0020</span>
+    <span class="wd">they</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðeɪ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>他们；她们；它们<span class="de">Those people or things already mentioned.</span></div><div class="mean"><span class="p">pron.</span>（泛指）人们<span class="de">Used to refer to people in general.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">They also serve who only stand and wait.</div><div class="cn">那些只是站立等待的人，同样是在服务。</div><button class="sp" onclick="speakExample(this, "They also serve who only stand and wait.")">▶ 朗读例句</button></div><div class="ex"><div class="en">They say that time heals all wounds.</div><div class="cn">人们说时间能治愈一切创伤。</div><button class="sp" onclick="speakExample(this, "They say that time heals all wounds.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>they say</code><span>据说</span></div><div class="ph-item"><code>as they are</code><span>照原样</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“They also serve who only stand and wait.”</div>
+    <div class="qcn">那些只是站立等待的人，同样是在服务。</div>
+    <div class="src">— John Milton, When I Consider How My Light Is Spent</div>
+    <button class="sp" onclick='speakExample(this, "They also serve who only stand and wait.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="at /æt; ət/ 在（某地点） in or near a particular place or point. 在（某时刻） at a particular time or moment. 处于（某状态）；从事 in a particular state or activity. at least 至少 at once 立刻；同时 at first 起初 at all 根本（用于否定句） at the still point of the turning world, there the dance is. 在旋转世界的静止点上，舞蹈就在那里。 she is very good at solving problems. 她很擅长解决问题。">
+  <div class="chead">
+    <span class="no">#0021</span>
+    <span class="wd">at</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/æt; ət/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>在（某地点）<span class="de">In or near a particular place or point.</span></div><div class="mean"><span class="p">prep.</span>在（某时刻）<span class="de">At a particular time or moment.</span></div><div class="mean"><span class="p">prep.</span>处于（某状态）；从事<span class="de">In a particular state or activity.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">At the still point of the turning world, there the dance is.</div><div class="cn">在旋转世界的静止点上，舞蹈就在那里。</div><button class="sp" onclick="speakExample(this, "At the still point of the turning world, there the dance is.")">▶ 朗读例句</button></div><div class="ex"><div class="en">She is very good at solving problems.</div><div class="cn">她很擅长解决问题。</div><button class="sp" onclick="speakExample(this, "She is very good at solving problems.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>at least</code><span>至少</span></div><div class="ph-item"><code>at once</code><span>立刻；同时</span></div><div class="ph-item"><code>at first</code><span>起初</span></div><div class="ph-item"><code>at all</code><span>根本（用于否定句）</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“At the still point of the turning world. Neither flesh nor fleshless; neither from nor towards; at the still point, there the dance is.”</div>
+    <div class="qcn">在旋转世界的静止点上。非肉非无肉；非来非去；就在那静态之点上，舞蹈在那里。</div>
+    <div class="src">— T. S. Eliot, Four Quartets: Burnt Norton</div>
+    <button class="sp" onclick='speakExample(this, "At the still point of the turning world. Neither flesh nor fleshless; neither from nor towards; at the still point, there the dance is.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="but /bʌt; bət/ 但是；然而 used to introduce a contrast or exception. 除了 except; apart from. 只，仅仅 only; merely. not only ... but also 不但……而且 but for 要不是 all but 几乎；除……外全部 cannot but 不得不 everyone thinks of changing the world, but no one thinks of changing himself. 每个人都想改变世界，但没人想改变自己。 nothing but the truth will do. 只有真话才行。">
+  <div class="chead">
+    <span class="no">#0022</span>
+    <span class="wd">but</span>
+    <span class="pos">conj.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/bʌt; bət/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">conj.</span>但是；然而<span class="de">Used to introduce a contrast or exception.</span></div><div class="mean"><span class="p">prep.</span>除了<span class="de">Except; apart from.</span></div><div class="mean"><span class="p">adv.</span>只，仅仅<span class="de">Only; merely.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Everyone thinks of changing the world, but no one thinks of changing himself.</div><div class="cn">每个人都想改变世界，但没人想改变自己。</div><button class="sp" onclick="speakExample(this, "Everyone thinks of changing the world, but no one thinks of changing himself.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Nothing but the truth will do.</div><div class="cn">只有真话才行。</div><button class="sp" onclick="speakExample(this, "Nothing but the truth will do.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>not only ... but also</code><span>不但……而且</span></div><div class="ph-item"><code>but for</code><span>要不是</span></div><div class="ph-item"><code>all but</code><span>几乎；除……外全部</span></div><div class="ph-item"><code>cannot but</code><span>不得不</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Everyone thinks of changing the world, but no one thinks of changing himself.”</div>
+    <div class="qcn">每个人都想改变世界，但没人想改变自己。</div>
+    <div class="src">— Leo Tolstoy</div>
+    <button class="sp" onclick='speakExample(this, "Everyone thinks of changing the world, but no one thinks of changing himself.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="we /wiː; wi/ 我们 the speaker together with one or more other people. （泛指包括说话者在内的）人们 people in general, including the speaker. we all 我们大家 here we go 我们开始吧 we shall see 我们拭目以待 we are what we repeatedly do. 我们是我们反复做的事情。 we shall overcome because the arc of the moral universe is long, but it bends toward justice. 我们终将胜利，因为道德宇宙的弧线虽然漫长，却弯向正义。">
+  <div class="chead">
+    <span class="no">#0023</span>
+    <span class="wd">we</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wiː; wi/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>我们<span class="de">The speaker together with one or more other people.</span></div><div class="mean"><span class="p">pron.</span>（泛指包括说话者在内的）人们<span class="de">People in general, including the speaker.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">We are what we repeatedly do.</div><div class="cn">我们是我们反复做的事情。</div><button class="sp" onclick="speakExample(this, "We are what we repeatedly do.")">▶ 朗读例句</button></div><div class="ex"><div class="en">We shall overcome because the arc of the moral universe is long, but it bends toward justice.</div><div class="cn">我们终将胜利，因为道德宇宙的弧线虽然漫长，却弯向正义。</div><button class="sp" onclick="speakExample(this, "We shall overcome because the arc of the moral universe is long, but it bends toward justice.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>we all</code><span>我们大家</span></div><div class="ph-item"><code>here we go</code><span>我们开始吧</span></div><div class="ph-item"><code>we shall see</code><span>我们拭目以待</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“We are what we repeatedly do. Excellence, then, is not an act, but a habit.”</div>
+    <div class="qcn">我们是我们反复做的事情。因此，卓越不是一种行为，而是一种习惯。</div>
+    <div class="src">— Will Durant, paraphrasing Aristotle</div>
+    <button class="sp" onclick='speakExample(this, "We are what we repeatedly do. Excellence, then, is not an act, but a habit.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="can /kæn; kən/ 能，能够；会 to be able to; to know how to. 可以，被允许 to be permitted to; to have the right to. 罐头；金属罐 a metal container for food or drink. can afford to 负担得起 can&#x27;t help doing 忍不住做 as ... as one can 尽可能…… can do 能行（口语） you can&#x27;t judge a book by its cover. 不能仅凭封面来判断一本书。 can i ask you a question? 我可以问你一个问题吗？">
+  <div class="chead">
+    <span class="no">#0024</span>
+    <span class="wd">can</span>
+    <span class="pos">modal v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/kæn; kən/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">modal v.</span>能，能够；会<span class="de">To be able to; to know how to.</span></div><div class="mean"><span class="p">modal v.</span>可以，被允许<span class="de">To be permitted to; to have the right to.</span></div><div class="mean"><span class="p">n.</span>罐头；金属罐<span class="de">A metal container for food or drink.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">You can&#x27;t judge a book by its cover.</div><div class="cn">不能仅凭封面来判断一本书。</div><button class="sp" onclick="speakExample(this, "You can't judge a book by its cover.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Can I ask you a question?</div><div class="cn">我可以问你一个问题吗？</div><button class="sp" onclick="speakExample(this, "Can I ask you a question?")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>can afford to</code><span>负担得起</span></div><div class="ph-item"><code>can&#x27;t help doing</code><span>忍不住做</span></div><div class="ph-item"><code>as ... as one can</code><span>尽可能……</span></div><div class="ph-item"><code>can do</code><span>能行（口语）</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“You can&#x27;t judge a book by its cover.”</div>
+    <div class="qcn">不能仅凭封面来判断一本书。</div>
+    <div class="src">— English proverb; also the title of a 1962 Bo Diddley album</div>
+    <button class="sp" onclick='speakExample(this, "You can't judge a book by its cover.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="all /ɔːl/ 所有的；全部的 the whole number or amount of; every one of. 完全地；都 completely; entirely. all in all 总的来说 above all 最重要的是 after all 毕竟 all at once 突然；同时 all that glitters is not gold. 闪光的不都是金子。 we are all in the gutter, but some of us are looking at the stars. 我们都身处阴沟，但有些人却在仰望星空。">
+  <div class="chead">
+    <span class="no">#0025</span>
+    <span class="wd">all</span>
+    <span class="pos">det.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɔːl/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">det.</span>所有的；全部的<span class="de">The whole number or amount of; every one of.</span></div><div class="mean"><span class="p">adv.</span>完全地；都<span class="de">Completely; entirely.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">All that glitters is not gold.</div><div class="cn">闪光的不都是金子。</div><button class="sp" onclick="speakExample(this, "All that glitters is not gold.")">▶ 朗读例句</button></div><div class="ex"><div class="en">We are all in the gutter, but some of us are looking at the stars.</div><div class="cn">我们都身处阴沟，但有些人却在仰望星空。</div><button class="sp" onclick="speakExample(this, "We are all in the gutter, but some of us are looking at the stars.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>all in all</code><span>总的来说</span></div><div class="ph-item"><code>above all</code><span>最重要的是</span></div><div class="ph-item"><code>after all</code><span>毕竟</span></div><div class="ph-item"><code>all at once</code><span>突然；同时</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“We are all in the gutter, but some of us are looking at the stars.”</div>
+    <div class="qcn">我们都身处阴沟，但有些人却在仰望星空。</div>
+    <div class="src">— Oscar Wilde, Lady Windermere&#x27;s Fan</div>
+    <button class="sp" onclick='speakExample(this, "We are all in the gutter, but some of us are looking at the stars.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="there /ðeə(r); ðə(r)/ 在那里；到那里 in, at, or to that place. （与 be 连用）表示存在：有 used with &#x27;be&#x27; to say that something exists. there is no doubt that 毫无疑问 here and there 到处 there you go 这就对了 over there 在那边 there is no greater agony than bearing an untold story inside you. 没有比把未曾讲述的故事埋在心中更大的痛苦了。 put the box over there, please. 请把那个箱子放到那边。">
+  <div class="chead">
+    <span class="no">#0026</span>
+    <span class="wd">there</span>
+    <span class="pos">adv.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðeə(r); ðə(r)/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">adv.</span>在那里；到那里<span class="de">In, at, or to that place.</span></div><div class="mean"><span class="p">adv.</span>（与 be 连用）表示存在：有<span class="de">Used with &#x27;be&#x27; to say that something exists.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">There is no greater agony than bearing an untold story inside you.</div><div class="cn">没有比把未曾讲述的故事埋在心中更大的痛苦了。</div><button class="sp" onclick="speakExample(this, "There is no greater agony than bearing an untold story inside you.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Put the box over there, please.</div><div class="cn">请把那个箱子放到那边。</div><button class="sp" onclick="speakExample(this, "Put the box over there, please.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>there is no doubt that</code><span>毫无疑问</span></div><div class="ph-item"><code>here and there</code><span>到处</span></div><div class="ph-item"><code>there you go</code><span>这就对了</span></div><div class="ph-item"><code>over there</code><span>在那边</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“There is no greater agony than bearing an untold story inside you.”</div>
+    <div class="qcn">没有比把未曾讲述的故事埋在心中更大的痛苦了。</div>
+    <div class="src">— Maya Angelou, I Know Why the Caged Bird Sings</div>
+    <button class="sp" onclick='speakExample(this, "There is no greater agony than bearing an untold story inside you.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="not /nɒt/ 不；没有（构成否定） used to make a word, phrase, or clause negative. not at all 一点也不；别客气 not only ... but also 不但……而且 not necessarily 不一定 more often than not 往往，多半 not all those who wander are lost. 并非所有徘徊的人都迷失了方向。 he is not the man he used to be. 他已不是从前的他了。">
+  <div class="chead">
+    <span class="no">#0027</span>
+    <span class="wd">not</span>
+    <span class="pos">adv.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/nɒt/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">adv.</span>不；没有（构成否定）<span class="de">Used to make a word, phrase, or clause negative.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Not all those who wander are lost.</div><div class="cn">并非所有徘徊的人都迷失了方向。</div><button class="sp" onclick="speakExample(this, "Not all those who wander are lost.")">▶ 朗读例句</button></div><div class="ex"><div class="en">He is not the man he used to be.</div><div class="cn">他已不是从前的他了。</div><button class="sp" onclick="speakExample(this, "He is not the man he used to be.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>not at all</code><span>一点也不；别客气</span></div><div class="ph-item"><code>not only ... but also</code><span>不但……而且</span></div><div class="ph-item"><code>not necessarily</code><span>不一定</span></div><div class="ph-item"><code>more often than not</code><span>往往，多半</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“All that is gold does not glitter; not all those who wander are lost.”</div>
+    <div class="qcn">并非所有金子都闪光；并不是所有徘徊的人都迷失了方向。</div>
+    <div class="src">— J. R. R. Tolkien, The Fellowship of the Ring</div>
+    <button class="sp" onclick='speakExample(this, "All that is gold does not glitter; not all those who wander are lost.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="what /wɒt/ 什么（疑问代词） used to ask for information about something. （引导从句）……的东西；所……的 the thing or things that (used to introduce a relative clause). what is more 而且，此外 what about ……怎么样 so what 那又怎样 what&#x27;s up 怎么了（口语） what does not kill me makes me stronger. 凡不能杀死我的，使我更强大。 what matters most is how you see yourself. 最重要的是你如何看待自己。">
+  <div class="chead">
+    <span class="no">#0028</span>
+    <span class="wd">what</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wɒt/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>什么（疑问代词）<span class="de">Used to ask for information about something.</span></div><div class="mean"><span class="p">pron.</span>（引导从句）……的东西；所……的<span class="de">The thing or things that (used to introduce a relative clause).</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">What does not kill me makes me stronger.</div><div class="cn">凡不能杀死我的，使我更强大。</div><button class="sp" onclick="speakExample(this, "What does not kill me makes me stronger.")">▶ 朗读例句</button></div><div class="ex"><div class="en">What matters most is how you see yourself.</div><div class="cn">最重要的是你如何看待自己。</div><button class="sp" onclick="speakExample(this, "What matters most is how you see yourself.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>what is more</code><span>而且，此外</span></div><div class="ph-item"><code>what about</code><span>……怎么样</span></div><div class="ph-item"><code>so what</code><span>那又怎样</span></div><div class="ph-item"><code>what&#x27;s up</code><span>怎么了（口语）</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“What does not kill me makes me stronger.”</div>
+    <div class="qcn">凡不能杀死我的，使我更强大。</div>
+    <div class="src">— Friedrich Nietzsche, Twilight of the Idols</div>
+    <button class="sp" onclick='speakExample(this, "What does not kill me makes me stronger.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="so /səʊ/ 那么，如此；很 to such a great degree; very. 因此，所以 for that reason; therefore. 也，同样 in the same way; also. so far 到目前为止 so as to 以便 so that 以便；结果 so to speak 可以说 so long as men can breathe or eyes can see, so long lives this, and this gives life to thee. 只要人类还能呼吸，眼睛还能看，这首诗就将长存，并赋予你生命。 it was late, so we went home. 天晚了，所以我们就回家了。">
+  <div class="chead">
+    <span class="no">#0029</span>
+    <span class="wd">so</span>
+    <span class="pos">adv.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/səʊ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">adv.</span>那么，如此；很<span class="de">To such a great degree; very.</span></div><div class="mean"><span class="p">conj.</span>因此，所以<span class="de">For that reason; therefore.</span></div><div class="mean"><span class="p">adv.</span>也，同样<span class="de">In the same way; also.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">So long as men can breathe or eyes can see, so long lives this, and this gives life to thee.</div><div class="cn">只要人类还能呼吸，眼睛还能看，这首诗就将长存，并赋予你生命。</div><button class="sp" onclick="speakExample(this, "So long as men can breathe or eyes can see, so long lives this, and this gives life to thee.")">▶ 朗读例句</button></div><div class="ex"><div class="en">It was late, so we went home.</div><div class="cn">天晚了，所以我们就回家了。</div><button class="sp" onclick="speakExample(this, "It was late, so we went home.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>so far</code><span>到目前为止</span></div><div class="ph-item"><code>so as to</code><span>以便</span></div><div class="ph-item"><code>so that</code><span>以便；结果</span></div><div class="ph-item"><code>so to speak</code><span>可以说</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“So long as men can breathe or eyes can see, so long lives this, and this gives life to thee.”</div>
+    <div class="qcn">只要人类还能呼吸，眼睛还能看，这首诗就将长存，并赋予你生命。</div>
+    <div class="src">— William Shakespeare, Sonnet 18</div>
+    <button class="sp" onclick='speakExample(this, "So long as men can breathe or eyes can see, so long lives this, and this gives life to thee.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="up /ʌp/ 向上；起来 towards a higher position or level. 完全地；（时间）已过，用尽 completely; finished. 沿着……往上 along or towards the top of. up to 多达；取决于；由……负责 make up one&#x27;s mind 下定决心 give up 放弃 up and down 上上下下；来来回回 the only way is up when you have hit the bottom. 当你跌到谷底时，唯一的出路就是向上。 time is up — please put down your pens. 时间到了——请放下笔。">
+  <div class="chead">
+    <span class="no">#0030</span>
+    <span class="wd">up</span>
+    <span class="pos">adv.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ʌp/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">adv.</span>向上；起来<span class="de">Towards a higher position or level.</span></div><div class="mean"><span class="p">adv.</span>完全地；（时间）已过，用尽<span class="de">Completely; finished.</span></div><div class="mean"><span class="p">prep.</span>沿着……往上<span class="de">Along or towards the top of.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">The only way is up when you have hit the bottom.</div><div class="cn">当你跌到谷底时，唯一的出路就是向上。</div><button class="sp" onclick="speakExample(this, "The only way is up when you have hit the bottom.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Time is up — please put down your pens.</div><div class="cn">时间到了——请放下笔。</div><button class="sp" onclick="speakExample(this, "Time is up \u2014 please put down your pens.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>up to</code><span>多达；取决于；由……负责</span></div><div class="ph-item"><code>make up one&#x27;s mind</code><span>下定决心</span></div><div class="ph-item"><code>give up</code><span>放弃</span></div><div class="ph-item"><code>up and down</code><span>上上下下；来来回回</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“It always seems impossible until it&#x27;s done.”</div>
+    <div class="qcn">事情在完成之前，看起来总是那么不可能。</div>
+    <div class="src">— Nelson Mandela</div>
+    <button class="sp" onclick='speakExample(this, "It always seems impossible until it's done.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="out /aʊt/ 出去；在外 away from the inside; outdoors. 熄灭；不再流行；出局 no longer burning, working, or in fashion. out of 从……出来；缺乏 point out 指出 figure out 弄明白 out of date 过时的 the secret is out: the truth will always find its way. 秘密已经揭穿：真相总会找到出路。 he is out of the office today. 他今天不在办公室。">
+  <div class="chead">
+    <span class="no">#0031</span>
+    <span class="wd">out</span>
+    <span class="pos">adv.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/aʊt/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">adv.</span>出去；在外<span class="de">Away from the inside; outdoors.</span></div><div class="mean"><span class="p">adv.</span>熄灭；不再流行；出局<span class="de">No longer burning, working, or in fashion.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">The secret is out: the truth will always find its way.</div><div class="cn">秘密已经揭穿：真相总会找到出路。</div><button class="sp" onclick="speakExample(this, "The secret is out: the truth will always find its way.")">▶ 朗读例句</button></div><div class="ex"><div class="en">He is out of the office today.</div><div class="cn">他今天不在办公室。</div><button class="sp" onclick="speakExample(this, "He is out of the office today.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>out of</code><span>从……出来；缺乏</span></div><div class="ph-item"><code>point out</code><span>指出</span></div><div class="ph-item"><code>figure out</code><span>弄明白</span></div><div class="ph-item"><code>out of date</code><span>过时的</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The truth is rarely pure and never simple.”</div>
+    <div class="qcn">真相很少是纯粹的，也从来不是简单的。</div>
+    <div class="src">— Oscar Wilde, The Importance of Being Earnest</div>
+    <button class="sp" onclick='speakExample(this, "The truth is rarely pure and never simple.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="if /ɪf/ 如果；假如 used to introduce a condition. 是否 whether. as if 好像 if only 要是……就好了 if necessary 如有必要 even if 即使 if you want to go fast, go alone. if you want to go far, go together. 想走得快，就独自上路；想走得远，就结伴同行。 ask her if she is coming. 问问她是否会来。">
+  <div class="chead">
+    <span class="no">#0032</span>
+    <span class="wd">if</span>
+    <span class="pos">conj.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɪf/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">conj.</span>如果；假如<span class="de">Used to introduce a condition.</span></div><div class="mean"><span class="p">conj.</span>是否<span class="de">Whether.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">If you want to go fast, go alone. If you want to go far, go together.</div><div class="cn">想走得快，就独自上路；想走得远，就结伴同行。</div><button class="sp" onclick="speakExample(this, "If you want to go fast, go alone. If you want to go far, go together.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Ask her if she is coming.</div><div class="cn">问问她是否会来。</div><button class="sp" onclick="speakExample(this, "Ask her if she is coming.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>as if</code><span>好像</span></div><div class="ph-item"><code>if only</code><span>要是……就好了</span></div><div class="ph-item"><code>if necessary</code><span>如有必要</span></div><div class="ph-item"><code>even if</code><span>即使</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“If you want to go fast, go alone. If you want to go far, go together.”</div>
+    <div class="qcn">想走得快，就独自上路；想走得远，就结伴同行。</div>
+    <div class="src">— African proverb</div>
+    <button class="sp" onclick='speakExample(this, "If you want to go fast, go alone. If you want to go far, go together.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="about /əˈbaʊt/ 关于；涉及 on the subject of; concerning. 大约；差不多 approximately; nearly. 在……各处；在……附近 in or to various places within. be about to 正要，即将 how about ……怎么样 out and about 四处走动 about time 早该如此 tell me about your dreams, and i will tell you who you are. 告诉我你的梦想，我就能告诉你你是谁。 there were about fifty people at the meeting. 会上大约有五十人。">
+  <div class="chead">
+    <span class="no">#0033</span>
+    <span class="wd">about</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/əˈbaʊt/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>关于；涉及<span class="de">On the subject of; concerning.</span></div><div class="mean"><span class="p">adv.</span>大约；差不多<span class="de">Approximately; nearly.</span></div><div class="mean"><span class="p">prep.</span>在……各处；在……附近<span class="de">In or to various places within.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Tell me about your dreams, and I will tell you who you are.</div><div class="cn">告诉我你的梦想，我就能告诉你你是谁。</div><button class="sp" onclick="speakExample(this, "Tell me about your dreams, and I will tell you who you are.")">▶ 朗读例句</button></div><div class="ex"><div class="en">There were about fifty people at the meeting.</div><div class="cn">会上大约有五十人。</div><button class="sp" onclick="speakExample(this, "There were about fifty people at the meeting.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>be about to</code><span>正要，即将</span></div><div class="ph-item"><code>how about</code><span>……怎么样</span></div><div class="ph-item"><code>out and about</code><span>四处走动</span></div><div class="ph-item"><code>about time</code><span>早该如此</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“We are not makers of history. We are made by history.”</div>
+    <div class="qcn">我们不是历史的创造者，我们是被历史创造的。</div>
+    <div class="src">— Martin Luther King Jr., Strength to Love</div>
+    <button class="sp" onclick='speakExample(this, "We are not makers of history. We are made by history.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="who /huː/ 谁（疑问代词） used to ask which person or people. （关系代词）……的人 used to introduce a clause giving more information about a person. who knows 谁知道呢 whoever it is 不管是谁 to whom it may concern 致有关人士 ask not for whom the bell tolls; it tolls for thee. 不要问丧钟为谁而鸣，它就为你而鸣。 who is the author of this book? 这本书的作者是谁？">
+  <div class="chead">
+    <span class="no">#0034</span>
+    <span class="wd">who</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/huː/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>谁（疑问代词）<span class="de">Used to ask which person or people.</span></div><div class="mean"><span class="p">pron.</span>（关系代词）……的人<span class="de">Used to introduce a clause giving more information about a person.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Ask not for whom the bell tolls; it tolls for thee.</div><div class="cn">不要问丧钟为谁而鸣，它就为你而鸣。</div><button class="sp" onclick="speakExample(this, "Ask not for whom the bell tolls; it tolls for thee.")">▶ 朗读例句</button></div><div class="ex"><div class="en">Who is the author of this book?</div><div class="cn">这本书的作者是谁？</div><button class="sp" onclick="speakExample(this, "Who is the author of this book?")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>who knows</code><span>谁知道呢</span></div><div class="ph-item"><code>whoever it is</code><span>不管是谁</span></div><div class="ph-item"><code>to whom it may concern</code><span>致有关人士</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Any man&#x27;s death diminishes me, because I am involved in mankind; and therefore never send to know for whom the bell tolls; it tolls for thee.”</div>
+    <div class="qcn">任何人的死亡都使我有所缺损，因为我与人类息息相关；所以不要去问丧钟为谁而鸣，它就为你而鸣。</div>
+    <div class="src">— John Donne, Meditation XVII</div>
+    <button class="sp" onclick='speakExample(this, "Any man's death diminishes me, because I am involved in mankind; and therefore never send to know for whom the bell tolls; it tolls for thee.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="get /ɡet/ 得到；获得；买到 to obtain, receive, or buy something. 变得；成为 to become or start to be in a state. 到达 to arrive at a place. get on with 与……相处；继续做 get rid of 摆脱，除掉 get used to 习惯于 get down to 开始认真做 you get what you pay for. 一分钱一分货。 it gets easier the more you practise. 你练习得越多，就越容易。">
+  <div class="chead">
+    <span class="no">#0035</span>
+    <span class="wd">get</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɡet/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>得到；获得；买到<span class="de">To obtain, receive, or buy something.</span></div><div class="mean"><span class="p">v.</span>变得；成为<span class="de">To become or start to be in a state.</span></div><div class="mean"><span class="p">v.</span>到达<span class="de">To arrive at a place.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">You get what you pay for.</div><div class="cn">一分钱一分货。</div><button class="sp" onclick="speakExample(this, "You get what you pay for.")">▶ 朗读例句</button></div><div class="ex"><div class="en">It gets easier the more you practise.</div><div class="cn">你练习得越多，就越容易。</div><button class="sp" onclick="speakExample(this, "It gets easier the more you practise.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>get on with</code><span>与……相处；继续做</span></div><div class="ph-item"><code>get rid of</code><span>摆脱，除掉</span></div><div class="ph-item"><code>get used to</code><span>习惯于</span></div><div class="ph-item"><code>get down to</code><span>开始认真做</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Nobody gets to live life backward. Look ahead — that is where your future lies.”</div>
+    <div class="qcn">没有人能倒着过日子。向前看——你的未来就在那里。</div>
+    <div class="src">— Ann Landers</div>
+    <button class="sp" onclick='speakExample(this, "Nobody gets to live life backward. Look ahead \u2014 that is where your future lies.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="which /wɪtʃ/ 哪一个；哪些 used to ask for a choice between alternatives. （关系代词）……的；某事/物 used to add information about a thing already mentioned. which is to say 也就是说 no matter which 无论哪一个 the extent to which ……的程度 which of us has not longed for a simpler life? 我们之中有谁不曾渴望更简单的生活呢？ the book which you lent me was fascinating. 你借给我的那本书引人入胜。">
+  <div class="chead">
+    <span class="no">#0036</span>
+    <span class="wd">which</span>
+    <span class="pos">pron.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wɪtʃ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">pron.</span>哪一个；哪些<span class="de">Used to ask for a choice between alternatives.</span></div><div class="mean"><span class="p">pron.</span>（关系代词）……的；某事/物<span class="de">Used to add information about a thing already mentioned.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Which of us has not longed for a simpler life?</div><div class="cn">我们之中有谁不曾渴望更简单的生活呢？</div><button class="sp" onclick="speakExample(this, "Which of us has not longed for a simpler life?")">▶ 朗读例句</button></div><div class="ex"><div class="en">The book which you lent me was fascinating.</div><div class="cn">你借给我的那本书引人入胜。</div><button class="sp" onclick="speakExample(this, "The book which you lent me was fascinating.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>which is to say</code><span>也就是说</span></div><div class="ph-item"><code>no matter which</code><span>无论哪一个</span></div><div class="ph-item"><code>the extent to which</code><span>……的程度</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The question is not what you look at, but what you see.”</div>
+    <div class="qcn">问题不在于你看什么，而在于你看到了什么。</div>
+    <div class="src">— Henry David Thoreau, Journal, 1851</div>
+    <button class="sp" onclick='speakExample(this, "The question is not what you look at, but what you see.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="go /ɡəʊ/ 去；走；离开 to move or travel to a place; to leave. 变得；进入（某状态） to pass into a particular state or condition. 运转；进展 to run or operate successfully. go on 继续；发生 go through 经历；仔细检查 go ahead 请便；进行 go without saying 不言而喻 go confidently in the direction of your dreams. 自信地朝着你的梦想方向前进吧。 how did the interview go? 面试进行得怎么样？">
+  <div class="chead">
+    <span class="no">#0037</span>
+    <span class="wd">go</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ɡəʊ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>去；走；离开<span class="de">To move or travel to a place; to leave.</span></div><div class="mean"><span class="p">v.</span>变得；进入（某状态）<span class="de">To pass into a particular state or condition.</span></div><div class="mean"><span class="p">v.</span>运转；进展<span class="de">To run or operate successfully.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Go confidently in the direction of your dreams.</div><div class="cn">自信地朝着你的梦想方向前进吧。</div><button class="sp" onclick="speakExample(this, "Go confidently in the direction of your dreams.")">▶ 朗读例句</button></div><div class="ex"><div class="en">How did the interview go?</div><div class="cn">面试进行得怎么样？</div><button class="sp" onclick="speakExample(this, "How did the interview go?")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>go on</code><span>继续；发生</span></div><div class="ph-item"><code>go through</code><span>经历；仔细检查</span></div><div class="ph-item"><code>go ahead</code><span>请便；进行</span></div><div class="ph-item"><code>go without saying</code><span>不言而喻</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Go confidently in the direction of your dreams. Live the life you have imagined.”</div>
+    <div class="qcn">自信地朝着你的梦想方向前进，过你想象中的那种生活。</div>
+    <div class="src">— Henry David Thoreau, Walden</div>
+    <button class="sp" onclick='speakExample(this, "Go confidently in the direction of your dreams. Live the life you have imagined.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="when /wen/ 当……的时候 at the time that; as soon as. 什么时候 used to ask at what time. when it comes to 谈到，涉及 when necessary 必要时 since when 从何时起 when you are through changing, you are through. 当你不再改变时，你就完了。 when in rome, do as the romans do. 入乡随俗。">
+  <div class="chead">
+    <span class="no">#0038</span>
+    <span class="wd">when</span>
+    <span class="pos">conj.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wen/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">conj.</span>当……的时候<span class="de">At the time that; as soon as.</span></div><div class="mean"><span class="p">adv.</span>什么时候<span class="de">Used to ask at what time.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">When you are through changing, you are through.</div><div class="cn">当你不再改变时，你就完了。</div><button class="sp" onclick="speakExample(this, "When you are through changing, you are through.")">▶ 朗读例句</button></div><div class="ex"><div class="en">When in Rome, do as the Romans do.</div><div class="cn">入乡随俗。</div><button class="sp" onclick="speakExample(this, "When in Rome, do as the Romans do.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>when it comes to</code><span>谈到，涉及</span></div><div class="ph-item"><code>when necessary</code><span>必要时</span></div><div class="ph-item"><code>since when</code><span>从何时起</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“When you are through changing, you are through.”</div>
+    <div class="qcn">当你不再改变时，你就完了。</div>
+    <div class="src">— Bruce Barton</div>
+    <button class="sp" onclick='speakExample(this, "When you are through changing, you are through.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="make /meɪk/ 做；制造；创作 to create, produce, or build something. 使；让；导致 to cause to be or to happen. 挣得；达到 to earn (money) or reach (a total). make up one&#x27;s mind 下定决心 make sense 有道理；讲得通 make a difference 产生影响 make the most of 充分利用 make it simple, but significant. 让它简单，但要有意义。 we make a living by what we get, but we make a life by what we give. 我们靠所得谋生，而靠给予成就人生。">
+  <div class="chead">
+    <span class="no">#0039</span>
+    <span class="wd">make</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/meɪk/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>做；制造；创作<span class="de">To create, produce, or build something.</span></div><div class="mean"><span class="p">v.</span>使；让；导致<span class="de">To cause to be or to happen.</span></div><div class="mean"><span class="p">v.</span>挣得；达到<span class="de">To earn (money) or reach (a total).</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Make it simple, but significant.</div><div class="cn">让它简单，但要有意义。</div><button class="sp" onclick="speakExample(this, "Make it simple, but significant.")">▶ 朗读例句</button></div><div class="ex"><div class="en">We make a living by what we get, but we make a life by what we give.</div><div class="cn">我们靠所得谋生，而靠给予成就人生。</div><button class="sp" onclick="speakExample(this, "We make a living by what we get, but we make a life by what we give.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>make up one&#x27;s mind</code><span>下定决心</span></div><div class="ph-item"><code>make sense</code><span>有道理；讲得通</span></div><div class="ph-item"><code>make a difference</code><span>产生影响</span></div><div class="ph-item"><code>make the most of</code><span>充分利用</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“We make a living by what we get, but we make a life by what we give.”</div>
+    <div class="qcn">我们靠所得谋生，而靠给予成就人生。</div>
+    <div class="src">— Winston Churchill</div>
+    <button class="sp" onclick='speakExample(this, "We make a living by what we get, but we make a life by what we give.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="time /taɪm/ 时间；光阴 the ongoing sequence of events; the passing of minutes, hours, days. 次；回；（某）时刻 an occasion, or a point in time. 为……安排时间；计时 to arrange when something happens, or measure how long it takes. in time 及时；最终 on time 准时 at times 有时 take one&#x27;s time 从容，不着急 for the time being 暂时，眼下 time is the most valuable thing a man can spend. 时间是人所能花费的最宝贵的东西。 this is the first time i have been to beijing. 这是我第一次来北京。">
+  <div class="chead">
+    <span class="no">#0040</span>
+    <span class="wd">time</span>
+    <span class="pos">n.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/taɪm/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">n.</span>时间；光阴<span class="de">The ongoing sequence of events; the passing of minutes, hours, days.</span></div><div class="mean"><span class="p">n.</span>次；回；（某）时刻<span class="de">An occasion, or a point in time.</span></div><div class="mean"><span class="p">v.</span>为……安排时间；计时<span class="de">To arrange when something happens, or measure how long it takes.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Time is the most valuable thing a man can spend.</div><div class="cn">时间是人所能花费的最宝贵的东西。</div><button class="sp" onclick="speakExample(this, "Time is the most valuable thing a man can spend.")">▶ 朗读例句</button></div><div class="ex"><div class="en">This is the first time I have been to Beijing.</div><div class="cn">这是我第一次来北京。</div><button class="sp" onclick="speakExample(this, "This is the first time I have been to Beijing.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>in time</code><span>及时；最终</span></div><div class="ph-item"><code>on time</code><span>准时</span></div><div class="ph-item"><code>at times</code><span>有时</span></div><div class="ph-item"><code>take one&#x27;s time</code><span>从容，不着急</span></div><div class="ph-item"><code>for the time being</code><span>暂时，眼下</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Time is the most valuable thing a man can spend.”</div>
+    <div class="qcn">时间是人所能花费的最宝贵的东西。</div>
+    <div class="src">— Theophrastus</div>
+    <button class="sp" onclick='speakExample(this, "Time is the most valuable thing a man can spend.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="would /wʊd; wəd/ （表示礼貌）会，想要 used in polite offers, requests, or opinions. （表示过去习惯）总是，常常 used for a habitual action in the past. （表示虚拟、假设）就会，将会 used to talk about an imagined or unreal situation. would rather 宁愿 would like to 想要 would you mind 你介意吗 as luck would have it 碰巧，偏巧 would you like a cup of tea? 你想来杯茶吗？ i would rather fail than give up. 我宁愿失败，也不愿放弃。">
+  <div class="chead">
+    <span class="no">#0041</span>
+    <span class="wd">would</span>
+    <span class="pos">modal v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wʊd; wəd/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">modal v.</span>（表示礼貌）会，想要<span class="de">Used in polite offers, requests, or opinions.</span></div><div class="mean"><span class="p">modal v.</span>（表示过去习惯）总是，常常<span class="de">Used for a habitual action in the past.</span></div><div class="mean"><span class="p">modal v.</span>（表示虚拟、假设）就会，将会<span class="de">Used to talk about an imagined or unreal situation.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Would you like a cup of tea?</div><div class="cn">你想来杯茶吗？</div><button class="sp" onclick="speakExample(this, "Would you like a cup of tea?")">▶ 朗读例句</button></div><div class="ex"><div class="en">I would rather fail than give up.</div><div class="cn">我宁愿失败，也不愿放弃。</div><button class="sp" onclick="speakExample(this, "I would rather fail than give up.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>would rather</code><span>宁愿</span></div><div class="ph-item"><code>would like to</code><span>想要</span></div><div class="ph-item"><code>would you mind</code><span>你介意吗</span></div><div class="ph-item"><code>as luck would have it</code><span>碰巧，偏巧</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“I feared I would lose it, I never loved to read. One does not love breathing.”</div>
+    <div class="qcn">我生怕失去阅读，我从来谈不上热爱阅读——就像人不会说热爱呼吸一样。</div>
+    <div class="src">— Harper Lee, To Kill a Mockingbird</div>
+    <button class="sp" onclick='speakExample(this, "I feared I would lose it, I never loved to read. One does not love breathing.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="know /nəʊ/ 知道；了解 to have information or understanding in your mind. 认识；熟悉 to be acquainted with a person, place, or thing. know about 了解，知道 as far as i know 就我所知 know by heart 熟记 you never know 谁也说不准 i know that i know nothing. 我知道我一无所知。 to know what you know and what you do not know, that is true knowledge. 知道你知道什么、不知道什么，这才是真正的知识。">
+  <div class="chead">
+    <span class="no">#0042</span>
+    <span class="wd">know</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/nəʊ/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>知道；了解<span class="de">To have information or understanding in your mind.</span></div><div class="mean"><span class="p">v.</span>认识；熟悉<span class="de">To be acquainted with a person, place, or thing.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">I know that I know nothing.</div><div class="cn">我知道我一无所知。</div><button class="sp" onclick="speakExample(this, "I know that I know nothing.")">▶ 朗读例句</button></div><div class="ex"><div class="en">To know what you know and what you do not know, that is true knowledge.</div><div class="cn">知道你知道什么、不知道什么，这才是真正的知识。</div><button class="sp" onclick="speakExample(this, "To know what you know and what you do not know, that is true knowledge.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>know about</code><span>了解，知道</span></div><div class="ph-item"><code>as far as I know</code><span>就我所知</span></div><div class="ph-item"><code>know by heart</code><span>熟记</span></div><div class="ph-item"><code>you never know</code><span>谁也说不准</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“I know that I know nothing.”</div>
+    <div class="qcn">我知道我一无所知。</div>
+    <div class="src">— Socrates, recorded in Plato&#x27;s Apology</div>
+    <button class="sp" onclick='speakExample(this, "I know that I know nothing.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="will /wɪl/ 将；会（表将来） used to talk about the future or make a prediction. 愿意；决心 used to express willingness or determination. 意志；决心 the power of the mind to decide and control action; determination. at will 随意，任意 free will 自由意志 will power 意志力 against one&#x27;s will 违背某人的意愿 where there is a will, there is a way. 有志者，事竟成。 i will always remember what you did for me. 我会永远记得你为我做的一切。">
+  <div class="chead">
+    <span class="no">#0043</span>
+    <span class="wd">will</span>
+    <span class="pos">modal v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/wɪl/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">modal v.</span>将；会（表将来）<span class="de">Used to talk about the future or make a prediction.</span></div><div class="mean"><span class="p">modal v.</span>愿意；决心<span class="de">Used to express willingness or determination.</span></div><div class="mean"><span class="p">n.</span>意志；决心<span class="de">The power of the mind to decide and control action; determination.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Where there is a will, there is a way.</div><div class="cn">有志者，事竟成。</div><button class="sp" onclick="speakExample(this, "Where there is a will, there is a way.")">▶ 朗读例句</button></div><div class="ex"><div class="en">I will always remember what you did for me.</div><div class="cn">我会永远记得你为我做的一切。</div><button class="sp" onclick="speakExample(this, "I will always remember what you did for me.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>at will</code><span>随意，任意</span></div><div class="ph-item"><code>free will</code><span>自由意志</span></div><div class="ph-item"><code>will power</code><span>意志力</span></div><div class="ph-item"><code>against one&#x27;s will</code><span>违背某人的意愿</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Where there is a will, there is a way.”</div>
+    <div class="qcn">有志者，事竟成。</div>
+    <div class="src">— English proverb</div>
+    <button class="sp" onclick='speakExample(this, "Where there is a will, there is a way.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="as /æz; əz/ 作为；当作 in the role or function of. 当……时；因为 at the same time as; while. also: because. （用于比较）像……一样 used in comparisons: as ... as. as well as 以及；和……一样好 as for 至于 as a result 结果，因此 as long as 只要 as usual 像平常一样 as a man thinks in his heart, so is he. 一个人心里怎么想，他为人就是怎样。 she is as clever as she is kind. 她既聪明又善良。">
+  <div class="chead">
+    <span class="no">#0044</span>
+    <span class="wd">as</span>
+    <span class="pos">prep.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/æz; əz/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">prep.</span>作为；当作<span class="de">In the role or function of.</span></div><div class="mean"><span class="p">conj.</span>当……时；因为<span class="de">At the same time as; while. Also: because.</span></div><div class="mean"><span class="p">adv.</span>（用于比较）像……一样<span class="de">Used in comparisons: as ... as.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">As a man thinks in his heart, so is he.</div><div class="cn">一个人心里怎么想，他为人就是怎样。</div><button class="sp" onclick="speakExample(this, "As a man thinks in his heart, so is he.")">▶ 朗读例句</button></div><div class="ex"><div class="en">She is as clever as she is kind.</div><div class="cn">她既聪明又善良。</div><button class="sp" onclick="speakExample(this, "She is as clever as she is kind.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>as well as</code><span>以及；和……一样好</span></div><div class="ph-item"><code>as for</code><span>至于</span></div><div class="ph-item"><code>as a result</code><span>结果，因此</span></div><div class="ph-item"><code>as long as</code><span>只要</span></div><div class="ph-item"><code>as usual</code><span>像平常一样</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“As a man thinks in his heart, so is he.”</div>
+    <div class="qcn">一个人心里怎么想，他为人就是怎样。</div>
+    <div class="src">— The Bible, Proverbs 23:7</div>
+    <button class="sp" onclick='speakExample(this, "As a man thinks in his heart, so is he.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="there&#x27;s /ðeəz/ there is / there has 的缩写 short form of &#x27;there is&#x27; or &#x27;there has&#x27;. there&#x27;s no doubt 毫无疑问 there&#x27;s no point 没有意义 there&#x27;s no denying 不可否认 there&#x27;s no place like home. 没有比家更好的地方。 there&#x27;s a crack in everything; that&#x27;s how the light gets in. 万物皆有裂痕，那是光照进来的地方。">
+  <div class="chead">
+    <span class="no">#0045</span>
+    <span class="wd">there&#x27;s</span>
+    <span class="pos">contraction</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ðeəz/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">contraction</span>there is / there has 的缩写<span class="de">Short form of &#x27;there is&#x27; or &#x27;there has&#x27;.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">There&#x27;s no place like home.</div><div class="cn">没有比家更好的地方。</div><button class="sp" onclick="speakExample(this, "There's no place like home.")">▶ 朗读例句</button></div><div class="ex"><div class="en">There&#x27;s a crack in everything; that&#x27;s how the light gets in.</div><div class="cn">万物皆有裂痕，那是光照进来的地方。</div><button class="sp" onclick="speakExample(this, "There's a crack in everything; that's how the light gets in.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>there&#x27;s no doubt</code><span>毫无疑问</span></div><div class="ph-item"><code>there&#x27;s no point</code><span>没有意义</span></div><div class="ph-item"><code>there&#x27;s no denying</code><span>不可否认</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“There is a crack in everything. That&#x27;s how the light gets in.”</div>
+    <div class="qcn">万物皆有裂痕，那是光照进来的地方。</div>
+    <div class="src">— Leonard Cohen, Anthem</div>
+    <button class="sp" onclick='speakExample(this, "There is a crack in everything. That's how the light gets in.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="think /θɪŋk/ 想；思考；认为 to use the mind to consider, reason, or judge. 认为；以为 to have a particular opinion or belief. think about 考虑 think of 想起；认为 think over 仔细考虑 think twice 三思而行 think globally, act locally. 放眼全球，立足本地。 i do not think we can solve this by force. 我认为我们无法用武力解决这个问题。">
+  <div class="chead">
+    <span class="no">#0046</span>
+    <span class="wd">think</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/θɪŋk/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>想；思考；认为<span class="de">To use the mind to consider, reason, or judge.</span></div><div class="mean"><span class="p">v.</span>认为；以为<span class="de">To have a particular opinion or belief.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Think globally, act locally.</div><div class="cn">放眼全球，立足本地。</div><button class="sp" onclick="speakExample(this, "Think globally, act locally.")">▶ 朗读例句</button></div><div class="ex"><div class="en">I do not think we can solve this by force.</div><div class="cn">我认为我们无法用武力解决这个问题。</div><button class="sp" onclick="speakExample(this, "I do not think we can solve this by force.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>think about</code><span>考虑</span></div><div class="ph-item"><code>think of</code><span>想起；认为</span></div><div class="ph-item"><code>think over</code><span>仔细考虑</span></div><div class="ph-item"><code>think twice</code><span>三思而行</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Think globally, act locally.”</div>
+    <div class="qcn">放眼全球，立足本地。</div>
+    <div class="src">— Widely attributed environmental slogan; popularised by David Brower</div>
+    <button class="sp" onclick='speakExample(this, "Think globally, act locally.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="see /siː/ 看见 to perceive with the eyes. 明白，理解 to understand or realise. 会见；查看 to meet or visit (someone); to find out. see off 为……送行 see to it that 确保…… see eye to eye 看法一致 as far as i can see 据我所见 i see the light now; i finally understand. 我现在明白了，终于懂了。 see you tomorrow! 明天见！">
+  <div class="chead">
+    <span class="no">#0047</span>
+    <span class="wd">see</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/siː/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>看见<span class="de">To perceive with the eyes.</span></div><div class="mean"><span class="p">v.</span>明白，理解<span class="de">To understand or realise.</span></div><div class="mean"><span class="p">v.</span>会见；查看<span class="de">To meet or visit (someone); to find out.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">I see the light now; I finally understand.</div><div class="cn">我现在明白了，终于懂了。</div><button class="sp" onclick="speakExample(this, "I see the light now; I finally understand.")">▶ 朗读例句</button></div><div class="ex"><div class="en">See you tomorrow!</div><div class="cn">明天见！</div><button class="sp" onclick="speakExample(this, "See you tomorrow!")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>see off</code><span>为……送行</span></div><div class="ph-item"><code>see to it that</code><span>确保……</span></div><div class="ph-item"><code>see eye to eye</code><span>看法一致</span></div><div class="ph-item"><code>as far as I can see</code><span>据我所见</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“The eye sees only what the mind is prepared to comprehend.”</div>
+    <div class="qcn">眼睛只能看见心灵准备好去理解的东西。</div>
+    <div class="src">— Henri Bergson</div>
+    <button class="sp" onclick='speakExample(this, "The eye sees only what the mind is prepared to comprehend.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="people /ˈpiːpl/ 人们；人 human beings in general; persons. 民族；国民 the citizens of a country or members of a community. young people 年轻人 people of all ages 各个年龄段的人 the people concerned 有关人员 people will forget what you said, but they will never forget how you made them feel. 人们会忘记你说过的话，但永远不会忘记你带给他们的感受。 the chinese people are known for their hard work. 中国人民以勤劳著称。">
+  <div class="chead">
+    <span class="no">#0048</span>
+    <span class="wd">people</span>
+    <span class="pos">n.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/ˈpiːpl/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">n.</span>人们；人<span class="de">Human beings in general; persons.</span></div><div class="mean"><span class="p">n.</span>民族；国民<span class="de">The citizens of a country or members of a community.</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">People will forget what you said, but they will never forget how you made them feel.</div><div class="cn">人们会忘记你说过的话，但永远不会忘记你带给他们的感受。</div><button class="sp" onclick="speakExample(this, "People will forget what you said, but they will never forget how you made them feel.")">▶ 朗读例句</button></div><div class="ex"><div class="en">The Chinese people are known for their hard work.</div><div class="cn">中国人民以勤劳著称。</div><button class="sp" onclick="speakExample(this, "The Chinese people are known for their hard work.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>young people</code><span>年轻人</span></div><div class="ph-item"><code>people of all ages</code><span>各个年龄段的人</span></div><div class="ph-item"><code>the people concerned</code><span>有关人员</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“People will forget what you said, people will forget what you did, but people will never forget how you made them feel.”</div>
+    <div class="qcn">人们会忘记你说过的话，忘记你做过的事，但永远不会忘记你带给他们的感受。</div>
+    <div class="src">— Attributed to Maya Angelou</div>
+    <button class="sp" onclick='speakExample(this, "People will forget what you said, people will forget what you did, but people will never forget how you made them feel.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="take /teɪk/ 拿；取；带走 to move something or someone to another place; to remove. 接受；采取；选择 to accept, receive, or choose. 需要；花费 to need or require (time, effort, courage). take care of 照顾；处理 take part in 参加 take place 发生，举行 take advantage of 利用；占……便宜 take for granted 认为理所当然 take the first step in faith. you do not have to see the whole staircase. 带着信念迈出第一步，你不必看清整段楼梯。 it takes courage to grow up and become who you really are. 长大并成为真正的自己，需要勇气。">
+  <div class="chead">
+    <span class="no">#0049</span>
+    <span class="wd">take</span>
+    <span class="pos">v.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/teɪk/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">v.</span>拿；取；带走<span class="de">To move something or someone to another place; to remove.</span></div><div class="mean"><span class="p">v.</span>接受；采取；选择<span class="de">To accept, receive, or choose.</span></div><div class="mean"><span class="p">v.</span>需要；花费<span class="de">To need or require (time, effort, courage).</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">Take the first step in faith. You do not have to see the whole staircase.</div><div class="cn">带着信念迈出第一步，你不必看清整段楼梯。</div><button class="sp" onclick="speakExample(this, "Take the first step in faith. You do not have to see the whole staircase.")">▶ 朗读例句</button></div><div class="ex"><div class="en">It takes courage to grow up and become who you really are.</div><div class="cn">长大并成为真正的自己，需要勇气。</div><button class="sp" onclick="speakExample(this, "It takes courage to grow up and become who you really are.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>take care of</code><span>照顾；处理</span></div><div class="ph-item"><code>take part in</code><span>参加</span></div><div class="ph-item"><code>take place</code><span>发生，举行</span></div><div class="ph-item"><code>take advantage of</code><span>利用；占……便宜</span></div><div class="ph-item"><code>take for granted</code><span>认为理所当然</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“Take the first step in faith. You don&#x27;t have to see the whole staircase, just take the first step.”</div>
+    <div class="qcn">带着信念迈出第一步。你不必看清整段楼梯，只需迈出第一步。</div>
+    <div class="src">— Martin Luther King Jr.</div>
+    <button class="sp" onclick='speakExample(this, "Take the first step in faith. You don't have to see the whole staircase, just take the first step.")'>▶ 朗读引用</button>
+  </div>
+</article><article class="card" data-search="year /jɪə(r); jɜː(r)/ 年；一年 a period of twelve months, or 365 days. （学年、财年等）年度 a period of twelve months used for a particular purpose (school year, fiscal year). year after year 年复一年 all year round 一年到头 the new year 新年 in recent years 近年来 a year from now, you will wish you had started today. 一年之后，你会希望自己今天就开始。 this is the best film of the year. 这是年度最佳影片。">
+  <div class="chead">
+    <span class="no">#0050</span>
+    <span class="wd">year</span>
+    <span class="pos">n.</span>
+    <button class="speak" title="朗读单词" onclick="speakFrom(this)">🔊</button>
+  </div>
+  <div class="ipa">/jɪə(r); jɜː(r)/<span class="cn-hint">· 点击喇叭听真人发音</span></div>
+  <div class="sec">
+    <div class="lbl">含义 Meaning</div>
+    <div class="mean"><span class="p">n.</span>年；一年<span class="de">A period of twelve months, or 365 days.</span></div><div class="mean"><span class="p">n.</span>（学年、财年等）年度<span class="de">A period of twelve months used for a particular purpose (school year, fiscal year).</span></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">例句 Examples</div>
+    <div class="ex"><div class="en">A year from now, you will wish you had started today.</div><div class="cn">一年之后，你会希望自己今天就开始。</div><button class="sp" onclick="speakExample(this, "A year from now, you will wish you had started today.")">▶ 朗读例句</button></div><div class="ex"><div class="en">This is the best film of the year.</div><div class="cn">这是年度最佳影片。</div><button class="sp" onclick="speakExample(this, "This is the best film of the year.")">▶ 朗读例句</button></div>
+  </div>
+  <div class="sec">
+    <div class="lbl">常用短语 Phrases</div>
+    <div class="ph-list"><div class="ph-item"><code>year after year</code><span>年复一年</span></div><div class="ph-item"><code>all year round</code><span>一年到头</span></div><div class="ph-item"><code>the New Year</code><span>新年</span></div><div class="ph-item"><code>in recent years</code><span>近年来</span></div></div>
+  </div>
+  <div class="quote">
+    <div class="qen">“A year from now you may wish you had started today.”</div>
+    <div class="qcn">一年之后，你也许会希望自己今天就开始。</div>
+    <div class="src">— Karen Lamb</div>
+    <button class="sp" onclick='speakExample(this, "A year from now you may wish you had started today.")'>▶ 朗读引用</button>
+  </div>
+</article>
+  </div>
+  <div class="empty">没有匹配的单词，换个关键词试试。</div>
+
+  <footer>
+    🔊 点击卡片右上角喇叭或用「连续朗读」听发音（使用浏览器内置语音引擎，建议 Chrome / Edge / Safari）。<br>
+    学习法：听音 → 跟读三遍 → 看图说义 → 用短语造句 → 抄写经典引用。
+  </footer>
+</div>
+<script>
+function speak(text, el){
+  if(!('speechSynthesis' in window)){ alert('当前浏览器不支持语音朗读，请使用 Chrome / Edge / Safari。'); return; }
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.9;
+  var vs = window.speechSynthesis.getVoices();
+  var v = vs.find(function(x){ return /en[-_]US/i.test(x.lang) && /female|samantha|zira|aria|jenny/i.test(x.name); })
+       || vs.find(function(x){ return /en[-_]US/i.test(x.lang); })
+       || vs.find(function(x){ return /^en/i.test(x.lang); });
+  if(v) u.voice = v;
+  if(el){ document.querySelectorAll('.speak.playing').forEach(function(b){ b.classList.remove('playing'); });
+    el.classList.add('playing'); u.onend = function(){ el.classList.remove('playing'); }; }
+  window.speechSynthesis.speak(u);
+}
+function speakFrom(btn){
+  var card = btn.closest('.card');
+  speak(card.querySelector('.wd').textContent.trim(), null);
+}
+function speakExample(btn, text){ speak(text, null); }
+
+document.addEventListener('DOMContentLoaded', function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var input = document.getElementById('q');
+  var cnt = document.getElementById('cnt');
+  var empty = document.querySelector('.empty');
+  var hideEn = false, hideCn = false;
+
+  function apply(){
+    var q = (input.value || '').trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(c){
+      var hit = !q || (c.dataset.search || '').indexOf(q) !== -1;
+      c.classList.toggle('hidden', !hit);
+      if(hit) shown++;
+    });
+    cnt.textContent = '显示 ' + shown + ' / ' + cards.length + ' 个单词';
+    empty.style.display = shown === 0 ? 'block' : 'none';
+  }
+  input.addEventListener('input', apply);
+
+  document.getElementById('tgEn').addEventListener('click', function(){
+    hideEn = !hideEn; this.classList.toggle('on', hideEn);
+    document.querySelectorAll('.ex .en, .quote .qen, .mean .de').forEach(function(e){
+      e.style.visibility = hideEn ? 'hidden' : 'visible'; });
+  });
+  document.getElementById('tgCn').addEventListener('click', function(){
+    hideCn = !hideCn; this.classList.toggle('on', hideCn);
+    document.querySelectorAll('.ex .cn, .quote .qcn, .mean, .ph-item span').forEach(function(e){
+      e.style.visibility = hideCn ? 'hidden' : 'visible'; });
+  });
+  document.getElementById('all').addEventListener('click', function(){
+    if(!('speechSynthesis' in window)){ alert('当前浏览器不支持语音朗读。'); return; }
+    var t = this; t.classList.toggle('on');
+    if(t.classList.contains('on')){
+      var list = cards.filter(function(c){ return !c.classList.contains('hidden'); })
+                      .map(function(c){ return c.querySelector('.wd').textContent.trim(); });
+      var i = 0;
+      (function next(){
+        if(i >= list.length || !t.classList.contains('on')){ t.classList.remove('on'); return; }
+        var u = new SpeechSynthesisUtterance(list[i++]);
+        u.lang='en-US'; u.rate=0.85; u.onend = next; u.onerror = next;
+        window.speechSynthesis.speak(u);
+      })();
+    } else { window.speechSynthesis.cancel(); }
+  });
+
+  apply();
+  if(window.speechSynthesis) window.speechSynthesis.getVoices();
+});
+window.addEventListener('load', function(){ if(window.speechSynthesis) window.speechSynthesis.getVoices(); });
+</script>
+</body>
+</html>

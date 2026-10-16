@@ -56,22 +56,8 @@ MODULES = {
         "icon": "🗄️",
         "folder": "learn-data-process",
     },
-    "programming": {
-        "name": "编程本质",
-        "desc": "关于编程范式、本质与思维方式的系统性研究。",
-        "color": "#b24020",
-        "icon": "💻",
-        "folder": "programming",
-    },
-    "english": {
-        "name": "英语学习",
-        "desc": "每日英语核心词等语言学习资料。",
-        "color": "#0a8754",
-        "icon": "🔤",
-        "folder": "learn-english",
-    },
 }
-MODULE_ORDER = ["management", "tech", "bdl", "industry", "data", "programming", "english"]
+MODULE_ORDER = ["management", "tech", "bdl", "industry", "data"]
 
 CONTENT_CAP = 80000  # max characters indexed per file (for search)
 
@@ -328,7 +314,7 @@ BODY = """</head>
 <main class="container" id="top">
   <section class="hero" id="top-hero">
     <h1>个人知识库 · Knowledge Hub</h1>
-    <p>管理学习 · 技术框架 · 业务描述语言 · 行业研究 · 数据处理 · 编程本质 · 英语学习 — 模块化整理，一键互联检索</p>
+    <p>管理学习 · 技术框架 · 业务描述语言 · 行业研究 · 数据处理 — 模块化整理，一键互联检索</p>
     <div class="stats">
       <div class="stat"><b>__STAT_DOCS__</b><span>篇文档</span></div>
       <div class="stat"><b>__STAT_MODS__</b><span>个模块</span></div>

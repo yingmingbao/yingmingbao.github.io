@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>企业决策分析中的龙卷风图：构建方法、规范与完整案例</title>
+<style>
+  :root{
+    --bg:#fdfcf9; --ink:#1f2328; --muted:#5b6470; --line:#e6e1d6;
+    --accent:#8a6d3b; --blue:#2f6f8f; --plum:#7a5a86; --green:#4b7d5b; --red:#a8544a;
+    --soft:#f5f1e8; --white:#fff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+    line-height:1.85;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:56px 28px 100px}
+  h1{font-size:31px;letter-spacing:.5px;margin:0 0 8px;line-height:1.35}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:36px}
+  h2{font-size:22px;margin:58px 0 16px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.45}
+  h3{font-size:17px;margin:28px 0 8px;line-height:1.5}
+  h4{font-size:15.5px;margin:20px 0 6px;color:var(--accent)}
+  p{margin:13px 0}
+  ul,ol{margin:10px 0;padding-left:23px}
+  li{margin:8px 0}
+  strong{font-weight:600;color:#15181c}
+  code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:14px;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  .lead{font-size:17px;background:var(--soft);padding:22px 24px;border-radius:10px;
+    border:1px solid var(--line);line-height:1.85}
+  .lead .core{font-size:17.5px;border-bottom:1px dashed #cfc6b2;padding-bottom:13px;margin-bottom:13px}
+  .toc{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:26px 0 6px;font-size:14px}
+  .toc a{display:block;padding:9px 12px;border:1px solid var(--line);border-radius:7px;
+    background:var(--white);color:var(--ink);text-decoration:none}
+  .toc a:hover{border-color:var(--accent);color:var(--accent)}
+  .toc a b{font-weight:600;margin-right:6px;color:var(--accent)}
+  .figure{margin:28px 0;background:var(--white);border:1px solid var(--line);
+    border-radius:10px;padding:16px 18px 10px}
+  .figure svg{display:block;width:100%;height:auto}
+  .cap{color:var(--muted);font-size:13px;text-align:center;margin:8px 0 6px;line-height:1.7}
+  .essence{background:#fbf6ec;border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:14px 19px;margin:20px 0 24px;font-size:16.5px;line-height:1.8}
+  .essence b{color:var(--accent)}
+  .blk{border:1px solid var(--line);border-radius:9px;background:var(--white);
+    padding:16px 20px;margin:16px 0}
+  .blk.p{border-top:3px solid var(--accent)}
+  .blk.m{border-top:3px solid var(--blue)}
+  .blk.l{border-top:3px solid var(--plum)}
+  .blk.g{border-top:3px solid var(--green)}
+  .blk.r{border-top:3px solid var(--red)}
+  .blk .lbl{display:inline-block;font-size:12px;color:#fff;padding:2px 10px;border-radius:20px;
+    margin-bottom:9px;letter-spacing:.5px}
+  .blk.p .lbl{background:var(--accent)} .blk.m .lbl{background:var(--blue)}
+  .blk.l .lbl{background:var(--plum)} .blk.g .lbl{background:var(--green)}
+  .blk.r .lbl{background:var(--red)}
+  .blk h3{margin:0 0 8px}
+  .blk ol,.blk ul{margin:6px 0 0;padding-left:21px}
+  .blk ol li,.blk ul li{margin:9px 0}
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px;
+    background:var(--white);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{padding:10px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.7}
+  th{background:#f6f2e9;font-weight:600;font-size:14px;color:#3a3327}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;white-space:nowrap}
+  .anchor{margin-top:11px;font-size:13px;color:var(--muted);border-top:1px dashed var(--line);
+    padding-top:9px;line-height:1.75}
+  .anchor b{font-weight:600;color:#7a7168}
+  .note{background:#fbf1ef;border:1px solid #e8d5d0;border-left:4px solid var(--red);
+    border-radius:8px;padding:13px 18px;margin:18px 0;font-size:15.5px}
+  .note b{color:var(--red)}
+  .kv{display:grid;grid-template-columns:132px 1fr;gap:6px 16px;margin:16px 0;font-size:15.5px}
+  .kv .k{color:var(--accent);font-weight:600}
+  .steps{counter-reset:st;margin:18px 0;padding-left:0;list-style:none}
+  .steps li{counter-increment:st;position:relative;padding-left:44px;margin:16px 0}
+  .steps li::before{content:counter(st);position:absolute;left:0;top:2px;width:28px;height:28px;
+    background:var(--accent);color:#fff;border-radius:50%;display:flex;align:center;
+    justify-content:center;font-size:14px;font-weight:600}
+  .foot{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:13.5px;color:var(--muted);line-height:1.85}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+  .cmp .cell{border:1px solid var(--line);border-radius:9px;padding:14px 17px;background:var(--white);font-size:15px}
+  .cmp .cell .h{font-weight:600;color:var(--accent);margin-bottom:5px;font-size:15px}
+  .cmp .cell.bad .h{color:var(--red)}
+  .cmp .cell.good .h{color:var(--green)}
+  pre{background:#f6f2e9;border:1px solid var(--line);border-radius:8px;padding:14px 16px;
+    overflow:auto;font-size:13px;line-height:1.75;font-family:ui-monospace,Menlo,Consolas,monospace}
+  pre code{background:none;padding:0;font-size:13px}
+  ul.chk{list-style:none;padding-left:4px}
+  ul.chk li{margin:9px 0}
+  ul.chk li::before{content:"☐";color:var(--accent);margin-right:9px;font-weight:600}
+  .sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+  @media(max-width:640px){.toc{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}
+    .kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>企业决策分析中的龙卷风图（Tornado Diagram）：构建方法、规范与完整案例</h1>
+<div class="sub">从适用场景、数据要求、坐标轴与置信区间，到排序标注与可读性优化的完整方法体系 ｜ 含一个 NPV 敏感度分析全流程算例 ｜ 全文约 10,000 字</div>
+
+<div class="lead">
+<div class="core"><strong>一句话定义：</strong>龙卷风图是把"每个因素在合理区间内单独变动时，目标指标如何摆动"画成的一组横向条形图——条形以基准值为中心向左（不利）向右（有利）展开，按总摆幅从大到小自上而下排列，因整体形似龙卷风而得名。</div>
+它回答的是企业决策中最常被问到、也最难凭直觉回答的问题：<strong>在几十个假设里，哪几个真正决定成败？</strong>龙卷风图的价值不在于精确预测，而在于把"什么最重要"从一页表格数字变成一眼可读的排序，从而把有限的管理注意力、合同谈判筹码和对冲资源，配置到真正敏感的少数因素上。
+</div>
+
+<div class="toc">
+  <a href="#s1"><b>01</b>概念与原理</a>
+  <a href="#s2"><b>02</b>适用场景与边界</a>
+  <a href="#s3"><b>03</b>数据要求</a>
+  <a href="#s4"><b>04</b>构建七步法</a>
+  <a href="#s5"><b>05</b>坐标轴与置信区间</a>
+  <a href="#s6"><b>06</b>排序与标注规范</a>
+  <a href="#s7"><b>07</b>样式与可读性</a>
+  <a href="#s8"><b>08</b>完整案例实操</a>
+  <a href="#s9"><b>09</b>敏感度与风险判断</a>
+  <a href="#s10"><b>10</b>常见错误与清单</a>
+  <a href="#sa"><b>附A</b>Excel 操作步骤</a>
+  <a href="#sb"><b>附B</b>Python 代码</a>
+  <a href="#sc"><b>附C</b>术语表</a>
+</div>
+
+<!-- ================= 一、概念与原理 ================= -->
+<h2 id="s1">一、概念与原理</h2>
+
+<h3>1.1 是什么：单因素敏感度分析的标准化图形</h3>
+<p>龙卷风图（Tornado Diagram，又称敏感度图、Swung Bar Chart）的本质是<strong>单因素轮动法</strong>（One-at-a-Time, OAT）的可视化：保持其他所有因素在基准值不变，每次只把一个因素从"悲观值"推到"乐观值"，记录目标指标（NPV、IRR、利润、回收期等）的两次结果；把这两个结果用一根横条形连起来，所有因素按条形总长度降序排列，就得到龙卷风图。</p>
+<p>它的信息结构非常紧凑：<strong>条形长度 = 该因素的敏感度</strong>（在给定变动范围内能造成多大摆动）；<strong>条形是否跨越关键阈值线</strong>（如 NPV=0、目标收益率线）= 该因素能否单独改变决策结论；<strong>排列顺序</strong> = 管理注意力的优先级。</p>
+
+<h3>1.2 为什么有效：三个其他图形难以替代的优势</h3>
+<ul>
+<li><strong>排序即结论。</strong>管理层不需要读懂模型，只需要看懂"哪根 bar 最长"，就能立刻知道该盯什么、该谈什么、该对冲什么。</li>
+<li><strong>天然带方向。</strong>每根 bar 都有不利端与有利端，直接呈现"这个假设往坏走一步的代价"，与风险管理语言同构。</li>
+<li><strong>制作成本极低。</strong>不需要分布假设、不需要模拟，一个财务模型加一张图就能完成，是蒙特卡洛之前性价比最高的一级筛子。</li>
+</ul>
+
+<h3>1.3 与相邻工具的分工</h3>
+<table>
+<thead><tr><th style="width:120px">工具</th><th style="width:210px">回答的问题</th><th style="width:110px">因素互动</th><th>输出与定位</th></tr></thead>
+<tbody>
+<tr><td><strong>龙卷风图</strong></td><td>单因素在合理区间内变动，目标指标摆多大？谁最重要？</td><td>不含<br>（一次一个）</td><td>排序条形图。初步筛选、优先级排序、向上沟通。<strong>本报告主题</strong></td></tr>
+<tr><td><strong>蜘蛛图</strong></td><td>所有因素同比例变动（如全部 +10%）时，指标各自如何响应？</td><td>可含<br>（统一比例）</td><td>雷达/放射状折线。快速扫描，但"同比例"假设往往不现实</td></tr>
+<tr><td><strong>情景分析</strong></td><td>几个预设的组合情景（乐观/基准/悲观/压力）下结果如何？</td><td>含<br>（预设组合）</td><td>少数情景值。战略规划、压力测试，回答"具体局面"</td></tr>
+<tr><td><strong>蒙特卡洛模拟</strong></td><td>因素按各自分布联合抽样时，指标的结果分布与超越概率？</td><td>含<br>（相关抽样）</td><td>分布直方图、P10/P50/P90、概率型龙卷风图。风险量化</td></tr>
+</tbody>
+</table>
+<div class="essence"><b>分工原则：</b>龙卷风图负责"排序与筛选"，情景分析负责"具体局面"，蒙特卡洛负责"分布与概率"。三者是递进关系而非竞争关系——龙卷风图筛出的头部因素，正是后两者应该重点展开的对象。</div>
+
+<!-- ================= 二、适用场景 ================= -->
+<h2 id="s2">二、适用场景与边界</h2>
+
+<h3>2.1 典型适用场景</h3>
+<div class="blk p"><span class="lbl">高频场景</span>
+<ul>
+<li><strong>投资项目决策：</strong>对 NPV/IRR 模型做敏感度排序，向投委会说明"这个项目的回报对什么最敏感"，是龙卷风图最经典的应用。</li>
+<li><strong>定价与成本决策：</strong>判断价格战承受力、成本传导空间，量化"降价 5% 还能不能活"。</li>
+<li><strong>预算与资源分配：</strong>在收入、成本、汇率、利率等多重不确定下，找出最值得投入管理精力的预算科目。</li>
+<li><strong>合同谈判优先级：</strong>把谈判筹码分配到敏感度最高的条款上（价格调整公式、锁价、不可预见费、违约金上限）。</li>
+<li><strong>风险沟通与汇报：</strong>向董事会、上级单位、金融机构直观展示项目风险结构。</li>
+<li><strong>产品与研发组合：</strong>比较多个方案时，用各自的龙卷风图对比"谁的假设更脆弱"。</li>
+</ul>
+</div>
+
+<h3>2.2 不适用与慎用情形</h3>
+<div class="cmp">
+<div class="cell good"><div class="h">适合使用</div>
+目标指标可建模为若干连续参数的函数；因素各自有可信的变动区间；关心"哪个假设最重要"；需要在早期快速筛出重点；受众是需要快速形成判断的管理层。</div>
+<div class="cell bad"><div class="h">不适合 / 需补充</div>
+因素间存在强互动或非线性阈值（一次只动一个会系统性低估风险，应补情景分析/蒙特卡洛）；决策变量是离散选择（应建决策树）；因素强相关（如价格与销量联动，OAT 假设失效）；只关心极端尾部概率（应看分布而非摆幅）；因素数量过少（两三根 bar 直接列表即可）。</div>
+</div>
+<div class="note"><b>最重要的一条边界：</b>龙卷风图是<strong>局部</strong>敏感度分析——它衡量的是"在其他条件不变时，单独推动一个因素的边际影响"。当因素在现实中联动（降价往往换量、通胀往往同时推高成本与折现率）时，真实风险通常<strong>大于</strong>龙卷风图显示的水平。因此龙卷风图必须与情景/压力测试配对使用（本报告 8.7 节有算例演示）。</div>
+
+<!-- ================= 三、数据要求 ================= -->
+<h2 id="s3">三、数据要求</h2>
+
+<h3>3.1 数据清单</h3>
+<table>
+<thead><tr><th style="width:150px">数据项</th><th>要求与说明</th></tr></thead>
+<tbody>
+<tr><td><strong>目标函数与模型</strong></td><td>明确到唯一指标（NPV / IRR / 年均 EVA / 回收期），且有可复算的模型（Excel 表或脚本）。模型必须先在基准值上通过对账（与预算、历史项目、报价单校验）。</td></tr>
+<tr><td><strong>参数基准值</strong></td><td>每个因素一个基准值，标注单位与口径（含税/不含税、名义/实际、时点/期间）。口径不统一是常见错误源。</td></tr>
+<tr><td><strong>变动区间（悲观值/乐观值）</strong></td><td>核心数据。要求"可信且可比"：可信 = 有依据（见 3.2）；可比 = 各因素的区间应反映同等置信度的判断，否则摆幅不可直接比较，须在图中明示。</td></tr>
+<tr><td><strong>区间设定依据</strong></td><td>每个因素的区间依据要留档（历史波动率、专家判断记录、行业数据、合同条款），评审时会被追问。</td></tr>
+<tr><td><strong>分布假设（仅概率版需要）</strong></td><td>若要画概率龙卷风图，需为每个因素指定分布（正态/三角/对数正态等）及参数，并说明理由。</td></tr>
+<tr><td><strong>相关性判断</strong></td><td>明确因素间是否存在显著相关（价量、成本与通胀、汇率与利率）。强相关时 OAT 结论需降权解读，或改用相关抽样。</td></tr>
+<tr><td><strong>模拟设置（仅概率版）</strong></td><td>模拟次数 ≥ 5,000～10,000 次；固定随机种子以保证可复现；记录软件与版本。</td></tr>
+<tr><td><strong>元数据</strong></td><td>模型版本、数据来源、编制人/日期、假设清单。图注必须可回溯。</td></tr>
+</tbody>
+</table>
+
+<h3>3.2 变动区间的四种设定方法</h3>
+<table>
+<thead><tr><th style="width:130px">方法</th><th>做法</th><th style="width:210px">适用与注意</th></tr></thead>
+<tbody>
+<tr><td><strong>历史波动率</strong></td><td>取该变量过去 3～5 年的标准差或极值带（如大宗商品价格年化波动率 σ≈9%，取 ±2σ 或 ±10%）</td><td>有充足历史数据的市场变量（原材料、汇率、利率）；注意结构性变化会让历史失效</td></tr>
+<tr><td><strong>专家德尔菲</strong></td><td>多轮匿名征求领域专家，取 P10/P90 分位共识</td><td>无历史数据的战略变量（销量、渗透率）；要记录参与人与轮次</td></tr>
+<tr><td><strong>行业基准</strong></td><td>对标同类项目的实际偏差分布（如行业概算偏差 ±10%、达产率 70%～110%）</td><td>投资额、工期、达产进度；注意选取可比项目</td></tr>
+<tr><td><strong>硬约束法</strong></td><td>以合同条款、政策上限、物理极限设定边界（最低保护价、产能上限、许可额度）</td><td>有合同/监管锚点的变量；区间往往不对称，如实反映即可</td></tr>
+</tbody>
+</table>
+
+<h3>3.3 口径与模型验证</h3>
+<ul>
+<li><strong>单位统一：</strong>全图只用一个单位（如"万元"），量级差异大的指标（利润 vs 百分比）不要混入同一张图。</li>
+<li><strong>模型对账：</strong>基准 NPV 必须与独立估算（另一方模型、历史类似项目、供应商报价）交叉验证，误差可解释。</li>
+<li><strong>极限值检查：</strong>把每个因素推到极值，确认模型输出方向与量级合理（不会出现负销量、负成本等荒谬中间态）。</li>
+</ul>
+
+<!-- ================= 四、构建七步法 ================= -->
+<h2 id="s4">四、构建方法：七步流程</h2>
+
+<ol class="steps">
+<li><strong>明确决策问题与目标指标。</strong>写清楚"为哪个决策画图"：是否投资某项目、是否接受某报价、是否启动某计划。指标唯一（如 5 年期 NPV），并明确决策阈值（NPV&gt;0 且 IRR&gt;WACC）。</li>
+<li><strong>建立基准模型并对账。</strong>把所有假设固化为参数表 + 现金流表，基准情形跑通并与外部数据校验。基准值画成图中的竖直虚线——它是整张图的锚。</li>
+<li><strong>筛选因素并设定变动范围。</strong>从长假设清单中筛出 5～12 个关键因素（筛法：专家列举 + 初步试算 + 剔除明显二阶因素），按 3.2 的方法为每个因素设定悲观/乐观值与依据。</li>
+<li><strong>单因素轮动测算。</strong>严格保持"其他因素 = 基准值"，逐个因素代入悲观值、乐观值各跑一次模型，记录目标指标。建议用数据表/脚本批量执行，避免手工改参出错。</li>
+<li><strong>计算摆幅并排序。</strong>摆幅 = 乐观值 − 悲观值（取绝对值）。按摆幅降序排列，最大的放最上面。同时计算两个派生指标：<strong>单位敏感度</strong>（每变动 1% 对指标的影响）和<strong>弹性系数</strong>（指标变动% ÷ 参数变动%），用于跨因素可比性修正。</li>
+<li><strong>选择制式并成图。</strong>绝对值制（X 轴 = 指标值）适合决策评审；偏离量制（X 轴 = 相对基准的偏离）适合内部分析。按第五至七章的规范设置坐标轴、排序、标注、配色。</li>
+<li><strong>解读并转化为行动。</strong>回答四个问题：谁最敏感？谁能单独翻转结论？缓冲空间多大？因素间是否联动？把结论翻译成监控 KPI、合同条款、对冲手段或分期投资的期权设计（见第九章）。</li>
+</ol>
+
+<!-- ================= 五、坐标轴与置信区间 ================= -->
+<h2 id="s5">五、坐标轴与置信区间设置</h2>
+
+<h3>5.1 坐标轴：两种制式</h3>
+<table>
+<thead><tr><th style="width:110px">制式</th><th style="width:170px">X 轴含义与画法</th><th>优点</th><th style="width:150px">适用场合</th></tr></thead>
+<tbody>
+<tr><td><strong>绝对值制</strong></td><td>X 轴 = 目标指标值（如 NPV，万元）。每根 bar 从悲观值延伸到乐观值，基准值为竖直虚线</td><td>直接看出基准位置、bar 是否跨越盈亏线（NPV=0），决策者无需心算换算</td><td>对外汇报、投委会评审、需要判断"会不会亏"的场合</td></tr>
+<tr><td><strong>偏离量制</strong></td><td>X 轴 = 相对基准的偏离量（ΔNPV）。bar 中心在 0，左负右正</td><td>强调各因素"贡献了多少摆动"，跨因素可比性强；适合基准值很大、关注相对影响时</td><td>内部分析、因素很多时的排序比较</td></tr>
+</tbody>
+</table>
+<h4>坐标轴设置要点</h4>
+<ul>
+<li><strong>单位入轴：</strong>轴标题必须带单位（"项目净现值 NPV（万元）"）；图题带指标名与基准值。</li>
+<li><strong>nice 刻度：</strong>刻度取整齐数字（每 500 万元一格），刻度数 5～9 个，太多则密、太少则粗。</li>
+<li><strong>务必包含负值区：</strong>若指标可能为负（如 NPV），X 轴下限要留出负值空间，否则 bar 会被截断、跨越阈值的视觉信息丢失。</li>
+<li><strong>两条基准线：</strong>竖直虚线标基准值；若存在决策阈值（NPV=0、目标收益率），用另一条略粗的实线标出，可加浅色底纹区分"可行区/不可行区"。</li>
+<li><strong>类别轴（Y 轴）：</strong>只有因素名称，按摆幅降序；<strong>禁用双 Y 轴</strong>，不要把不同指标塞进一张龙卷风图。</li>
+</ul>
+
+<h3>5.2 置信区间设置</h3>
+<p>这是最容易被含糊处理的一环。龙卷风图的"区间"有两种完全不同的性质，混用会导致严重的解读错误。</p>
+<table>
+<thead><tr><th style="width:130px">类型</th><th style="width:190px">条形端点含义</th><th style="width:150px">推荐区间</th><th>使用条件与要点</th></tr></thead>
+<tbody>
+<tr><td><strong>确定性情景区间</strong></td><td>悲观/乐观<strong>情形</strong>下的指标点估计值，是"if-then"结果，<strong>不是统计置信区间</strong></td><td>不适用（点估计）</td><td>单因素 OAT 的默认形态。必须在图注写明"条形为情形值，非置信区间"，避免被误读</td></tr>
+<tr><td><strong>概率型区间</strong>（蒙特卡洛龙卷风图）</td><td>该因素单独抽样（其他因素按设定处理）时，目标指标分布的 P10 / P90 端点，P50 为中心</td><td><strong>P10–P90（80% 区间）</strong>为主流；更保守可用 P5–P95（90%）</td><td>需要分布假设、≥1 万次模拟、固定随机种子；条形长度 = 敏感度，条形"厚度/宽度" = 该因素的不确定性，二者相乘近似风险贡献</td></tr>
+<tr><td><strong>估计不确定性误差棒</strong></td><td>摆幅本身的抽样误差（参数由样本估计时）</td><td>±1.96×标准误</td><td>当参数来自回归/实测样本（如价格弹性估计值 ±SE），在 bar 端加误差棒，体现"连敏感度本身都没测准"</td></tr>
+</tbody>
+</table>
+<div class="blk m"><span class="lbl">关键规则</span>
+<ul>
+<li><strong>不要用 min/max 做概率端点：</strong>极值随模拟次数剧烈漂移，不可复现也不稳定，应使用分位数。</li>
+<li><strong>不要混图：</strong>确定性情形 bar 与概率分位 bar 不要画在同一张图、同一坐标轴上。</li>
+<li><strong>区间不可外推：</strong>概率龙卷风图展示的是"单个因素在其设定分布内变动时"的条件区间，<strong>不是</strong>项目总回报的总体分布——后者要看直方图/CDF，两者数值不可互相引用。</li>
+<li><strong>明示分位定义：</strong>图注写明"P10–P90，基于 10,000 次蒙特卡洛模拟，随机种子 20261016"。</li>
+</ul>
+</div>
+
+<!-- ================= 六、排序与标注规范 ================= -->
+<h2 id="s6">六、正负因素排序与标注规范</h2>
+
+<h3>6.1 排序规则</h3>
+<ul>
+<li><strong>主排序（默认）：</strong>按<strong>总摆幅</strong>（|乐观 − 悲观|）降序，最长的 bar 置于最上方——视觉动线自然从最重要到最次要。</li>
+<li><strong>下行视角（可选）：</strong>若决策核心是"最坏会怎样"（如债务契约、保本经营），改按<strong>不利端摆幅</strong>降序，并在图注说明排序口径。</li>
+<li><strong>剔除与归并：</strong>摆幅小于决策阈值（如引起的 NPV 变动 &lt; 基准值的 2%）的因素可剔除或合并为"其他"，在图注说明，保持 5～12 根的清爽规模。</li>
+<li><strong>并列与同族因素：</strong>摆幅接近时按业务重要性打破平局；同一因素的多个子项（如成本的料工费）可用缩进表示层级。</li>
+<li><strong>方向一致性：</strong>每根 bar 的不利端在左、有利端在右；若某因素只有单侧影响（如补贴退坡只可能变差），bar 只画一侧，如实呈现。</li>
+</ul>
+
+<h3>6.2 标注规范清单</h3>
+<table>
+<thead><tr><th style="width:150px">标注对象</th><th>规范</th></tr></thead>
+<tbody>
+<tr><td><strong>因素名称</strong></td><td>三要素齐全：参数业务名 + 基准值与单位 + 变动范围。例："产品单价（基准 120 元/件，±8%）"。只写"价格"不给基准与幅度是常见缺陷</td></tr>
+<tr><td><strong>条形端点值</strong></td><td>两端标注该情形下的指标值，与坐标轴同单位、同精度；千分位分隔；数字用等宽字体（tabular figures）保证对齐</td></tr>
+<tr><td><strong>基准线与阈值线</strong></td><td>基准值竖直虚线（标注"基准 800"）；决策阈值线（NPV=0）略粗实线（标注"NPV=0 / 盈亏平衡"）；可行/不可行区可加浅色底纹</td></tr>
+<tr><td><strong>阈值穿越警示</strong></td><td>bar 跨越盈亏线时（该因素可单独翻转结论），端点值可用强调色或加"⚠ 由盈转亏"标记——这是全图信息密度最高的信号</td></tr>
+<tr><td><strong>颜色图例</strong></td><td>说明正负端配色含义（见 7.1），置于图的上沿或右侧，不与条形重叠</td></tr>
+<tr><td><strong>图题</strong></td><td>三要素：指标 + 单位 + 方法。例："项目 NPV 龙卷风图（万元）：单因素敏感度，其余因素固定"</td></tr>
+<tr><td><strong>脚注</strong></td><td>模型版本、变动范围依据摘要、数据来源、编制日期；概率版加模拟次数与随机种子</td></tr>
+<tr><td><strong>摆幅与弹性（可选）</strong></td><td>条端或右侧附小字"摆幅 2,184"，或另附弹性系数表，弥补"变动范围不同导致摆幅不可直接比"的缺陷</td></tr>
+</tbody>
+</table>
+
+<!-- ================= 七、样式与可读性 ================= -->
+<h2 id="s7">七、图表样式与可读性优化要点</h2>
+
+<h3>7.1 配色：正负端的方向约定</h3>
+<p>龙卷风图的左右两段必须用可辨识的双色区分。约定有两种，<strong>在中国财务语境下默认使用前者</strong>：</p>
+<table>
+<thead><tr><th style="width:160px">配色方案</th><th>不利端（左）</th><th>有利端（右）</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><strong>中国财务惯例（默认）</strong></td><td><span class="sw" style="background:#4B7D5B"></span>绿 = 不利 / 减值 / 下行</td><td><span class="sw" style="background:#A8544A"></span>红 = 有利 / 增值 / 上行</td><td>与 A 股"涨红跌绿"一致，符合国内管理层直觉；面向欧美受众时需切换并在图注说明</td></tr>
+<tr><td><strong>国际惯例（备用）</strong></td><td>红 = 不利 / 风险</td><td>绿 = 有利 / 改善</td><td>西方财务报表常用；跨国汇报时与受众对齐</td></tr>
+<tr><td><strong>单色方案</strong></td><td colspan="2">同一色系深浅两档（深 = 不利，浅 = 有利）</td><td>黑白打印、色盲友好场景；需靠图例明确方向</td></tr>
+</tbody>
+</table>
+<div class="note"><b>注意：</b>配色方向一旦选定，全图、全报告必须一致；跨文化汇报时在图注注明"本图采用中国财务配色惯例（红=有利，绿=不利）"，避免误读。</div>
+
+<h3>7.2 版式与可读性</h3>
+<ul>
+<li><strong>横向条形：</strong>因素名长、数值范围大，横向布局保证名称完整可读；bar 高度约为行距的 50%～55%，留足呼吸感。</li>
+<li><strong>左对齐名称区：</strong>因素名统一右对齐至绘图区左缘，形成整齐的视觉边缘；名称与数值之间留 ≥10px 间距。</li>
+<li><strong>网格线浅而后撤：</strong>浅色虚线置于条形下层，仅保留刻度参考功能，不与数据争夺注意力。</li>
+<li><strong>强调线只留两条：</strong>基准线（虚线）+ 阈值线（实线）加粗，其余线条一律弱化。</li>
+<li><strong>数字等宽、右端对齐：</strong>端点值用等宽数字字体；同一图内小数位数一致。</li>
+<li><strong>字号与对比度：</strong>正文 ≥10.5pt，文字与背景对比度 ≥4.5:1；投屏场景主字号再放大一档。</li>
+<li><strong>禁项：</strong>3D 效果、渐变填充、阴影、圆角过度装饰、双坐标轴、截断轴（bar 不得被 X 轴边界切断）。</li>
+<li><strong>打印友好：</strong>白底、避免大面积深色填充；先转灰度检查可读性。</li>
+</ul>
+
+<h3>7.3 规模控制</h3>
+<ul>
+<li>单图因素数 <strong>5～12</strong> 个：少于 5 个不如直接列表；多于 12 个则视觉噪音超过信息量，应归并或分层。</li>
+<li>一行一个因素，行高一致；相关因素（如成本族）相邻放置，可用缩进体现层级。</li>
+</ul>
+
+<h3>7.4 反面模式清单</h3>
+<div class="blk r"><span class="lbl">不要这样做</span>
+<ul>
+<li>各因素变动幅度随意设定（有的 ±5%、有的 ±30%）却直接比较摆幅，且不在图注说明；</li>
+<li>把"悲观/乐观情形值"说成"80% 置信区间"；</li>
+<li>因素名只有"收入""成本"这种词，无基准值、无单位、无幅度；</li>
+<li>X 轴从 0 起而所有 bar 都在高位，摆幅差异被视觉压缩；</li>
+<li>图题只写"敏感度分析"，无指标、无单位、无方法；</li>
+<li>用 min/max 当概率端点；图注不写模拟次数与种子；</li>
+<li>一张图里又画 NPV 又画 IRR；</li>
+<li>忽略因素相关性提示（价量联动时不加任何说明）。</li>
+</ul>
+</div>
+
+<!-- ================= 八、完整案例 ================= -->
+<h2 id="s8">八、完整案例：从数据准备到成图</h2>
+
+<h3>8.1 决策问题</h3>
+<p>某制造企业拟投资 <strong>6,000 万元</strong>新建一条智能装配产线，运营期 5 年。基准测算 NPV ≈ 800 万元、IRR ≈ 14.7%，高于 10% 的 WACC，项目可行。决策层需要回答：<strong>这个结论对哪些假设最敏感？哪些假设单独恶化就能让项目由盈转亏？</strong>为此构建单因素龙卷风图。</p>
+
+<h3>8.2 基准模型（数据准备第一步）</h3>
+<table>
+<thead><tr><th style="width:180px">参数</th><th style="width:150px">基准值</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>初始投资 I₀</td><td class="num">6,000 万元</td><td>t=0 一次性投入（设备 + 厂房改造）</td></tr>
+<tr><td>运营期 / 残值</td><td class="num">5 年 / 1,000 万元</td><td>直线折旧，年折旧 1,000 万元</td></tr>
+<tr><td>年销量 Q</td><td class="num">40 万件</td><td>达产年销量</td></tr>
+<tr><td>产品单价 P</td><td class="num">120 元/件</td><td>年收入 = 40 × 120 = 4,800 万元</td></tr>
+<tr><td>单位变动成本</td><td class="num">62 元/件</td><td>合计 2,480 万元/年；其中原材料 34 元/件（1,360 万元）</td></tr>
+<tr><td>固定运营成本</td><td class="num">480 万元/年</td><td>人工 + 制造费用（付现）</td></tr>
+<tr><td>所得税率</td><td class="num">25%</td><td>—</td></tr>
+<tr><td>折现率 WACC</td><td class="num">10%</td><td>5 年期年金现值系数 3.7908</td></tr>
+</tbody>
+</table>
+<p>基准年度现金流：EBIT = 4,800 − 2,480 − 480 − 1,000 = <strong>840 万元</strong>；税后 NOPAT = 630 万元；经营现金流 OCF = 630 + 1,000 = <strong>1,630 万元/年</strong>；第 5 年另回收残值 1,000 万元。</p>
+<table>
+<thead><tr><th>项目（万元）</th><th class="num">第0年</th><th class="num">第1年</th><th class="num">第2年</th><th class="num">第3年</th><th class="num">第4年</th><th class="num">第5年</th></tr></thead>
+<tbody>
+<tr><td>经营现金流 OCF</td><td class="num">—</td><td class="num">1,630</td><td class="num">1,630</td><td class="num">1,630</td><td class="num">1,630</td><td class="num">1,630</td></tr>
+<tr><td>残值回收</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">1,000</td></tr>
+<tr><td>初始投资</td><td class="num">-6,000</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><strong>折现现金流</strong></td><td class="num"><strong>-6,000</strong></td><td class="num"><strong>1,482</strong></td><td class="num"><strong>1,347</strong></td><td class="num"><strong>1,225</strong></td><td class="num"><strong>1,113</strong></td><td class="num"><strong>1,633</strong></td></tr>
+</tbody>
+</table>
+<p>NPV = −6,000 + 1,482 + 1,347 + 1,225 + 1,113 + 1,633 = <strong>799.9 ≈ 800 万元</strong>。模型与第三方估算交叉验证误差 &lt;3%，通过对账。</p>
+
+<h3>8.3 因素筛选与变动范围设定（数据准备第二步）</h3>
+<table>
+<thead><tr><th style="width:110px">因素</th><th style="width:120px">基准值</th><th style="width:110px">变动范围</th><th>范围设定依据</th></tr></thead>
+<tbody>
+<tr><td>产品单价</td><td class="num">120 元/件</td><td class="num">±8%</td><td>行业近 3 年成交价波动带 ±7%～9%；竞品降价空间评估</td></tr>
+<tr><td>年销量</td><td class="num">40 万件</td><td class="num">±10%</td><td>达产进度与渠道铺设不确定；大客户订单波动区间</td></tr>
+<tr><td>初始投资</td><td class="num">6,000 万元</td><td class="num">±10%</td><td>同类项目概算偏差统计 ±10%；已设 10% 不可预见费</td></tr>
+<tr><td>原材料成本</td><td class="num">34 元/件</td><td class="num">±10%</td><td>主要大宗原料 12 个月历史年化波动率 ≈9%</td></tr>
+<tr><td>折现率 WACC</td><td class="num">10%</td><td class="num">±2 个百分点</td><td>利率情景与贝塔变动导致的 WACC 区间 8%～12%</td></tr>
+<tr><td>固定运营成本</td><td class="num">480 万元/年</td><td class="num">±15%</td><td>人工成本通胀 + 能耗价格情景</td></tr>
+</tbody>
+</table>
+
+<h3>8.4 单因素轮动测算（数据准备第三步）</h3>
+<p>严格遵循 OAT：每次仅改动一个因素，其余五个保持基准值，重新计算 NPV（含折旧税盾的联动效应）。结果如下：</p>
+<table>
+<thead><tr><th>排名</th><th>因素（基准，变动范围）</th><th class="num">不利情形 NPV</th><th class="num">有利情形 NPV</th><th class="num">摆幅</th><th class="num">每变动 1% 的 NPV 影响</th><th class="num">NPV 弹性</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>产品单价（120 元/件，±8%）</td><td class="num">-292</td><td class="num">1,892</td><td class="num">2,184</td><td class="num">-136.5 万元</td><td class="num">17.1</td></tr>
+<tr><td>2</td><td>年销量（40 万件，±10%）</td><td class="num">140</td><td class="num">1,460</td><td class="num">1,319</td><td class="num">-66.0 万元</td><td class="num">8.2</td></tr>
+<tr><td>3</td><td>初始投资（6,000 万元，±10%）</td><td class="num">314</td><td class="num">1,286</td><td class="num">973</td><td class="num">-48.6 万元</td><td class="num">6.1</td></tr>
+<tr><td>4</td><td>原材料成本（34 元/件，±10%）</td><td class="num">413</td><td class="num">1,187</td><td class="num">773</td><td class="num">-38.7 万元</td><td class="num">4.8</td></tr>
+<tr><td>5</td><td>折现率 WACC（10%，±2pp）</td><td class="num">443</td><td class="num">1,189</td><td class="num">746</td><td class="num">-178.3 万元/pp</td><td class="num">22.3 / pp</td></tr>
+<tr><td>6</td><td>固定运营成本（480 万元/年，±15%）</td><td class="num">595</td><td class="num">1,005</td><td class="num">409</td><td class="num">-13.6 万元</td><td class="num">1.7</td></tr>
+</tbody>
+</table>
+<div class="anchor"><b>口径说明：</b>摆幅 = 有利 NPV − 不利 NPV；"每变动 1% 的影响"按不利端折算（折现率按每 1 个百分点）；NPV 弹性 = |ΔNPV%| ÷ |Δ参数%|（不利端），衡量参数每变动 1% 引起 NPV 变动百分之几——弹性修正了"各因素变动幅度不同"带来的不可比，是比摆幅更严谨的跨因素敏感度标尺。单位：万元。</div>
+
+<h3>8.5 成图</h3>
+<p>采用绝对值制：X 轴为 NPV（万元，−1,000 至 3,000），竖直虚线为基准 800 万元，竖直实线为盈亏平衡线 NPV=0（左侧浅色区域为亏损区）；条形按摆幅降序；左端（绿）为不利情形、右端（红）为有利情形，遵循中国财务配色惯例。</p>
+
+<div class="figure">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif">
+<rect x="0" y="0" width="900" height="440" fill="#FFFFFF"/>
+<rect x="200.0" y="40" width="167.5" height="336" fill="#F5F1E8"/>
+<line x1="200.0" y1="40" x2="200.0" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="283.8" y1="40" x2="283.8" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="451.2" y1="40" x2="451.2" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="535.0" y1="40" x2="535.0" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="618.8" y1="40" x2="618.8" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="702.5" y1="40" x2="702.5" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="786.2" y1="40" x2="786.2" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="870.0" y1="40" x2="870.0" y2="376" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="200" y="16" font-size="11.0" fill="#5B6470">单位：万元｜每次仅变动一个因素，其余保持基准</text>
+<text x="870.0" y="16" text-anchor="end" font-size="11.0" fill="#1F2328">不利情形（NPV 恶化）</text>
+<rect x="719.4" y="6" width="11" height="11" fill="#4B7D5B"/>
+<text x="699.4" y="16" text-anchor="end" font-size="11.0" fill="#1F2328">有利情形（NPV 改善）</text>
+<rect x="548.7" y="6" width="11" height="11" fill="#A8544A"/>
+<rect x="318.6" y="56.0" width="182.9" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="56.0" width="182.9" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="67.0" text-anchor="end" font-size="13.0" fill="#1F2328">产品单价</text>
+<text x="190.0" y="80.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准120元/件 ±8%</text>
+<text x="312.6" y="72.0" text-anchor="end" font-size="11.0" fill="#1F2328">-292</text>
+<text x="690.4" y="72.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,892</text>
+<rect x="391.0" y="112.0" width="110.5" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="112.0" width="110.5" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="123.0" text-anchor="end" font-size="13.0" fill="#1F2328">年销量</text>
+<text x="190.0" y="136.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准40万件 ±10%</text>
+<text x="385.0" y="128.0" text-anchor="end" font-size="11.0" fill="#1F2328">140</text>
+<text x="618.0" y="128.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,460</text>
+<rect x="420.0" y="168.0" width="81.5" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="168.0" width="81.5" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="179.0" text-anchor="end" font-size="13.0" fill="#1F2328">初始投资</text>
+<text x="190.0" y="192.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准6000万元 ±10%</text>
+<text x="414.0" y="184.0" text-anchor="end" font-size="11.0" fill="#1F2328">314</text>
+<text x="588.9" y="184.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,286</text>
+<rect x="436.7" y="224.0" width="64.8" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="224.0" width="64.8" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="235.0" text-anchor="end" font-size="13.0" fill="#1F2328">原材料成本</text>
+<text x="190.0" y="248.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准34元/件 ±10%</text>
+<text x="430.7" y="240.0" text-anchor="end" font-size="11.0" fill="#1F2328">413</text>
+<text x="572.2" y="240.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,187</text>
+<rect x="441.7" y="280.0" width="59.7" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="280.0" width="65.1" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="291.0" text-anchor="end" font-size="13.0" fill="#1F2328">折现率</text>
+<text x="190.0" y="304.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准10% ±2pp</text>
+<text x="435.7" y="296.0" text-anchor="end" font-size="11.0" fill="#1F2328">443</text>
+<text x="572.6" y="296.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,189</text>
+<rect x="467.2" y="336.0" width="34.3" height="24.0" fill="#4B7D5B"/>
+<rect x="501.5" y="336.0" width="34.3" height="24.0" fill="#A8544A"/>
+<text x="190.0" y="347.0" text-anchor="end" font-size="13.0" fill="#1F2328">固定运营成本</text>
+<text x="190.0" y="360.0" text-anchor="end" font-size="11.0" fill="#5B6470">基准480万元/年 ±15%</text>
+<text x="461.2" y="352.0" text-anchor="end" font-size="11.0" fill="#1F2328">595</text>
+<text x="541.8" y="352.0" text-anchor="start" font-size="11.0" fill="#1F2328">1,005</text>
+<line x1="367.5" y1="40" x2="367.5" y2="376" stroke="#A8544A" stroke-width="1.6"/>
+<line x1="501.5" y1="40" x2="501.5" y2="376" stroke="#1F2328" stroke-width="1.6" stroke-dasharray="6,4"/>
+<text x="372.5" y="32" font-size="11.0" fill="#A8544A">NPV=0</text>
+<text x="506.5" y="32" font-size="11.0" fill="#1F2328">基准 800</text>
+<text x="200.0" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">-1,000</text>
+<text x="283.8" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">-500</text>
+<text x="367.5" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">0</text>
+<text x="451.2" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">500</text>
+<text x="535.0" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">1,000</text>
+<text x="618.8" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">1,500</text>
+<text x="702.5" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">2,000</text>
+<text x="786.2" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">2,500</text>
+<text x="870.0" y="394" text-anchor="middle" font-size="11.0" fill="#5B6470">3,000</text>
+<text x="535.0" y="420" text-anchor="middle" font-size="11.5" fill="#1F2328">项目净现值 NPV（万元）</text>
+</svg>
+<div class="cap"><b>图 1　项目 NPV 龙卷风图（单因素敏感度，单位：万元）</b><br>
+每次仅变动一个因素、其余保持基准值；绿色 = 不利情形，红色 = 有利情形（中国财务惯例）。单价 −8% 时 NPV 降至 −292 万元，是唯一越过盈亏平衡线的因素。</div>
+</div>
+
+<h3>8.6 结果解读：敏感度排序与盈亏平衡阈值</h3>
+<p><strong>排序结论：</strong>单价（摆幅 2,184）＞销量（1,319）＞初始投资（973）＞原材料（773）＞折现率（746）＞固定成本（409）。前两个因素均为收入侧因素——<strong>这个项目的风险结构是"市场风险主导"而非"成本风险主导"</strong>。若按弹性系数排序，折现率升至第二（22.3/pp），但其合理变动范围窄（±2pp），实际优先级仍低于收入侧因素——这正是"摆幅看实际影响、弹性看单位效率、两者结合看优先级"的用法。</p>
+<p><strong>盈亏平衡阈值：</strong>把每个因素单独推到 NPV=0，得到各因素的"安全边际"：</p>
+<table>
+<thead><tr><th>因素</th><th class="num">盈亏平衡临界值</th><th class="num">相对基准变动</th><th>方向</th></tr></thead>
+<tbody>
+<tr><td>产品单价</td><td class="num">≤ 113.0 元/件</td><td class="num">−5.9%</td><td>下行即亏</td></tr>
+<tr><td>年销量</td><td class="num">≤ 35.2 万件</td><td class="num">−12.1%</td><td>下行即亏</td></tr>
+<tr><td>初始投资</td><td class="num">≥ 6,987 万元</td><td class="num">+16.4%</td><td>超支即亏</td></tr>
+<tr><td>原材料成本</td><td class="num">≥ 41.0 元/件</td><td class="num">+20.7%</td><td>上涨即亏</td></tr>
+<tr><td>折现率 WACC</td><td class="num">≥ 14.7%</td><td class="num">+47.4%</td><td>上行即亏（= 项目 IRR）</td></tr>
+<tr><td>固定运营成本</td><td class="num">≥ 761 万元/年</td><td class="num">+58.6%</td><td>上行即亏</td></tr>
+</tbody>
+</table>
+
+<div class="figure">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" font-family="'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif">
+<rect x="0" y="0" width="900" height="300" fill="#FFFFFF"/>
+<line x1="190.0" y1="46" x2="190.0" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="285.4" y1="46" x2="285.4" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="380.8" y1="46" x2="380.8" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="476.2" y1="46" x2="476.2" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="571.5" y1="46" x2="571.5" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="666.9" y1="46" x2="666.9" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="762.3" y1="46" x2="762.3" y2="244" stroke="#E6E1D6" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="190" y="16" font-size="11" fill="#5B6470">各因素盈亏平衡安全边际：单因素变动超过条形长度，项目 NPV 转负</text>
+<text x="810" y="16" text-anchor="end" font-size="11" fill="#A8544A">红色 = 缓冲空间最小（最脆弱）</text>
+<line x1="380.8" y1="42" x2="380.8" y2="244" stroke="#5B6470" stroke-width="1.4" stroke-dasharray="5,4"/>
+<text x="380.8" y="38" text-anchor="middle" font-size="10.5" fill="#5B6470">20% 参考线</text>
+<rect x="190" y="54.2" width="55.9" height="16.5" fill="#A8544A"/>
+<text x="180.0" y="61.5" text-anchor="end" font-size="12.5" fill="#1F2328">产品单价</text>
+<text x="180.0" y="74.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 120 元/件</text>
+<text x="251.9" y="66.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受下行 5.9%</text>
+<rect x="190" y="87.2" width="115.7" height="16.5" fill="#2F6F8F"/>
+<text x="180.0" y="94.5" text-anchor="end" font-size="12.5" fill="#1F2328">年销量</text>
+<text x="180.0" y="107.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 40 万件</text>
+<text x="311.7" y="99.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受下行 12.1%</text>
+<rect x="190" y="120.2" width="156.9" height="16.5" fill="#2F6F8F"/>
+<text x="180.0" y="127.5" text-anchor="end" font-size="12.5" fill="#1F2328">初始投资</text>
+<text x="180.0" y="140.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 6,000 万元</text>
+<text x="352.9" y="132.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受上行 16.4%</text>
+<rect x="190" y="153.2" width="197.3" height="16.5" fill="#2F6F8F"/>
+<text x="180.0" y="160.5" text-anchor="end" font-size="12.5" fill="#1F2328">原材料成本</text>
+<text x="180.0" y="173.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 34 元/件</text>
+<text x="393.3" y="165.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受上行 20.7%</text>
+<rect x="190" y="186.2" width="452.5" height="16.5" fill="#2F6F8F"/>
+<text x="180.0" y="193.5" text-anchor="end" font-size="12.5" fill="#1F2328">折现率 WACC</text>
+<text x="180.0" y="206.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 10%</text>
+<text x="648.5" y="198.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受上行 47.4%</text>
+<rect x="190" y="219.2" width="559.1" height="16.5" fill="#2F6F8F"/>
+<text x="180.0" y="226.5" text-anchor="end" font-size="12.5" fill="#1F2328">固定运营成本</text>
+<text x="180.0" y="239.5" text-anchor="end" font-size="10.5" fill="#5B6470">基准 480 万元/年</text>
+<text x="755.1" y="231.5" text-anchor="start" font-size="11.5" fill="#1F2328">可承受上行 58.6%</text>
+<text x="190.0" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">0%</text>
+<text x="285.4" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">10%</text>
+<text x="380.8" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">20%</text>
+<text x="476.2" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">30%</text>
+<text x="571.5" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">40%</text>
+<text x="666.9" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">50%</text>
+<text x="762.3" y="262" text-anchor="middle" font-size="10.5" fill="#5B6470">60%</text>
+<text x="500.0" y="288" text-anchor="middle" font-size="11.5" fill="#1F2328">距 NPV=0 的缓冲空间（相对基准变动幅度）</text>
+</svg>
+<div class="cap"><b>图 2　各因素盈亏平衡安全边际</b><br>单因素变动超过条形长度，项目 NPV 转负；红色为缓冲空间最小的因素（最脆弱）。20% 参考线用于快速划分"高/低脆弱性"。</div>
+</div>
+
+<div class="essence"><b>核心解读：</b>产品单价只需下跌 <b>5.9%</b> 就会把项目推入亏损——这是全图信息密度最高的信号，意味着项目本质上没有价格容错空间；相比之下投资可超支 16.4%、原材料可涨 20.7%、固定成本可涨 58.6% 才会亏。<b>管理注意力的正确配置是：盯价格 ≫ 盯销量 &gt; 盯概算 &gt; 盯采购 &gt; 盯费用。</b></div>
+
+<h3>8.7 联动与压力测试：为什么龙卷风图只是起点</h3>
+<p>现实中价格与销量往往正相关（降价换量）。把两个因素按联动情景同时变动，结果显著超出单因素分析的线性叠加预期：</p>
+<table>
+<thead><tr><th>联合情景</th><th class="num">NPV（万元）</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>价格 +8% 且销量 +10%</td><td class="num">2,660</td><td>双升情景，显著优于单因素有利端简单加总</td></tr>
+<tr><td>基准</td><td class="num">800</td><td>—</td></tr>
+<tr><td>价格 −5% 且销量 −5%</td><td class="num">-178</td><td>看似温和的双降，已足以让项目转负</td></tr>
+<tr><td>价格 −8% 且销量 −10%</td><td class="num">-842</td><td>压力情景，亏损放大</td></tr>
+</tbody>
+</table>
+<div class="note"><b>关键教训：</b>单因素龙卷风图显示"销量有 12% 缓冲"，容易让人高估安全性。但价格 −5% 同时销量 −5%（各自都在合理波动范围内）就使 NPV 转负——<strong>相关因素的联合冲击远大于单因素摆幅之和</strong>。龙卷风图必须配合：①价量联合情景表；②概率型龙卷风图（P10–P90）；③敏感性监控 KPI，三者共同构成完整的风险图景。</div>
+
+<!-- ================= 九、敏感度与决策风险判断 ================= -->
+<h2 id="s9">九、如何据此判断敏感度与决策风险</h2>
+
+<p>从龙卷风图到决策结论，建议按以下六步框架推进：</p>
+<ol class="steps">
+<li><strong>看排序定主次。</strong>前 2～3 根最长的 bar 就是项目的主要风险源。若头部因素集中于收入侧，项目是市场风险型；集中于成本/投资侧，则是执行风险型——两类风险的管理手段完全不同。</li>
+<li><strong>看穿越定生死。</strong>凡是 bar 跨越盈亏平衡线（或目标收益率线）的因素，具备"单独翻转决策结论"的能力，属于<strong>关键敏感因素</strong>，必须进入投委会重点审议与合同条款设计。</li>
+<li><strong>看弹性做校正。</strong>当各因素变动幅度不同时，用弹性系数（每 1% 参数变动引起指标变动百分之几）做跨因素可比性修正，避免"范围定得宽所以摆幅大"的伪排序。</li>
+<li><strong>看缓冲定容错。</strong>计算每个因素的盈亏平衡安全边际（图 2）。缓冲 &lt;10% 的因素几乎没有试错空间，应设置预警线和熔断机制；缓冲 &gt;40% 的因素可放心纳入常规监控。</li>
+<li><strong>看联动防低估。</strong>识别相关因素对（价量、成本—通胀、汇率—利率），做联合情景与压力测试；龙卷风图给出的排序在强相关场景下需要整体上调风险等级。</li>
+<li><strong>转行动闭环。</strong>把每个头部因素转化为具体动作：监控指标与频率、合同条款（锁价/价格调整公式/不可预见费/违约金）、对冲工具（套保、双供应商、战略库存）、或保留期权（分期投资、小规模试点）。</li>
+</ol>
+
+<table>
+<thead><tr><th style="width:130px">风险等级</th><th style="width:220px">判据（满足其一）</th><th>管理动作</th></tr></thead>
+<tbody>
+<tr><td><strong>高敏感 / 关键</strong></td><td>弹性 ≥10；或缓冲 &lt;10%；或 bar 穿越盈亏线</td><td>每周监控；写入投委会决议要点；合同硬条款（锁价、调整公式）；设置预警熔断线</td></tr>
+<tr><td><strong>中敏感</strong></td><td>弹性 4～10；或缓冲 10%～25%</td><td>月度监控；预算中设专项缓冲；对冲/备选方案（套保、双供应商、备选产能）</td></tr>
+<tr><td><strong>低敏感</strong></td><td>弹性 &lt;4 且缓冲 &gt;25%</td><td>季度例行监控；常规管控即可，不占用谈判与管理资源</td></tr>
+</tbody>
+</table>
+
+<p>落到本案例：<strong>产品单价 = 高敏感关键因素</strong>（弹性 17.1、缓冲 5.9%、唯一穿越盈亏线）→ 定价策略、长协锁价与价格调整公式、竞品价格监控、上市前价格测试；<strong>年销量与初始投资 = 中敏感</strong>（缓冲 12.1% / 16.4%）→ 渠道进度月度复盘、EPC 固定总价 + ≥10% 不可预见费 + 变更控制；<strong>原材料 = 中敏感</strong>（缓冲 20.7%）→ 套期保值、战略备库、双供应商、采购价格联动条款；<strong>折现率与固定成本 = 低敏感</strong>（缓冲 47.4% / 58.6%）→ 例行监控，无需专项资源。</p>
+
+<!-- ================= 十、常见错误与清单 ================= -->
+<h2 id="s10">十、常见错误与质量检查清单</h2>
+
+<h3>10.1 十个高频错误</h3>
+<ol>
+<li>各因素变动范围设定随意且不一致，摆幅排序失去可比性；</li>
+<li>把确定性"悲观/乐观情形值"误称为"置信区间"；</li>
+<li>因素命名缺基准值、单位或幅度，读者无法复算；</li>
+<li>X 轴截断（从 0 起而数据全在高位），压缩视觉差异或丢失亏损区；</li>
+<li>一张图混用多个指标（NPV + IRR），或使用双坐标轴；</li>
+<li>忽略因素相关性提示，读者按"因素独立"误读；</li>
+<li>因素超过 12 个或少于 5 个，图形信噪比失衡；</li>
+<li>图题与脚注缺失（无指标、无单位、无方法、无来源、无日期）；</li>
+<li>概率版用 min/max 作端点、不写模拟次数与随机种子；</li>
+<li>只出图不给行动——龙卷风图止步于"看"，没有转化为监控、条款与对冲。</li>
+</ol>
+
+<h3>10.2 成图前检查清单</h3>
+<ul class="chk">
+<li>基准模型已通过对账，基准值线位置正确；</li>
+<li>每个因素的变动范围有书面依据，且各范围置信度相当；</li>
+<li>OAT 严格执行：每次只改一个因素，无手工改参遗漏；</li>
+<li>摆幅、排序、弹性三项计算经第二人复核；</li>
+<li>坐标轴含负值区、刻度整齐、单位入题、无双轴；</li>
+<li>因素名三要素齐全，端点值标注完整、精度一致；</li>
+<li>正负端配色符合受众惯例且全报告一致，图例清晰；</li>
+<li>bar 穿越阈值处有警示标记；</li>
+<li>图题含"指标 + 单位 + 方法"，脚注含模型版本/来源/日期（概率版含模拟次数与种子）；</li>
+<li>已配套联合情景/压力测试说明，并已生成行动清单。</li>
+</ul>
+
+<!-- ================= 附录 ================= -->
+<h2 id="sa">附录 A：Excel 操作步骤（确定性龙卷风图）</h2>
+<ol>
+<li><strong>建参数表：</strong>B 列放基准值（销量、单价、成本、投资、税率、WACC），每行一个参数并备注单位。</li>
+<li><strong>建现金流计算区：</strong>公式全部引用参数表单元格，禁止硬编码数字。</li>
+<li><strong>NPV 单元格：</strong><code>=NPV(WACC, OCF1:OCF5) + 残值/(1+WACC)^5 - I0</code>。</li>
+<li><strong>批量测算：</strong>用"数据 → 模拟分析 → 模拟运算表（数据表）"，行引用因素列、列引用 NPV 单元格；或复制模型 6×2 份，每份只改一个参数。</li>
+<li><strong>整理结果表：</strong>因素名 / 悲观 NPV / 乐观 NPV / 摆幅（=乐观−悲观）/ 排序。</li>
+<li><strong>做辅助列：</strong>段1 = MIN(悲观, 基准) − X轴下限；段2 = |悲观 − 基准|；段3 = |乐观 − 基准|。</li>
+<li><strong>插入堆积条形图：</strong>三个系列堆积；段1 设为"无填充"；类别轴勾选"逆序类别"使摆幅最大的因素显示在最上方；X 轴最小值设为 −1,000（固定，避免自动缩放截断）。</li>
+<li><strong>加基准线：</strong>插入竖直误差线/散点系列画基准值与零线，或叠加一个透明系列的误差线实现。</li>
+<li><strong>标注：</strong>添加数据标签（段2、段3 端点值）、图例改为中文正负端说明、补齐图题与脚注。</li>
+</ol>
+
+<h2 id="sb">附录 B：Python 核心代码（计算 + 绘图）</h2>
+<pre><code># -*- coding: utf-8 -*-
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Microsoft YaHei"
+
+def npv(I0=6000.0, life=5, salvage=1000.0, Q=40.0, P=120.0,
+        vc_unit=62.0, fixed=480.0, tax=0.25, r=0.10):
+    """智能装配产线 NPV 模型（单位：万元）"""
+    R, VC = Q * P, Q * vc_unit
+    dep = (I0 - salvage) / life
+    ocf = (R - VC - fixed - dep) * (1 - tax) + dep
+    af = (1 - (1 + r) ** -life) / r
+    return -I0 + ocf * af + salvage * (1 + r) ** -life
+
+base = npv()
+scen = [  # (因素, 悲观 kwargs, 乐观 kwargs)
+    ("产品单价",     dict(P=110.4),  dict(P=129.6)),
+    ("年销量",       dict(Q=36.0),   dict(Q=44.0)),
+    ("初始投资",     dict(I0=6600.), dict(I0=5400.)),
+    ("原材料成本",   dict(vc_unit=65.4), dict(vc_unit=58.6)),
+    ("折现率",       dict(r=0.12),   dict(r=0.08)),
+    ("固定运营成本", dict(fixed=552.),dict(fixed=408.)),
+]
+low  = [npv(**lo) for _, lo, _ in scen]
+high = [npv(**hi) for _, _, hi in scen]
+
+order = np.argsort([h - l for l, h in zip(low, high)])[::-1]  # 按摆幅降序
+fig, ax = plt.subplots(figsize=(9, 4.6))
+for i, k in enumerate(order):
+    ax.barh(i, base - low[k],  left=low[k], color="#4B7D5B", height=.55)  # 不利端（绿）
+    ax.barh(i, high[k] - base, left=base,   color="#A8544A", height=.55)  # 有利端（红）
+    ax.text(low[k] - 40,  i, f"{low[k]:,.0f}",  ha="right", va="center", fontsize=9)
+    ax.text(high[k] + 40, i, f"{high[k]:,.0f}", ha="left",  va="center", fontsize=9)
+ax.axvline(0,    color="#A8544A", lw=1.4)            # 盈亏平衡线
+ax.axvline(base, color="#1F2328", lw=1.4, ls="--")   # 基准线
+ax.set_yticks(range(len(order)))
+ax.set_yticklabels([scen[k][0] for k in order])
+ax.set_xlabel("项目净现值 NPV（万元）"); ax.set_xlim(-1000, 3000)
+ax.invert_yaxis()                                    # 摆幅最大者置顶
+ax.spines[["top", "right"]].set_visible(False)
+plt.tight_layout(); plt.savefig("tornado.png", dpi=200)</code></pre>
+
+<h2 id="sc">附录 C：术语表</h2>
+<table>
+<thead><tr><th style="width:150px">术语</th><th>释义</th></tr></thead>
+<tbody>
+<tr><td><strong>龙卷风图</strong></td><td>单因素敏感度分析的横向条形图，条形以基准值为中心向两侧展开，按摆幅降序排列</td></tr>
+<tr><td><strong>敏感度分析</strong></td><td>研究参数变动对目标指标影响程度的方法总称；龙卷风图属其中"单因素局部敏感度"一支</td></tr>
+<tr><td><strong>OAT</strong></td><td>One-at-a-Time，一次只变动一个因素、其余固定的测算原则</td></tr>
+<tr><td><strong>摆幅</strong></td><td>乐观情形与悲观情形下目标指标值之差（绝对值），龙卷风图排序依据</td></tr>
+<tr><td><strong>弹性系数</strong></td><td>目标指标变动百分比 ÷ 参数变动百分比，衡量单位参数变动的影响效率</td></tr>
+<tr><td><strong>盈亏平衡点</strong></td><td>使目标指标等于决策阈值（如 NPV=0）的临界参数值</td></tr>
+<tr><td><strong>P10 / P90</strong></td><td>蒙特卡洛输出分布的第 10 / 第 90 百分位数，概率龙卷风图的常用端点（80% 区间）</td></tr>
+<tr><td><strong>蜘蛛图</strong></td><td>多因素同比例变动的放射状对比图，龙卷风图的粗筛替代</td></tr>
+<tr><td><strong>NPV / IRR / WACC</strong></td><td>净现值 / 内部收益率 / 加权平均资本成本；仅折现率变动时 NPV=0 的点即 IRR</td></tr>
+</tbody>
+</table>
+
+<div class="foot">
+本文方法框架基于决策分析（Decision Analysis）与资本预算实务的通行做法整理；案例数值为教学演示用构造数据，模型假设已在 8.2 节完整列示，计算过程可用附录 B 代码复现。<br>
+生成日期：2026-10-16 ｜ 配套交付：本页内嵌图 1（龙卷风图）与图 2（安全边际图）均为按文中数值精确计算的 SVG 矢量图。
+</div>
+
+</div>
+</body>
+</html>
